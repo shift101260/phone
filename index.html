@@ -236,6 +236,74 @@
         </div>
     </div>
 
+    <!-- 3. 🌟 新增：點擊卡片彈出的詳細 SOP 歷程與會計財務專區彈窗 -->
+    <div id="caseDetailModal" class="fixed inset-0 bg-black/60 backdrop-blur-xs hidden flex items-center justify-center z-50 p-4 overflow-y-auto">
+        <div class="bg-white w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden border border-stone-200 my-8">
+            <div class="bg-[#2C2A29] text-white px-6 py-4 flex justify-between items-center">
+                <h3 class="font-bold text-sm" id="modal-case-title"><i class="fa-solid fa-folder-open text-ruili-brand mr-2"></i> 專案詳細歷程與會計財務專區</h3>
+                <button onclick="closeModal('caseDetailModal')" class="text-stone-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div class="p-6 space-y-6 text-xs text-stone-700 max-h-[75vh] overflow-y-auto">
+                <!-- 基本資訊 -->
+                <div class="grid grid-cols-3 gap-3 p-3 bg-stone-50 rounded-xl border border-stone-200 font-medium">
+                    <div><span class="text-stone-400 block text-[10px]">案件編號</span><strong id="m-id" class="text-stone-900">2026-001</strong></div>
+                    <div><span class="text-stone-400 block text-[10px]">代書 / 負責人</span><strong id="m-owner" class="text-ruili-brand">周代書 (特助協同)</strong></div>
+                    <div><span class="text-stone-400 block text-[10px]">停留天數狀態</span><strong id="m-days" class="text-emerald-600">正常 (3天)</strong></div>
+                </div>
+
+                <!-- SOP 歷程進度時間軸 -->
+                <div class="space-y-2">
+                    <h4 class="font-bold text-stone-900 flex items-center gap-1.5"><i class="fa-solid fa-timeline text-ruili-brand"></i> SOP 標準作業程序歷程</h4>
+                    <div class="border-l-2 border-ruili-brand pl-4 space-y-3 ml-2">
+                        <div>
+                            <p class="font-bold text-stone-900">1. 秘書建檔與審查</p>
+                            <p class="text-[11px] text-stone-500">已完成紙本合約歸檔與大小章掃描確認（完成日：2026-06-01）</p>
+                        </div>
+                        <div>
+                            <p class="font-bold text-stone-900">2. 生產作業執行中（現階段）</p>
+                            <p class="text-[11px] text-stone-500">正在進行特定工廠與土地變更可行性評估，等待政府機關初審意見。</p>
+                        </div>
+                        <div class="text-stone-400">
+                            <p class="font-medium">3. 階段請款 / 會計（尚未到達）</p>
+                        </div>
+                        <div class="text-stone-400">
+                            <p class="font-medium">4. 準備結案 / 歸檔（尚未到達）</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 💰 會計財務專區（對應您稍早提供的會計欄位） -->
+                <div class="space-y-2 pt-2 border-t border-stone-200">
+                    <h4 class="font-bold text-stone-900 flex items-center gap-1.5"><i class="fa-solid fa-coins text-amber-600"></i> 簽約案件下方會計財務專區</h4>
+                    <div class="grid grid-cols-2 gap-3 bg-amber-50/50 p-4 rounded-xl border border-amber-200/60">
+                        <div>
+                            <label class="text-stone-500 block mb-1">第一期款比例 (%)：</label>
+                            <input type="text" value="30%" class="w-full bg-white border border-stone-300 rounded-lg p-2 font-bold text-stone-900">
+                        </div>
+                        <div>
+                            <label class="text-stone-500 block mb-1">預計收款日 / 金額：</label>
+                            <input type="text" value="2026-07-15 / NT$ 1,050,000" class="w-full bg-white border border-stone-300 rounded-lg p-2 font-bold text-stone-900">
+                        </div>
+                        <div>
+                            <label class="text-stone-500 block mb-1">是否開發票（含稅 5%）：</label>
+                            <select class="w-full bg-white border border-stone-300 rounded-lg p-2 font-bold text-stone-900">
+                                <option>是（含稅 5%）</option>
+                                <option>否（免開發票）</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="text-stone-500 block mb-1">預收帳款 / 存出保證金：</label>
+                            <input type="text" value="NT$ 0" class="w-full bg-white border border-stone-300 rounded-lg p-2 font-bold text-stone-900">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-stone-50 px-6 py-3 border-t border-stone-200 flex justify-end">
+                <button onclick="closeModal('caseDetailModal')" class="px-5 py-2 bg-ruili-brand text-white rounded-xl text-xs font-bold">關閉視窗</button>
+            </div>
+        </div>
+    </div>
+
     <!-- 頁面切換與控制邏輯 -->
     <script>
         // 🌟 自動生成 200 筆模擬案件的大型集團資料庫
@@ -243,6 +311,7 @@
             const statuses = ['簽約案件', '案件評估', '結案中心', '廢件專區', '失敗案件'];
             const services = ['土地變更', '特定工廠專用區', '綠能申設', '資產顧問', '土地重劃'];
             const clients = ['張董事長', '黃總經理', '林董', '陳小姐', '何董', '吳律師', '趙伯伯', '周代書', '鄭主委', '劉董'];
+            const owners = ['周代書 (代書)', '林特助 (特助組)', '王代書 (資深代書)', '陳特助 (特登專員)'];
             const districts = ['烏日區', '大雅區', '潭子區', '西屯區', '北屯區', '沙鹿區', '員林市', '安南區', '竹北市', '桃園區'];
             const progresses = {
                 '簽約案件': ['簽約中', '規劃中', '送件審查', '補件處理中'],
@@ -260,17 +329,20 @@
                 for (let i = 1; i <= count; i++) {
                     let idStr = `${yr}-${String(i).padStart(3, '0')}`;
                     let client = clients[(i + parseInt(yr)) % clients.length];
-                    let dist = districts[i % districts.length];
+                    let owner = owners[i % owners.length];
                     let srv = services[i % services.length];
-                    let name = `${dist}${client.substring(0, 1)}${srv}專案第${i}號`;
+                    let name = `${client.substring(0, 1)}${srv}專案`;
                     let status = statuses[i % statuses.length];
                     let progList = progresses[status];
                     let progress = progList[i % progList.length];
                     let amountNum = status === '廢件專區' || status === '失敗案件' ? 0 : ((i % 15) + 1) * 300000;
                     let amount = `NT$ ${amountNum.toLocaleString()}`;
-                    let note = status === '結案中心' ? '全數審查完畢，結案報告已產出' : (status === '簽約案件' ? '合規審查中，定期追蹤進度' : '等待後續補件與法規確認');
+                    
+                    // 🌟 模擬停留天數（讓部分案件故意超過 7 天以觸發紅燈警示）
+                    let daysInStage = (i * 3) % 15; 
+                    let note = status === '結案中心' ? '全數審查完畢' : '審查推進中';
 
-                    data[yr].push({ id: idStr, name: name, client: client, service: srv, progress: progress, amount: amount, note: note, status: status });
+                    data[yr].push({ id: idStr, name: name, client: client, owner: owner, service: srv, progress: progress, amount: amount, note: note, status: status, days: daysInStage });
                 }
             }
             return data;
@@ -321,7 +393,6 @@
                         </div>
                     </div>`;
             } else if(moduleName === 'kanban') {
-                // 預設進入工作看板時顯示「版本 A：橫向欄位看板模式」
                 renderKanbanView('kanban-card');
             } else if(moduleName === 'all-cases') {
                 container.innerHTML = `
@@ -383,7 +454,7 @@
             }
         }
 
-        // 🌟 渲染工作看板（支援切換為 版本A: 橫向卡片流 或 版本B: 列表清單）
+        // 🌟 渲染工作看板（橫向卡片流，內建：代書標籤、停留天數紅綠燈、點擊彈出詳細歷程與會計專區）
         function renderKanbanView(mode) {
             const container = document.getElementById('app-container');
 
@@ -393,7 +464,7 @@
                         <div class="bg-white p-5 rounded-2xl border border-ruili-border shadow-2xs flex flex-col md:flex-row md:items-center justify-between gap-4 shrink-0">
                             <div>
                                 <h2 class="text-base font-bold text-stone-950">工作看板 SOP 執行與控管</h2>
-                                <p class="text-xs text-stone-500">版本 A：橫向欄位卡片流，各階段獨立垂直捲動，全面掌握 200 筆案件分流。</p>
+                                <p class="text-xs text-stone-500">橫向卡片流：內建「代書負責人標籤」與「停留天數紅綠燈警示」，點擊卡片可查看完整歷程與會計專區。</p>
                             </div>
                             <div class="flex items-center space-x-2">
                                 <button onclick="renderKanbanView('kanban-card')" class="px-3 py-1.5 bg-ruili-brand text-white rounded-xl text-xs font-bold shadow-xs">橫向卡片流</button>
@@ -408,7 +479,7 @@
                                 <div class="w-80 bg-stone-100/90 rounded-2xl border border-stone-200 flex flex-col h-full shadow-xs">
                                     <div class="p-4 border-b border-stone-200 flex justify-between items-center bg-stone-200/60 rounded-t-2xl shrink-0">
                                         <span class="font-bold text-xs text-stone-800 flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span> 1. 秘書建檔/審查</span>
-                                        <span class="bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded-md">階段控管</span>
+                                        <span class="bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded-md">待辦催辦區</span>
                                     </div>
                                     <div class="p-3 flex-1 overflow-y-auto space-y-3" id="k-col-1"></div>
                                 </div>
@@ -416,7 +487,7 @@
                                 <div class="w-80 bg-stone-100/90 rounded-2xl border border-stone-200 flex flex-col h-full shadow-xs">
                                     <div class="p-4 border-b border-stone-200 flex justify-between items-center bg-stone-200/60 rounded-t-2xl shrink-0">
                                         <span class="font-bold text-xs text-stone-800 flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span> 2. 生產作業執行中</span>
-                                        <span class="bg-blue-100 text-blue-800 text-[10px] font-bold px-2 py-0.5 rounded-md">SOP 進行中</span>
+                                        <span class="bg-blue-100 text-blue-800 text-[10px] font-bold px-2 py-0.5 rounded-md">核心戰場</span>
                                     </div>
                                     <div class="p-3 flex-1 overflow-y-auto space-y-3" id="k-col-2"></div>
                                 </div>
@@ -441,7 +512,6 @@
                     </div>
                 `;
 
-                // 填入 200 筆卡片
                 populateKanbanCards();
 
             } else {
@@ -464,7 +534,6 @@
                             </div>
                         </div>
 
-                        <!-- 表格容器 -->
                         <div class="flex-1 bg-white rounded-2xl border border-stone-200 shadow-xs overflow-hidden flex flex-col">
                             <div class="overflow-y-auto flex-1">
                                 <table class="w-full text-left text-xs">
@@ -474,9 +543,9 @@
                                             <th class="py-3 px-4">案件編號</th>
                                             <th class="py-3 px-4">客戶與案名</th>
                                             <th class="py-3 px-4">服務細項</th>
-                                            <th class="py-3 px-4">SOP 目前進度階段</th>
+                                            <th class="py-3 px-4">負責人 / 代書</th>
                                             <th class="py-3 px-4">簽約金額</th>
-                                            <th class="py-3 px-4">備註說明</th>
+                                            <th class="py-3 px-4">停留天數警示</th>
                                         </tr>
                                     </thead>
                                     <tbody id="kanban-table-tbody" class="divide-y divide-stone-100">
@@ -491,64 +560,92 @@
             }
         }
 
+        // 🌟 在卡片中動態組合：代書標籤、停留天數紅綠燈警示、點擊事件
         function populateKanbanCards() {
-            const clients = ['張董事長', '黃總經理', '林董', '陳小姐', '何董', '吳律師', '趙伯伯', '周代書', '劉董'];
-            const services = ['土地變更', '特定工廠專用區', '綠能申設', '資產顧問', '土地重劃'];
             const colMap = { 0: 'k-col-1', 1: 'k-col-2', 2: 'k-col-3', 3: 'k-col-4' };
 
-            for (let i = 1; i <= 200; i++) {
-                let colIndex = i % 4;
-                let targetCol = document.getElementById(colMap[colIndex]);
-                if (!targetCol) continue;
-                let client = clients[i % clients.length];
-                let srv = services[i % services.length];
-                let amount = ((i % 10) + 1) * 300000;
+            for (let yr in globalCasesData) {
+                globalCasesData[yr].forEach((c, idx) => {
+                    let colIndex = idx % 4;
+                    let targetCol = document.getElementById(colMap[colIndex]);
+                    if (!targetCol) return;
 
-                let card = document.createElement('div');
-                card.className = "bg-white p-3.5 rounded-xl border border-stone-200 shadow-2xs space-y-2 hover:border-stone-400 transition cursor-pointer";
-                card.innerHTML = `
-                    <div class="flex justify-between items-center text-[10px] text-stone-400">
-                        <span class="font-mono font-bold text-stone-600">2026-${String(i).padStart(3, '0')}</span>
-                        <span class="px-2 py-0.5 bg-stone-100 rounded text-stone-600">${srv}</span>
-                    </div>
-                    <div class="font-bold text-stone-900 text-xs">${client} 專案委託</div>
-                    <div class="flex justify-between items-center pt-1 border-t border-stone-100 text-xs">
-                        <span class="text-stone-500 text-[11px]">合約金額</span>
-                        <span class="font-bold text-ruili-brand">NT$ ${amount.toLocaleString()}</span>
-                    </div>
-                `;
-                targetCol.appendChild(card);
+                    // 停留天數紅綠燈邏輯 (超過 7 天顯示紅燈逾期警告)
+                    let days = c.days;
+                    let badgeColor = days > 7 ? "bg-rose-100 text-rose-700 border-rose-300" : "bg-emerald-100 text-emerald-700 border-emerald-300";
+                    let dotColor = days > 7 ? "bg-rose-500 animate-ping" : "bg-emerald-500";
+                    let statusText = days > 7 ? `⚠️ 已滯留 ${days} 天` : `🟢 正常 (${days}天)`;
+
+                    let card = document.createElement('div');
+                    card.className = "bg-white p-3.5 rounded-xl border border-stone-200 shadow-2xs space-y-2.5 hover:border-ruili-brand transition cursor-pointer group";
+                    
+                    // 🌟 點擊卡片彈出詳細歷程與會計專區
+                    card.onclick = () => openCaseDetailModal(c);
+
+                    card.innerHTML = `
+                        <div class="flex justify-between items-center text-[10px] text-stone-400">
+                            <span class="font-mono font-bold text-stone-600">${c.id}</span>
+                            <span class="px-2 py-0.5 bg-stone-100 rounded text-stone-600 font-medium">${c.service}</span>
+                        </div>
+                        <div class="font-bold text-stone-900 text-xs group-hover:text-ruili-brand transition">${c.client} 專案</div>
+                        
+                        <!-- 🏷️ 代書/負責人標籤 -->
+                        <div class="flex items-center justify-between pt-1">
+                            <span class="inline-flex items-center gap-1 px-2 py-0.5 bg-sky-50 text-sky-700 border border-sky-200 rounded-md text-[10px] font-bold">
+                                <i class="fa-solid fa-user-tie text-[9px]"></i> ${c.owner}
+                            </span>
+                            <!-- 🚨 停留天數紅綠燈警示 -->
+                            <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-[10px] font-bold border ${badgeColor}">
+                                <span class="w-1.5 h-1.5 rounded-full ${dotColor}"></span>
+                                ${statusText}
+                            </span>
+                        </div>
+                    `;
+                    targetCol.appendChild(card);
+                });
             }
         }
 
         function populateKanbanTable() {
-            const clients = ['張董事長', '黃總經理', '林董', '陳小姐', '何董', '吳律師', '趙伯伯', '周代書', '劉董'];
-            const services = ['土地變更', '特定工廠專用區', '綠能申設', '資產顧問', '土地重劃'];
-            const stages = ['1. 秘書建檔/審查', '2. 生產作業執行中', '3. 階段請款/會計', '4. 準備結案/歸檔'];
             const tbody = document.getElementById('kanban-table-tbody');
             if (!tbody) return;
 
             let html = '';
-            for (let i = 1; i <= 200; i++) {
-                let idStr = `2026-${String(i).padStart(3, '0')}`;
-                let client = clients[i % clients.length];
-                let srv = services[i % services.length];
-                let stage = stages[i % stages.length];
-                let amount = ((i % 10) + 1) * 300000;
-
-                html += `
-                    <tr class="hover:bg-stone-50/80 transition kanban-list-row" data-keyword="${idStr} ${client} ${srv} ${stage}">
-                        <td class="py-3 px-4 text-center"><input type="checkbox" class="rounded border-stone-300"></td>
-                        <td class="py-3 px-4 font-mono font-bold text-stone-600">${idStr}</td>
-                        <td class="py-3 px-4 font-bold text-stone-900">${client} (${srv}專案)</td>
-                        <td class="py-3 px-4 text-stone-600">${srv}</td>
-                        <td class="py-3 px-4"><span class="px-2.5 py-1 bg-stone-100 text-stone-700 rounded-lg text-[11px] font-bold">${stage}</span></td>
-                        <td class="py-3 px-4 font-bold text-ruili-brand">NT$ ${amount.toLocaleString()}</td>
-                        <td class="py-3 px-4 text-stone-400">標準作業程序正常推進中</td>
-                    </tr>
-                `;
+            for (let yr in globalCasesData) {
+                globalCasesData[yr].forEach(c => {
+                    let badgeColor = c.days > 7 ? "text-rose-700 bg-rose-50 border-rose-200" : "text-emerald-700 bg-emerald-50 border-emerald-200";
+                    html += `
+                        <tr class="hover:bg-stone-50/80 transition kanban-list-row cursor-pointer" onclick='openCaseDetailModal(${JSON.stringify(c)})' data-keyword="${c.id} ${c.client} ${c.service} ${c.owner}">
+                            <td class="py-3 px-4 text-center" onclick="event.stopPropagation()"><input type="checkbox" class="rounded border-stone-300"></td>
+                            <td class="py-3 px-4 font-mono font-bold text-stone-600">${c.id}</td>
+                            <td class="py-3 px-4 font-bold text-stone-900">${c.client} (${c.name})</td>
+                            <td class="py-3 px-4 text-stone-600">${c.service}</td>
+                            <td class="py-3 px-4"><span class="px-2 py-0.5 bg-sky-50 text-sky-700 border border-sky-200 rounded font-bold text-[10px]">${c.owner}</span></td>
+                            <td class="py-3 px-4 font-bold text-ruili-brand">${c.amount}</td>
+                            <td class="py-3 px-4"><span class="px-2 py-0.5 border rounded font-bold text-[10px] ${badgeColor}">${c.days > 7 ? '⚠️ 滯留 ' + c.days + ' 天' : '🟢 正常 (' + c.days + '天)'}</span></td>
+                        </tr>
+                    `;
+                });
             }
             tbody.innerHTML = html;
+        }
+
+        // 🌟 開啟詳細歷程與會計專區彈窗並填入該筆資料
+        function openCaseDetailModal(c) {
+            document.getElementById('modal-case-title').innerHTML = `<i class="fa-solid fa-folder-open text-ruili-brand mr-2"></i> ${c.client} (${c.name}) 詳細歷程與會計專區`;
+            document.getElementById('m-id').innerText = c.id;
+            document.getElementById('m-owner').innerText = c.owner;
+            
+            let daysEl = document.getElementById('m-days');
+            if(c.days > 7) {
+                daysEl.className = "text-rose-600 font-bold";
+                daysEl.innerText = `⚠️ 已滯留 ${c.days} 天 (需催辦)`;
+            } else {
+                daysEl.className = "text-emerald-600 font-bold";
+                daysEl.innerText = `🟢 正常 (${c.days} 天)`;
+            }
+
+            openModal('caseDetailModal');
         }
 
         function filterKanbanTable() {
