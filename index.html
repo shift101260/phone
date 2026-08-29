@@ -6,247 +6,120 @@
     <title>睿立集團｜精密營運管理與結案系統</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body class="bg-[#FBF9F5] text-stone-800 flex h-screen overflow-hidden font-sans">
+    
+    <!-- 引入獨立的全域色號變數樣式檔 -->
+    <link rel="stylesheet" href="./css/variables.css">
+    <link rel="stylesheet" href="./css/layout.css">
 
-    <!-- 側邊導覽列 -->
-    <aside class="w-64 bg-[#2C2A29] text-stone-300 flex flex-col justify-between hidden md:flex border-r border-stone-800">
+    <!-- 讓 Tailwind 能夠抓取我們的 CSS 變數 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ruili: {
+                            bg: 'var(--ruili-bg)',
+                            brand: 'var(--ruili-brand)',
+                            sidebar: 'var(--ruili-sidebar)',
+                            matcha: 'var(--ruili-matcha)',
+                            pink: 'var(--ruili-pink)',
+                            dark: 'var(--ruili-dark)',
+                            border: 'var(--ruili-border)'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-ruili-bg text-ruili-dark flex h-screen overflow-hidden font-sans">
+
+    <!-- 左側功能導覽列 -->
+    <aside class="ruili-sidebar text-stone-300 flex flex-col justify-between md:flex border-r border-ruili-dark">
         <div>
-            <div class="p-6 border-b border-stone-800 flex items-center space-x-3">
-                <div class="bg-[#D4A373] text-white w-10 h-10 rounded-xl flex items-center justify-center font-bold text-xl shadow-xs">睿</div>
+            <!-- 品牌 Logo 與名稱 -->
+            <div class="p-6 border-b border-ruili-dark flex items-center space-x-3 sticky top-0 bg-ruili-sidebar z-10">
+                <div class="bg-ruili-brand text-white w-10 h-10 rounded-xl flex items-center justify-center font-bold text-xl shadow-xs">睿</div>
                 <div>
                     <h1 class="text-white font-bold tracking-wider text-sm">睿立集團</h1>
-                    <p class="text-[10px] text-stone-400">RUILI PRECISION ERP</p>
+                    <p class="text-[10px] text-stone-400">RUILI Group ERP</p>
                 </div>
             </div>
-            <nav class="p-4 space-y-1.5">
-                <button onclick="switchTab('dashboard', this)" class="tab-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-stone-800 transition"><i class="fa-solid fa-chart-line w-5"></i><span>戰情室 & 財報</span></button>
-                <button onclick="switchTab('marketing', this)" class="tab-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-stone-800 transition"><i class="fa-solid fa-bullhorn w-5"></i><span>行銷與 AI 腳本</span></button>
-                <button onclick="switchTab('crm', this)" class="tab-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-stone-800 transition"><i class="fa-solid fa-address-book w-5"></i><span>案件與 CRM (報價)</span></button>
-                <button onclick="switchTab('operations', this)" class="tab-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl bg-[#D4A373] text-white transition shadow-xs"><i class="fa-solid fa-list-check w-5"></i><span>簽約與工作看板</span></button>
-                <button onclick="switchTab('closing', this)" class="tab-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-stone-800 transition"><i class="fa-solid fa-file-invoice-dollar w-5"></i><span>請款與結案中心</span></button>
+            
+            <!-- 功能選單 -->
+            <nav id="nav-menu" class="p-4 space-y-1.5 text-xs">
+                <button onclick="switchModule('dashboard', this)" class="nav-btn w-full flex items-center space-x-3 px-4 py-2.5 rounded-xl bg-ruili-brand text-white transition shadow-xs font-bold">
+                    <i class="fa-solid fa-chart-line w-5"></i><span>戰情室總覽</span>
+                </button>
+                
+                <button onclick="switchModule('kanban', this)" class="nav-btn w-full flex items-center space-x-3 px-4 py-2.5 rounded-xl hover:bg-stone-800 text-stone-300 transition">
+                    <i class="fa-solid fa-list-check w-5"></i><span>工作看板</span>
+                </button>
+
+                <button onclick="switchModule('all-cases', this)" class="nav-btn w-full flex items-center space-x-3 px-4 py-2.5 rounded-xl hover:bg-stone-800 text-stone-300 transition">
+                    <i class="fa-solid fa-layer-group w-5 text-amber-500"></i><span>全集團案件總覽</span>
+                </button>
+
+                <div class="pt-2 pb-1 px-3 text-[10px] font-bold uppercase tracking-wider text-stone-500">年度案件快速切換</div>
+                <button onclick="switchModule('year-2027', this)" class="nav-btn w-full flex items-center space-x-3 px-4 py-2 rounded-xl hover:bg-stone-800 text-stone-300 transition"><i class="fa-solid fa-folder w-4 ml-1"></i><span>2027 案件管理</span></button>
+                <button onclick="switchModule('year-2026', this)" class="nav-btn w-full flex items-center space-x-3 px-4 py-2 rounded-xl hover:bg-stone-800 text-stone-300 transition"><i class="fa-solid fa-folder w-4 ml-1"></i><span>2026 案件管理</span></button>
+                <button onclick="switchModule('year-2025', this)" class="nav-btn w-full flex items-center space-x-3 px-4 py-2 rounded-xl hover:bg-stone-800 text-stone-300 transition"><i class="fa-solid fa-folder w-4 ml-1"></i><span>2025 案件管理</span></button>
+                <button onclick="switchModule('year-2024', this)" class="nav-btn w-full flex items-center space-x-3 px-4 py-2 rounded-xl hover:bg-stone-800 text-stone-300 transition"><i class="fa-solid fa-folder w-4 ml-1"></i><span>2024 案件管理</span></button>
+                <button onclick="switchModule('year-2023', this)" class="nav-btn w-full flex items-center space-x-3 px-4 py-2 rounded-xl hover:bg-stone-800 text-stone-300 transition"><i class="fa-solid fa-folder w-4 ml-1"></i><span>2023 案件管理</span></button>
+                <button onclick="switchModule('year-2022', this)" class="nav-btn w-full flex items-center space-x-3 px-4 py-2 rounded-xl hover:bg-stone-800 text-stone-300 transition"><i class="fa-solid fa-folder w-4 ml-1"></i><span>2022 案件管理</span></button>
+                <button onclick="switchModule('year-2021', this)" class="nav-btn w-full flex items-center space-x-3 px-4 py-2 rounded-xl hover:bg-stone-800 text-stone-300 transition"><i class="fa-solid fa-folder w-4 ml-1"></i><span>2021 案件管理</span></button>
+
+                <div class="pt-2"></div>
+                <button onclick="switchModule('quotation', this)" class="nav-btn w-full flex items-center space-x-3 px-4 py-2.5 rounded-xl hover:bg-stone-800 text-stone-300 transition">
+                    <i class="fa-solid fa-file-invoice-dollar w-5"></i><span>報價中心</span>
+                </button>
+                
+                <button onclick="switchModule('closing', this)" class="nav-btn w-full flex items-center space-x-3 px-4 py-2.5 rounded-xl hover:bg-stone-800 text-stone-300 transition">
+                    <i class="fa-solid fa-flag-checkered w-5"></i><span>結案中心</span>
+                </button>
             </nav>
         </div>
-        <div class="p-4 border-t border-stone-800 text-xs text-stone-400 flex items-center justify-between">
+
+        <div class="p-4 border-t border-ruili-dark text-xs text-stone-400 flex items-center justify-between bg-ruili-sidebar">
             <span>身分：<strong>管理者</strong></span>
             <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
         </div>
     </aside>
 
-    <!-- 主畫面內容 -->
-    <main class="flex-1 flex flex-col h-full overflow-y-auto relative">
-        <header class="bg-[#FBF9F5] border-b border-stone-200 px-8 py-5 flex justify-between items-center">
-            <div>
-                <h2 id="page-title" class="text-xl font-bold text-stone-900 tracking-tight">簽約案件與工作看板</h2>
-                <p id="page-subtitle" class="text-xs text-stone-500 mt-0.5">精密多維度任務管控與一鍵 PDF 結案歸檔</p>
-            </div>
+    <!-- 右側主畫面內容容器 -->
+    <main class="ruili-main">
+        
+        <!-- 📱 手機版專屬頂部列 -->
+        <div class="mobile-header-bar md:hidden flex items-center justify-between px-4 py-3 bg-[#2C2A29] text-white border-b border-[#292524]">
             <div class="flex items-center space-x-3">
-                <span class="text-xs bg-emerald-50 text-emerald-700 font-medium px-3 py-1 rounded-full border border-emerald-200"><i class="fa-solid fa-bell mr-1"></i> Telegram / Bark 連線中</span>
+                <div class="bg-[#D4A373] text-white w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm shadow-xs">睿</div>
+                <span class="text-xs font-bold tracking-wider">睿立集團系統</span>
             </div>
-        </header>
+            <button onclick="toggleSidebar()" class="text-stone-300 hover:text-white p-2 focus:outline-none">
+                <i class="fa-solid fa-bars text-lg"></i>
+            </button>
+        </div>
 
-        <div class="p-8 max-w-[96%] mx-auto w-full flex-1 space-y-6">
-            
-            <!-- 1. 戰情室 & 財報版型 -->
-            <section id="tab-dashboard" class="tab-content hidden space-y-6">
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
-                    <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-2xs">
-                        <p class="text-xs text-stone-400 font-bold uppercase">2026 總簽約金額</p>
-                        <h3 class="text-2xl font-bold text-stone-900 mt-2">NT$ 24,500,000</h3>
-                        <span class="text-xs text-amber-700 font-semibold mt-1 inline-block">較去年同期 +18%</span>
-                    </div>
-                    <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-2xs">
-                        <p class="text-xs text-stone-400 font-bold uppercase">專案預估毛利</p>
-                        <h3 class="text-2xl font-bold text-[#D4A373] mt-2">NT$ 18,200,000</h3>
-                        <span class="text-xs text-stone-500 mt-1 inline-block">平均毛利率 74.2%</span>
-                    </div>
-                    <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-2xs">
-                        <p class="text-xs text-stone-400 font-bold uppercase">進行中案件數</p>
-                        <h3 class="text-2xl font-bold text-stone-900 mt-2">115 件</h3>
-                        <span class="text-xs text-red-600 font-semibold mt-1 inline-block">3 件異常 / 需關注</span>
-                    </div>
-                    <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-2xs">
-                        <p class="text-xs text-stone-400 font-bold uppercase">年度淨利預估</p>
-                        <h3 class="text-2xl font-bold text-emerald-700 mt-2">NT$ 11,200,000</h3>
-                        <span class="text-xs text-stone-500 mt-1 inline-block">扣除固定支出後結算</span>
-                    </div>
-                </div>
-                <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-2xs space-y-4">
-                    <h3 class="font-bold text-sm text-stone-900"><i class="fa-solid fa-chart-column text-[#D4A373] mr-2"></i> 歷年損益與財報對照 (YoY)</h3>
-                    <div class="p-4 bg-stone-50 rounded-xl border border-stone-200 text-xs text-stone-600">
-                        系統每年 12/31 自動進行財務快照封存，確保集團資產、綠能與不動產各事業體帳務透明合規。
-                    </div>
-                </div>
-            </section>
-
-            <!-- 2. 行銷與 AI 腳本版型 -->
-            <section id="tab-marketing" class="tab-content hidden space-y-6">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-2xs space-y-4">
-                        <h3 class="font-bold text-sm text-stone-900"><i class="fa-solid fa-robot text-[#D4A373] mr-2"></i> Threads / 社群熱門話題爬蟲</h3>
-                        <p class="text-xs text-stone-500">自動抓取市場地主最關心的農地變更、資產配置痛點，一鍵交由 AI 生成專業行銷貼文。</p>
-                        <div class="p-4 bg-stone-50 rounded-xl border border-stone-200 space-y-2">
-                            <span class="text-xs bg-[#EED7C5] text-stone-800 px-2.5 py-0.5 rounded font-semibold">🔥 熱門話題標籤</span>
-                            <p class="text-xs font-bold text-stone-900">「農地變更流程到底要卡多久？很多地主不知道送件的黃金期...」</p>
-                            <button onclick="alert('AI 正在為您撰寫高互動行銷貼文...')" class="mt-2 w-full bg-[#D4A373] hover:bg-[#C28E5F] text-white py-2 rounded-xl text-xs font-bold transition shadow-2xs">
-                                <i class="fa-solid fa-wand-magic-sparkles mr-1"></i> AI 自動生成行銷腳本
-                            </button>
-                        </div>
-                    </div>
-                    <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-2xs space-y-4">
-                        <h3 class="font-bold text-sm text-stone-900"><i class="fa-solid fa-funnel-dollar text-emerald-700 mr-2"></i> 獲客與轉換漏斗成效</h3>
-                        <div class="space-y-3 pt-2 text-xs">
-                            <div><div class="flex justify-between mb-1 font-semibold"><span>曝光流量</span><span>1,200 人</span></div><div class="w-full bg-stone-100 h-2 rounded-full overflow-hidden"><div class="bg-[#D4A373] h-full w-full"></div></div></div>
-                            <div><div class="flex justify-between mb-1 font-semibold"><span>互動諮詢</span><span>450 人 (37%)</span></div><div class="w-full bg-stone-100 h-2 rounded-full overflow-hidden"><div class="bg-[#D4A373] h-full w-3/4"></div></div></div>
-                            <div><div class="flex justify-between mb-1 font-semibold"><span>正式簽約成交</span><span>18 人 (21%)</span></div><div class="w-full bg-stone-100 h-2 rounded-full overflow-hidden"><div class="bg-emerald-600 h-full w-1/4"></div></div></div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- 3. 案件與 CRM (報價) 版型 -->
-            <section id="tab-crm" class="tab-content hidden space-y-6">
-                <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-2xs space-y-4">
-                    <div class="flex justify-between items-center">
-                        <h3 class="font-bold text-sm text-stone-900"><i class="fa-solid fa-address-book text-[#D4A373] mr-2"></i> 客戶關係與專業報價管理 (CRM)</h3>
-                        <!-- 新增按鈕：點擊開啟線上報價單填寫與一鍵輸出 PDF 視窗 -->
-                        <button onclick="openModal('quoteModal')" class="bg-[#D4A373] hover:bg-[#C28E5F] text-white text-xs px-3.5 py-2 rounded-xl font-bold shadow-2xs transition">
-                            <i class="fa-solid fa-plus mr-1"></i> 新增潛在案件與線上報價
-                        </button>
-                    </div>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left text-xs border-collapse">
-                            <thead>
-                                <tr class="bg-stone-50 text-stone-500 uppercase border-b border-stone-200">
-                                    <th class="p-3">客戶 / 地主</th>
-                                    <th class="p-3">案件性質</th>
-                                    <th class="p-3">預估報價 (NT$)</th>
-                                    <th class="p-3">信任進度</th>
-                                    <th class="p-3 text-right">操作</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-stone-100 text-stone-700">
-                                <tr>
-                                    <td class="p-3 font-bold text-stone-900">黃董 (台中大里)</td>
-                                    <td class="p-3">土地變更顧問</td>
-                                    <td class="p-3 font-semibold">NT$ 4,500,000</td>
-                                    <td class="p-3"><span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-bold">深度諮詢中</span></td>
-                                    <td class="p-3 text-right"><button onclick="openModal('quoteModal')" class="text-[#D4A373] font-bold hover:underline">查看線上報價單</button></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
-
-            <!-- 4. 簽約與工作看板 (原本的核心看板) -->
-            <section id="tab-operations" class="tab-content space-y-6">
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-5 pt-2">
-                    
-                    <!-- 欄位 1：秘書建檔 / 審查（含簽約金額覆寫與特約內容填載） -->
-                    <div class="bg-[#F4F1EA] p-4 rounded-2xl border border-stone-300/60 space-y-4 flex flex-col">
-                        <div class="flex justify-between items-center font-bold text-xs text-stone-700 px-1 uppercase tracking-wider">
-                            <span><i class="fa-solid fa-file-signature text-amber-600 mr-1.5"></i> 1. 秘書建檔 / 審查</span>
-                        </div>
-                        <div class="space-y-3 flex-1">
-                            <div id="card-1" class="bg-white p-4 rounded-xl border border-stone-200/90 shadow-2xs space-y-3 border-l-4 border-l-amber-500">
-                                <h4 class="font-bold text-sm text-stone-900">桃園楊梅工業地變更專案</h4>
-                                <p class="text-[11px] text-stone-500 bg-stone-50 p-2 rounded-lg"><b>特約：</b>須於 3 個月內取得初審同意書</p>
-                                <div class="pt-2 flex justify-between items-center text-xs border-t border-stone-100">
-                                    <span class="text-stone-400 text-[11px]">負責：王代書</span>
-                                    <button onclick="openModal('reviewModal')" class="text-[#D4A373] hover:underline font-bold text-[11px]">進入審查 &rarr;</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 欄位 2：生產作業執行中 -->
-                    <div class="bg-[#F4F1EA] p-4 rounded-2xl border border-stone-300/60 space-y-4 flex flex-col">
-                        <div class="flex justify-between items-center font-bold text-xs text-stone-700 px-1 uppercase tracking-wider">
-                            <span><i class="fa-solid fa-gears text-blue-600 mr-1.5"></i> 2. 生產作業執行中</span>
-                        </div>
-                        <div class="space-y-3 flex-1">
-                            <div id="card-2" class="bg-white p-4 rounded-xl border border-stone-200/90 shadow-2xs space-y-3 border-l-4 border-l-red-500">
-                                <h4 class="font-bold text-sm text-stone-900">台中七期商辦資產顧問</h4>
-                                <p class="text-[11px] text-red-700 bg-red-50 p-2 rounded-lg"><b>NAS 異常：</b>檔案上傳停滯超過 5 天</p>
-                                <div class="pt-2 flex justify-between items-center text-xs border-t border-stone-100">
-                                    <span class="text-stone-400 text-[11px]">負責：陳專員</span>
-                                    <button onclick="openModal('alertModal')" class="bg-red-50 hover:bg-red-100 text-red-600 px-2.5 py-1 rounded-lg font-bold text-[11px] transition">🚨 異常回報</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 欄位 3：階段請款 / 會計 -->
-                    <div class="bg-[#F4F1EA] p-4 rounded-2xl border border-stone-300/60 space-y-4 flex flex-col">
-                        <div class="flex justify-between items-center font-bold text-xs text-stone-700 px-1 uppercase tracking-wider">
-                            <span><i class="fa-solid fa-file-invoice-dollar text-purple-600 mr-1.5"></i> 3. 階段請款 / 會計</span>
-                        </div>
-                        <div class="space-y-3 flex-1">
-                            <div id="card-3" class="bg-white p-4 rounded-xl border border-stone-200/90 shadow-2xs space-y-3 border-l-4 border-l-blue-500">
-                                <h4 class="font-bold text-sm text-stone-900">彰化芳苑太陽能土地整合</h4>
-                                <p class="text-[11px] text-stone-500 bg-stone-50 p-2 rounded-lg"><b>特約：</b>環評初審通過後請款 40%</p>
-                                <div class="pt-2 flex justify-between items-center text-xs border-t border-stone-100">
-                                    <span class="text-stone-400 text-[11px]">負責：林經理</span>
-                                    <button onclick="openModal('invoiceModal')" class="bg-blue-600 hover:bg-blue-700 text-white px-2.5 py-1 rounded-lg font-bold text-[11px] transition">產生請款單</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 欄位 4：準備結案 / 歸檔 -->
-                    <div class="bg-[#F4F1EA] p-4 rounded-2xl border border-stone-300/60 space-y-4 flex flex-col">
-                        <div class="flex justify-between items-center font-bold text-xs text-stone-700 px-1 uppercase tracking-wider">
-                            <span><i class="fa-solid fa-flag-checkered text-emerald-600 mr-1.5"></i> 4. 準備結案 / 歸檔</span>
-                        </div>
-                        <div class="space-y-3 flex-1">
-                            <div id="card-4" class="bg-white p-4 rounded-xl border border-stone-200/90 shadow-2xs space-y-3 border-l-4 border-l-emerald-500">
-                                <h4 class="font-bold text-sm text-stone-900">新竹竹北商用土地案</h4>
-                                <p class="text-[11px] text-stone-500 bg-stone-50 p-2 rounded-lg"><b>特約：</b>完工領證後 7 日內結清</p>
-                                <div class="pt-2 flex justify-between items-center text-xs border-t border-stone-100">
-                                    <span class="text-stone-400 text-[11px]">負責：林經理</span>
-                                    <button onclick="openModal('closingModal')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1 rounded-lg font-bold text-[11px] transition"><i class="fa-solid fa-file-pdf mr-1"></i> 一鍵結案 (PDF)</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </section>
-
-            <!-- 5. 請款與結案中心版型 -->
-            <section id="tab-closing" class="tab-content hidden space-y-6">
-                <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-2xs space-y-4">
-                    <h3 class="font-bold text-sm text-stone-900"><i class="fa-solid fa-file-invoice-dollar text-emerald-700 mr-2"></i> 集團請款與結案歷史總覽中心</h3>
-                    <p class="text-xs text-stone-500">在此集中管理所有已開立的正式請款單、已封存的 PDF 結案報告與介紹人佣金撥款紀錄。</p>
-                    <div class="p-4 bg-stone-50 rounded-xl border border-stone-200 text-xs text-stone-700 space-y-2">
-                        <div class="flex justify-between font-bold border-b border-stone-200 pb-2">
-                            <span>專案名稱</span><span>請款狀態</span><span>結案報告</span><span>操作</span>
-                        </div>
-                        <div class="flex justify-between items-center pt-1">
-                            <span>新竹竹北商用土地案</span>
-                            <span class="text-emerald-700 font-bold">已全數結清</span>
-                            <span class="text-stone-600">已歸檔 (PDF)</span>
-                            <button onclick="openModal('closingModal')" class="text-xs bg-stone-200 px-3 py-1 rounded-lg font-bold">檢視報表</button>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
+        <!-- 主畫面內容 -->
+        <div id="app-container" class="ruili-container space-y-6">
+            <div class="bg-white p-6 rounded-2xl border border-ruili-border shadow-2xs space-y-4">
+                <h2 class="text-lg font-bold text-stone-900">戰情室總覽</h2>
+                <p class="text-xs text-stone-500">歡迎進入睿立集團精密營運系統，請從左側切換功能或年度案件。</p>
+            </div>
         </div>
     </main>
 
     <!-- ========================================== -->
-    <!-- 互動彈窗模板區塊                            -->
+    <!-- 互動彈窗模板區塊 (報價與秘書審查)         -->
     <!-- ========================================== -->
 
-    <!-- [新增功能] 線上報價單填寫與一鍵輸出 PDF 預覽彈窗 -->
+    <!-- 1. 線上報價單填寫與一鍵輸出 PDF 預覽彈窗 -->
     <div id="quoteModal" class="fixed inset-0 bg-black/60 backdrop-blur-xs hidden flex items-center justify-center z-50 p-4 overflow-y-auto">
         <div class="bg-white w-full max-w-3xl rounded-2xl shadow-2xl overflow-hidden border border-stone-200 my-8">
             <div class="bg-[#2C2A29] text-white px-6 py-4 flex justify-between items-center print:hidden">
-                <h3 class="font-bold text-sm"><i class="fa-solid fa-file-lines text-[#D4A373] mr-2"></i> 專案線上報價單（可直接填寫並一鍵輸出）</h3>
+                <h3 class="font-bold text-sm"><i class="fa-solid fa-file-lines text-ruili-brand mr-2"></i> 專案線上報價單（可直接填寫並一鍵輸出）</h3>
                 <div class="flex items-center space-x-3">
-                    <button onclick="window.print()" class="bg-[#D4A373] hover:bg-[#C28E5F] text-white px-3 py-1.5 rounded-lg text-xs font-bold transition"><i class="fa-solid fa-print mr-1"></i> 列印 / 轉存 PDF 蓋大小章</button>
+                    <button onclick="window.print()" class="bg-ruili-brand hover:opacity-90 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition"><i class="fa-solid fa-print mr-1"></i> 列印 / 轉存 PDF 蓋大小章</button>
                     <button onclick="closeModal('quoteModal')" class="text-stone-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
                 </div>
             </div>
@@ -258,11 +131,10 @@
                         <p class="text-xs text-stone-500 mt-0.5">統一編號：88362109 | 台北市信義區金融路 88 號</p>
                     </div>
                     <div class="text-right">
-                        <h2 class="text-xl font-bold text-[#D4A373] tracking-widest uppercase">QUOTATION</h2>
+                        <h2 class="text-xl font-bold text-ruili-brand tracking-widest uppercase">QUOTATION</h2>
                         <p class="text-xs text-stone-500 mt-1">報價單編號：QT-2026-0829</p>
                     </div>
                 </div>
-                <!-- 互動輸入欄位：方便現場或線上填寫 -->
                 <div class="grid grid-cols-2 gap-6 bg-stone-50 p-4 rounded-xl border border-stone-200 text-xs">
                     <div>
                         <label class="text-stone-400 block mb-1 font-semibold">客戶 / 買受人：</label>
@@ -296,7 +168,7 @@
                         <div class="flex justify-between text-stone-600"><span>預估總計：</span><span>NT$ 3,500,000</span></div>
                         <div class="flex justify-between text-stone-600"><span>營業稅 5%：</span><span>NT$ 175,000</span></div>
                         <div class="flex justify-between text-stone-900 font-bold text-sm pt-2 border-t border-stone-300">
-                            <span>報價總金額含稅：</span><span class="text-[#D4A373] text-base">NT$ 3,675,000</span>
+                            <span>報價總金額含稅：</span><span class="text-ruili-brand text-base">NT$ 3,675,000</span>
                         </div>
                     </div>
                 </div>
@@ -305,22 +177,22 @@
                 <span class="text-xs text-stone-500">提示：此報價單可一鍵輸出 PDF 傳給秘書列印並蓋上公司大小章。</span>
                 <div class="flex space-x-3">
                     <button onclick="closeModal('quoteModal')" class="px-4 py-2 bg-stone-200 text-stone-700 rounded-xl text-xs">關閉</button>
-                    <button onclick="alert('✅ 報價單已成功封存！若客戶確認將可一鍵拋轉至簽約案件。'); closeModal('quoteModal');" class="px-5 py-2 bg-[#D4A373] hover:bg-[#C28E5F] text-white rounded-xl text-xs font-bold transition shadow-xs">確認並拋轉至簽約案件</button>
+                    <button onclick="alert('✅ 報價單已成功封存！若客戶確認將可一鍵拋轉至簽約案件。'); closeModal('quoteModal');" class="px-5 py-2 bg-ruili-brand hover:opacity-90 text-white rounded-xl text-xs font-bold transition shadow-xs">確認並拋轉至簽約案件</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- 1. 秘書建檔與審查（處理報價金額 vs 簽約金額不同、填寫特約內容） -->
+    <!-- 2. 秘書建檔與審查彈窗（處理報價金額 vs 簽約金額不同、填寫特約內容） -->
     <div id="reviewModal" class="fixed inset-0 bg-black/50 backdrop-blur-xs hidden flex items-center justify-center z-50 p-4">
         <div class="bg-white w-full max-w-xl rounded-2xl shadow-2xl overflow-hidden border border-stone-200">
             <div class="bg-[#2C2A29] text-white px-6 py-4 flex justify-between items-center">
-                <h3 class="font-bold text-sm"><i class="fa-solid fa-file-signature text-[#D4A373] mr-2"></i> 秘書建檔與代書審查作業（合約金額與特約填載）</h3>
+                <h3 class="font-bold text-sm"><i class="fa-solid fa-file-signature text-ruili-brand mr-2"></i> 秘書建檔與代書審查作業（合約金額與特約填載）</h3>
                 <button onclick="closeModal('reviewModal')" class="text-stone-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
             <div class="p-6 space-y-4 text-xs text-stone-700">
                 <div class="p-3 bg-amber-50 rounded-xl border border-amber-200 text-amber-900 font-medium">
-                    ℹ️ 提示：原始線上報價金額為 NT$ 3,500,000。請秘書依據正式紙本合約內容填寫下方的**實際簽約金額**與**特別約定條款**。
+                    ℹ️ 提示：原始線上報價金額與正式合約金額可能不同。請秘書依據紙本合約填寫下方的**實際簽約金額**與**特別約定條款**。
                 </div>
                 <div class="grid grid-cols-2 gap-4">
                     <div>
@@ -329,7 +201,7 @@
                     </div>
                     <div>
                         <label class="font-bold block mb-1 text-stone-900">正式合約總額 (NT$)：</label>
-                        <input type="text" value="3,800,000" class="w-full bg-stone-50 border border-stone-300 rounded-xl p-2.5 text-xs focus:outline-none font-bold text-red-700">
+                        <input type="text" value="3,800,000" class="w-full bg-stone-50 border border-stone-300 rounded-xl p-2.5 text-xs focus:outline-none font-bold text-rose-700">
                     </div>
                 </div>
                 <div>
@@ -339,245 +211,289 @@
             </div>
             <div class="bg-stone-50 px-6 py-3 border-t border-stone-200 flex justify-end space-x-3">
                 <button onclick="closeModal('reviewModal')" class="px-4 py-2 bg-stone-200 text-stone-700 rounded-xl text-xs font-medium">取消</button>
-                <button onclick="submitReviewAction(this)" class="px-4 py-2 bg-[#D4A373] text-white rounded-xl text-xs font-medium shadow-2xs">確認無誤並推進至工作看板</button>
+                <button onclick="submitReviewAction(this)" class="px-4 py-2 bg-ruili-brand text-white rounded-xl text-xs font-medium shadow-2xs">確認無誤並推進</button>
             </div>
         </div>
     </div>
 
-    <!-- 2. 立即發送推播警報 -->
-    <div id="alertModal" class="fixed inset-0 bg-black/50 backdrop-blur-xs hidden flex items-center justify-center z-50 p-4">
-        <div class="bg-white w-full max-w-md rounded-2xl shadow-2xl overflow-hidden border border-stone-200">
-            <div class="bg-red-600 text-white px-6 py-4 flex justify-between items-center">
-                <h3 class="font-bold text-sm"><i class="fa-solid fa-triangle-exclamation mr-2"></i> 異常回報與即時推播</h3>
-                <button onclick="closeModal('alertModal')" class="text-red-200 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
-            </div>
-            <div class="p-6 space-y-4 text-xs text-stone-700">
-                <p class="text-stone-500">此動作將立即透過 **Telegram / Bark** 發送緊急推播給總監與負責人！</p>
-                <div>
-                    <label class="font-bold block mb-1 text-stone-900">異常說明：</label>
-                    <textarea id="alert-reason" class="w-full bg-stone-50 border border-stone-300 rounded-xl p-3 h-24 text-xs focus:outline-none">NAS 檔案上傳停滯超過 5 天，影響後續進度。</textarea>
-                </div>
-            </div>
-            <div class="bg-stone-50 px-6 py-3 border-t border-stone-200 flex justify-end space-x-3">
-                <button onclick="closeModal('alertModal')" class="px-4 py-2 bg-stone-200 text-stone-700 rounded-xl text-xs font-medium">取消</button>
-                <button onclick="submitAlertAction(this)" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs font-medium shadow-2xs">立即發送推播警報</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- 3. 正式請款單預覽與開立彈窗（綁定收款期程） -->
-    <div id="invoiceModal" class="fixed inset-0 bg-black/60 backdrop-blur-xs hidden flex items-center justify-center z-50 p-4 overflow-y-auto">
-        <div class="bg-white w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden border border-stone-200 my-8">
-            <div class="bg-[#2C2A29] text-white px-6 py-4 flex justify-between items-center print:hidden">
-                <h3 class="font-bold text-sm"><i class="fa-solid fa-file-invoice text-[#D4A373] mr-2"></i> 正式請款單預覽（工作看板連動）</h3>
-                <div class="flex items-center space-x-3">
-                    <button onclick="window.print()" class="bg-stone-700 hover:bg-stone-600 text-stone-200 px-3 py-1.5 rounded-lg text-xs font-medium transition"><i class="fa-solid fa-print mr-1"></i> 列印 / 轉存 PDF</button>
-                    <button onclick="closeModal('invoiceModal')" class="text-stone-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
-                </div>
-            </div>
-            <div class="p-8 sm:p-12 space-y-6 bg-white text-stone-800 font-sans">
-                <div class="flex justify-between items-start border-b border-stone-200 pb-6">
-                    <div>
-                        <h1 class="text-2xl font-bold tracking-wider text-stone-900">睿立集團</h1>
-                        <p class="text-xs text-stone-500 mt-1">RUILI GROUP LAND & ASSET ADVISORY</p>
-                        <p class="text-xs text-stone-500 mt-0.5">統一編號：88362109 | 台北市信義區金融路 88 號</p>
-                    </div>
-                    <div class="text-right">
-                        <h2 class="text-xl font-bold text-[#D4A373] tracking-widest uppercase">Invoice</h2>
-                        <p class="text-xs text-stone-500 mt-1">單據編號：INV-2026-0828</p>
-                    </div>
-                </div>
-                <div class="grid grid-cols-2 gap-6 bg-stone-50 p-4 rounded-xl border border-stone-200 text-xs">
-                    <div>
-                        <span class="text-stone-400 block mb-1">客戶 / 買受人：</span>
-                        <strong class="text-stone-900 text-sm">彰化芳苑綠能開發股份有限公司</strong>
-                    </div>
-                    <div>
-                        <span class="text-stone-400 block mb-1">專案名稱：</span>
-                        <strong class="text-stone-900 text-sm">彰化芳苑太陽能土地整合專案</strong>
-                    </div>
-                </div>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse">
-                        <thead>
-                            <tr class="bg-stone-100 text-stone-600 text-xs uppercase border-b border-stone-200">
-                                <th class="p-3">項次與說明</th>
-                                <th class="p-3 text-center">計價基準</th>
-                                <th class="p-3 text-right">金額 (NT$)</th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-xs divide-y divide-stone-100">
-                            <tr>
-                                <td class="p-3"><strong>第二期工程期款（環評初審通過）</strong></td>
-                                <td class="p-3 text-center">40%</td>
-                                <td class="p-3 text-right font-medium">NT$ 2,000,000</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="flex justify-end pt-2">
-                    <div class="w-72 space-y-2 text-xs">
-                        <div class="flex justify-between text-stone-600"><span>銷售額合計：</span><span>NT$ 2,000,000</span></div>
-                        <div class="flex justify-between text-stone-600"><span>營業稅 5%：</span><span>NT$ 100,000</span></div>
-                        <div class="flex justify-between text-stone-900 font-bold text-sm pt-2 border-t border-stone-300">
-                            <span>本期應收總額：</span><span class="text-blue-600 text-base">NT$ 2,100,000</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="bg-stone-50 px-6 py-4 border-t border-stone-200 flex justify-between items-center print:hidden">
-                <span class="text-xs text-stone-500">入帳後將自動連動佣金撥款與後續結案程序</span>
-                <div class="flex space-x-3">
-                    <button onclick="closeModal('invoiceModal')" class="px-4 py-2 bg-stone-200 text-stone-700 rounded-xl text-xs">關閉</button>
-                    <button onclick="submitInvoiceAction(this)" class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition">確定產生請款單並入帳</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 4. 正式 PDF 結案報告預覽與歸檔彈窗 -->
-    <div id="closingModal" class="fixed inset-0 bg-black/60 backdrop-blur-xs hidden flex items-center justify-center z-50 p-4 overflow-y-auto">
-        <div class="bg-white w-full max-w-3xl rounded-2xl shadow-2xl overflow-hidden border border-stone-200 my-8">
-            <div class="bg-emerald-800 text-white px-6 py-4 flex justify-between items-center print:hidden">
-                <h3 class="font-bold text-sm"><i class="fa-solid fa-file-pdf text-emerald-300 mr-2"></i> 專案正式結案報告 (PDF 預覽版)</h3>
-                <div class="flex items-center space-x-3">
-                    <button onclick="window.print()" class="bg-emerald-900 hover:bg-emerald-700 text-emerald-100 px-3 py-1.5 rounded-lg text-xs font-medium"><i class="fa-solid fa-print mr-1"></i> 列印 / 轉存 PDF</button>
-                    <button onclick="closeModal('closingModal')" class="text-emerald-200 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
-                </div>
-            </div>
-            <div class="p-8 sm:p-12 space-y-6 bg-white text-stone-800 font-sans">
-                <div class="flex justify-between items-start border-b border-stone-200 pb-6">
-                    <div>
-                        <h1 class="text-2xl font-bold tracking-wider text-stone-900">睿立集團</h1>
-                        <p class="text-xs text-stone-500 mt-1">RUILI GROUP ASSET ADVISORY & LAND ADMINISTRATION</p>
-                    </div>
-                    <div class="text-right">
-                        <span class="bg-emerald-100 text-emerald-800 font-bold px-3 py-1 rounded-full text-xs">🟢 圓滿結案 (CLOSED)</span>
-                        <p class="text-xs text-stone-500 mt-2">報告編號：CLOSE-2026-0828</p>
-                    </div>
-                </div>
-                <div class="grid grid-cols-2 gap-6 bg-stone-50 p-4 rounded-xl border border-stone-200 text-xs">
-                    <div>
-                        <span class="text-stone-400 block mb-1">專案名稱：</span>
-                        <strong class="text-stone-900 text-sm">新竹竹北商用土地案</strong>
-                    </div>
-                    <div>
-                        <span class="text-stone-400 block mb-1">主辦經理：</span>
-                        <p class="text-stone-600">林經理 | 協同代書：黃代書</p>
-                    </div>
-                </div>
-                <div class="space-y-2">
-                    <h4 class="font-bold text-xs uppercase tracking-wider text-stone-500">專案財務與毛利結算表</h4>
-                    <table class="w-full text-left border-collapse text-xs">
-                        <thead>
-                            <tr class="bg-stone-100 text-stone-600 border-b border-stone-200">
-                                <th class="p-3">財務項目說明</th>
-                                <th class="p-3 text-right">金額 (NT$)</th>
-                                <th class="p-3 text-right">備註</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-stone-100">
-                            <tr><td class="p-3">總營業收入（尾款已結清）</td><td class="p-3 text-right font-semibold">NT$ 2,500,000</td><td class="p-3 text-right text-stone-500">100%</td></tr>
-                            <tr><td class="p-3">(-) 外部直接成本 / 佣金</td><td class="p-3 text-right text-red-600">NT$ 300,000</td><td class="p-3 text-right text-stone-500">12%</td></tr>
-                            <tr class="bg-emerald-50/50"><td class="p-3 font-bold">(=) 專案最終淨毛利</td><td class="p-3 text-right font-bold text-emerald-700">NT$ 2,200,000</td><td class="p-3 text-right font-bold text-emerald-700">88.0% 毛利率</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="bg-stone-50 p-4 rounded-xl border border-stone-200 text-xs space-y-1">
-                    <strong class="text-stone-900 block">專案執行成果摘要：</strong>
-                    <p class="text-stone-600">本專案於執行期間歷經地籍重測與土地變更審查，尾款已全數入帳，並已產出正式結案報告與歸檔。</p>
-                </div>
-            </div>
-            <div class="bg-stone-50 px-6 py-4 border-t border-stone-200 flex justify-between items-center print:hidden">
-                <span class="text-xs text-stone-500">點擊確認後將正式封存專案並歸檔</span>
-                <div class="flex space-x-3">
-                    <button onclick="closeModal('closingModal')" class="px-4 py-2 bg-stone-200 text-stone-700 rounded-xl text-xs">關閉</button>
-                    <button onclick="submitClosingAction(this)" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition">確認 PDF 並正式結案歸檔</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 互動 JavaScript 邏輯 -->
+    <!-- 頁面切換與控制邏輯 -->
     <script>
-        function switchTab(tabId, btnElement) {
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-            document.querySelectorAll('.tab-btn').forEach(el => { 
-                el.classList.remove('bg-[#D4A373]', 'text-white', 'shadow-xs'); 
-                el.classList.add('hover:bg-stone-800'); 
-            });
-            document.getElementById('tab-' + tabId).classList.remove('hidden');
-            if(btnElement) {
-                btnElement.classList.remove('hover:bg-stone-800');
-                btnElement.classList.add('bg-[#D4A373]', 'text-white', 'shadow-xs');
-            }
+        // 模擬全集團案件資料庫
+        let globalCasesData = {
+            '2027': [
+                { id: '2027-01', name: '烏日區未來產業專區', client: '何董事長', service: '土地變更', progress: '評估中', amount: 'NT$ 3,000,000', note: '審查準備中', status: '案件評估' }
+            ],
+            '2026': [
+                { id: '2026-01', name: '大雅區農地變更專案', client: '張先生', service: '農地變更', progress: '簽約中', amount: 'NT$ 2,500,000', note: '預計118通檢', status: '簽約案件' },
+                { id: '2026-02', name: '烏日區工廠合法化', client: '黃董事長', service: '特定工廠專用區', progress: '評估中', amount: 'NT$ 2,070,000', note: '廠房打掉重蓋，太陽能自建', status: '案件評估' },
+                { id: '2026-03', name: '潭子區綠能用地申設', client: '林總經理', service: '綠能申設', progress: '結案歸檔', amount: 'NT$ 1,500,000', note: '已完成全數審查', status: '結案中心' },
+                { id: '2026-04', name: '西屯區資產配置顧問', client: '陳小姐', service: '資產顧問', progress: '失敗', amount: 'NT$ 0', note: '客戶端暫緩投資', status: '失敗案件' },
+                { id: '2026-05', name: '北屯區土地重劃案', client: '王董', service: '土地重劃', progress: '廢件', amount: 'NT$ 0', note: '條件不符撤案', status: '廢件專區' }
+            ],
+            '2025': [
+                { id: '2025-01', name: '潭子綠能廠房申設', client: '林總經理', service: '綠能申設', progress: '已結案', amount: 'NT$ 1,800,000', note: '完美結案', status: '結案中心' }
+            ],
+            '2024': [],
+            '2023': [],
+            '2022': [],
+            '2021': []
+        };
 
-            const titles = {
-                'dashboard': ['戰情室與年度財報', '即時掌握營運數據、專案毛利與年度收支對比'],
-                'marketing': ['行銷與 AI 腳本中心', 'Threads 自動爬蟲話題與獲客漏斗分析'],
-                'crm': ['案件管理與 CRM', '客戶信任歷程與專業報價藝術'],
-                'operations': ['簽約案件與工作看板', '精密多維度任務管控、代書協同與紅綠燈逾期自動預警'],
-                'closing': ['請款與結案中心', '合約付款期程管控與 PDF 結案報告歸檔管理']
-            };
-            if(titles[tabId]) {
-                document.getElementById('page-title').innerText = titles[tabId][0];
-                document.getElementById('page-subtitle').innerText = titles[tabId][1];
-            }
+        // 🌟 通用 Modal 開關控制
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) modal.classList.remove('hidden');
         }
 
-        function openModal(modalId) { document.getElementById(modalId).classList.remove('hidden'); }
-        function closeModal(modalId) { document.getElementById(modalId).classList.add('hidden'); }
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) modal.classList.add('hidden');
+        }
 
         function submitReviewAction(btn) {
             const originalText = btn.innerHTML;
             btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-1"></i> 處理中...`;
             btn.disabled = true;
             setTimeout(() => {
-                alert('✅ 審查通過！正式簽約金額與特約已寫入系統，案件已成功推進至「生產作業執行中」。');
-                document.getElementById('card-1').style.opacity = '0.3';
+                alert('✅ 審查通過！正式簽約金額與特約已寫入系統。');
                 btn.innerHTML = originalText;
                 btn.disabled = false;
                 closeModal('reviewModal');
             }, 600);
         }
 
-        function submitAlertAction(btn) {
-            const originalText = btn.innerHTML;
-            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-1"></i> 正在發送 Telegram...`;
-            btn.disabled = true;
-            setTimeout(() => {
-                alert('🚨 Telegram / Bark 緊急推播已成功送達管理者手機！');
-                btn.innerHTML = originalText;
-                btn.disabled = false;
-                closeModal('alertModal');
-            }, 600);
+        function switchModule(moduleName, btnElement) {
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('bg-ruili-brand', 'text-white', 'font-bold', 'shadow-xs');
+                btn.classList.add('hover:bg-stone-800', 'text-stone-300');
+            });
+            if(btnElement) {
+                btnElement.classList.remove('hover:bg-stone-800', 'text-stone-300');
+                btnElement.classList.add('bg-ruili-brand', 'text-white', 'font-bold', 'shadow-xs');
+            }
+
+            const container = document.getElementById('app-container');
+            
+            if(moduleName === 'dashboard') {
+                container.innerHTML = `
+                    <div class="space-y-6">
+                        <div class="bg-white p-6 rounded-2xl border border-ruili-border shadow-2xs space-y-2">
+                            <h2 class="text-base font-bold text-stone-900">戰情室總覽</h2>
+                            <p class="text-xs text-stone-500">掌握集團整體 YoY 財報、營運案件數與跨通路效益分析。</p>
+                        </div>
+                    </div>`;
+            } else if(moduleName === 'kanban') {
+                container.innerHTML = `
+                    <div class="space-y-6">
+                        <div class="bg-white p-6 rounded-2xl border border-ruili-border shadow-2xs space-y-2">
+                            <h2 class="text-base font-bold text-stone-900">工作看板 SOP</h2>
+                            <p class="text-xs text-stone-500">生產作業標準化流程、案件紅綠燈異常與系統推播預警。</p>
+                            <div class="pt-4 flex gap-3">
+                                <button onclick="openModal('reviewModal')" class="px-4 py-2 bg-stone-800 text-white rounded-xl text-xs font-bold">測試：開啟秘書審查/特約填寫彈窗</button>
+                            </div>
+                        </div>
+                    </div>`;
+            } else if(moduleName === 'all-cases') {
+                container.innerHTML = `
+                    <div class="space-y-6">
+                        <div class="bg-white p-6 rounded-2xl border border-ruili-border shadow-2xs space-y-3">
+                            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                                <div>
+                                    <h2 class="text-base font-bold text-stone-900">全集團案件總覽</h2>
+                                    <p class="text-xs text-stone-500">跨年份集中檢索所有歷史與進行中案件，掌握全局脈動。</p>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <input type="text" id="global-search-input" oninput="filterGlobalCases()" placeholder="全集團關鍵字搜尋..." class="px-3 py-1.5 text-xs border border-stone-200 rounded-xl focus:outline-none focus:border-stone-400 w-48">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-2xl border border-stone-200 shadow-2xs overflow-hidden">
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left text-xs">
+                                    <thead>
+                                        <tr class="bg-stone-50/60 border-b border-stone-200 text-stone-400 font-medium">
+                                            <th class="py-3 px-4">年度</th>
+                                            <th class="py-3 px-4">客戶名稱</th>
+                                            <th class="py-3 px-4">服務細項</th>
+                                            <th class="py-3 px-4">工作進度</th>
+                                            <th class="py-3 px-4">簽約金額</th>
+                                            <th class="py-3 px-4">目前狀態</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="global-cases-tbody" class="divide-y divide-stone-100">
+                                        ${renderAllCasesRows()}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>`;
+            } else if(moduleName.startsWith('year-')) {
+                const year = moduleName.split('-')[1];
+                renderYearManagementView(year);
+            } else if(moduleName === 'quotation') {
+                container.innerHTML = `
+                    <div class="space-y-6">
+                        <div class="bg-white p-6 rounded-2xl border border-ruili-border shadow-2xs flex items-center justify-between">
+                            <div>
+                                <h2 class="text-base font-bold text-stone-900">報價中心</h2>
+                                <p class="text-xs text-stone-500">管理各專案之官方報價單、服務計費模組與一鍵輸出 PDF 預覽。</p>
+                            </div>
+                            <button onclick="openModal('quoteModal')" class="px-4 py-2 bg-ruili-brand text-white rounded-xl text-xs font-bold shadow-xs hover:opacity-90 transition">+ 建立並線上填寫新報價</button>
+                        </div>
+                    </div>`;
+            } else if(moduleName === 'closing') {
+                container.innerHTML = `
+                    <div class="space-y-6">
+                        <div class="bg-white p-6 rounded-2xl border border-ruili-border shadow-2xs space-y-1.5">
+                            <h2 class="text-base font-bold text-stone-900">結案中心</h2>
+                            <p class="text-xs text-stone-500">所有已完成專案之 PDF 正式結案報告歸檔與歷史審查查閱。</p>
+                        </div>
+                    </div>`;
+            }
         }
 
-        function submitInvoiceAction(btn) {
-            const originalText = btn.innerHTML;
-            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-1"></i> 正在寫入會計帳與連動佣金...`;
-            btn.disabled = true;
-            setTimeout(() => {
-                alert('📄 正式請款單已成功開立！會計帳收入與佣金支出已自動完成後端連動記錄。');
-                document.getElementById('card-3').style.opacity = '0.3';
-                btn.innerHTML = originalText;
-                btn.disabled = false;
-                closeModal('invoiceModal');
-            }, 800);
+        function renderAllCasesRows() {
+            let html = '';
+            for (let yr in globalCasesData) {
+                globalCasesData[yr].forEach(c => {
+                    html += `
+                        <tr class="hover:bg-stone-50/80 case-row-item" data-keyword="${c.client} ${c.name} ${c.service} ${c.note}">
+                            <td class="py-3 px-4 text-stone-500 font-bold">${yr}</td>
+                            <td class="py-3 px-4 text-stone-900 font-semibold">${c.client} (${c.name})</td>
+                            <td class="py-3 px-4 text-stone-600">${c.service}</td>
+                            <td class="py-3 px-4"><span class="px-2 py-0.5 bg-stone-100 text-stone-700 rounded-md text-[11px]">${c.progress}</span></td>
+                            <td class="py-3 px-4 text-stone-900 font-bold">${c.amount}</td>
+                            <td class="py-3 px-4"><span class="px-2 py-0.5 bg-blue-50 text-blue-700 border border-blue-200 rounded-md text-[11px] font-bold">${c.status}</span></td>
+                        </tr>`;
+                });
+            }
+            return html || `<tr><td colspan="6" class="py-6 text-center text-stone-400 text-xs">目前無任何案件記錄</td></tr>`;
         }
 
-        function submitClosingAction(btn) {
-            const originalText = btn.innerHTML;
-            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-1"></i> PDF 封存與雲端歸檔中...`;
-            btn.disabled = true;
-            setTimeout(() => {
-                alert('🎉 專案正式結案！尾款請款單與 PDF 結案報告已成功產出並封存至系統。');
-                document.getElementById('card-4').style.opacity = '0.3';
-                btn.innerHTML = originalText;
-                btn.disabled = false;
-                closeModal('closingModal');
-            }, 800);
+        function filterGlobalCases() {
+            const keyword = document.getElementById('global-search-input').value.toLowerCase();
+            const rows = document.querySelectorAll('.case-row-item');
+            rows.forEach(row => {
+                const text = row.getAttribute('data-keyword').toLowerCase();
+                row.style.display = text.includes(keyword) ? '' : 'none';
+            });
         }
+
+        function renderYearManagementView(year) {
+            const container = document.getElementById('app-container');
+            let cases = globalCasesData[year] || [];
+
+            const sections = [
+                { key: '簽約案件', title: '簽約案件', dotColor: 'bg-blue-500', badge: 'bg-blue-50 text-blue-700 border border-blue-200' },
+                { key: '案件評估', title: '案件評估', dotColor: 'bg-amber-500', badge: 'bg-amber-50 text-amber-700 border border-amber-200' },
+                { key: '結案中心', title: '結案中心', dotColor: 'bg-emerald-500', badge: 'bg-emerald-50 text-emerald-700 border border-emerald-200' },
+                { key: '廢件專區', title: '廢件專區', dotColor: 'bg-stone-400', badge: 'bg-stone-100 text-stone-600 border border-stone-200' },
+                { key: '失敗案件', title: '失敗案件', dotColor: 'bg-rose-500', badge: 'bg-rose-50 text-rose-700 border border-rose-200' }
+            ];
+
+            let sectionsHtml = sections.map(sec => {
+                let filtered = cases.filter(c => c.status === sec.key);
+                
+                let rowsHtml = filtered.length > 0 ? filtered.map(c => `
+                    <tr class="border-b border-stone-100 hover:bg-stone-50/85 transition-colors case-row" data-keyword="${c.client} ${c.name} ${c.service} ${c.note}">
+                        <td class="py-3 px-4 w-10 text-center">
+                            <input type="checkbox" class="case-checkbox rounded border-stone-300 text-sky-600 focus:ring-sky-500" value="${year}:${c.id}">
+                        </td>
+                        <td class="py-3 px-4 text-stone-900 font-semibold">${c.client}</td>
+                        <td class="py-3 px-4 text-stone-600">${c.service}</td>
+                        <td class="py-3 px-4"><span class="px-2.5 py-1 bg-stone-100/80 text-stone-700 rounded-lg text-[11px] font-medium">${c.progress}</span></td>
+                        <td class="py-3 px-4 text-stone-900 font-bold">${c.amount}</td>
+                        <td class="py-3 px-4 text-stone-500 truncate max-w-xs">${c.note}</td>
+                    </tr>
+                `).join('') : `
+                    <tr>
+                        <td colspan="6" class="py-6 text-center text-stone-400 text-xs">目前無相關案件記錄</td>
+                    </tr>
+                `;
+
+                return `
+                    <div class="bg-white rounded-2xl border border-stone-200 shadow-2xs overflow-hidden mb-6 section-card" data-section="${sec.key}">
+                        <div class="px-6 py-3.5 bg-stone-50/60 border-b border-stone-200 flex items-center justify-between">
+                            <div class="font-bold text-xs text-stone-800 flex items-center space-x-2.5">
+                                <span class="w-2.5 h-2.5 rounded-full ${sec.dotColor}"></span>
+                                <span class="tracking-wide">${sec.title}</span>
+                            </div>
+                            <span class="px-2.5 py-0.5 rounded-md text-[11px] font-bold ${sec.badge} section-badge">${filtered.length} 件</span>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-xs">
+                                <thead>
+                                    <tr class="bg-white border-b border-stone-100 text-stone-400 font-medium">
+                                        <th class="py-2.5 px-4 w-10 text-center"><input type="checkbox" onclick="toggleSelectAll(this, '${sec.key}')" class="rounded border-stone-300"></th>
+                                        <th class="py-2.5 px-4">客戶名稱</th>
+                                        <th class="py-2.5 px-4">服務細項</th>
+                                        <th class="py-2.5 px-4">工作進度</th>
+                                        <th class="py-2.5 px-4">簽約金額</th>
+                                        <th class="py-2.5 px-4">案件即時說明</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="section-tbody-${sec.key}">
+                                    ${rowsHtml}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            container.innerHTML = `
+                <div class="space-y-6">
+                    <div class="bg-white p-5 rounded-2xl border border-ruili-border shadow-2xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <div>
+                            <h2 class="text-base font-bold text-stone-950">${year} 年度案件管理中心</h2>
+                            <p class="text-xs text-stone-500">僅顯示與管理 ${year} 年度之案件，支援當年度關鍵字搜尋、勾選、刪除、恢復與狀態拋轉。</p>
+                        </div>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <div class="relative">
+                                <input type="text" id="year-search-input" oninput="filterCurrentYearManagement()" placeholder="搜尋 ${year} 年度案件..." class="px-3 py-1.5 pl-8 text-xs border border-stone-200 rounded-xl focus:outline-none focus:border-stone-400 w-48">
+                                <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-stone-400 text-[10px]"></i>
+                            </div>
+                            <button onclick="openModal('quoteModal')" class="px-3 py-1.5 bg-ruili-brand hover:opacity-90 text-white rounded-xl text-xs font-bold transition flex items-center gap-1 shadow-xs">
+                                <i class="fa-solid fa-plus text-[10px]"></i> 新增報價
+                            </button>
+                            <button onclick="openModal('reviewModal')" class="px-3 py-1.5 bg-stone-800 hover:bg-stone-700 text-white rounded-xl text-xs font-bold transition flex items-center gap-1">
+                                <i class="fa-solid fa-signature text-[10px]"></i> 審查/特約
+                            </button>
+                        </div>
+                    </div>
+                    <div class="space-y-6">
+                        ${sectionsHtml}
+                    </div>
+                </div>
+            `;
+        }
+
+        function filterCurrentYearManagement() {
+            const keyword = document.getElementById('year-search-input').value.toLowerCase();
+            const rows = document.querySelectorAll('.case-row');
+            rows.forEach(row => {
+                const text = row.getAttribute('data-keyword').toLowerCase();
+                row.style.display = text.includes(keyword) ? '' : 'none';
+            });
+        }
+
+        function toggleSelectAll(masterCheckbox, sectionKey) {
+            const tbody = document.querySelector(`.section-tbody-${sectionKey}`);
+            if(!tbody) return;
+            const checkboxes = tbody.querySelectorAll('.case-checkbox');
+            checkboxes.forEach(cb => cb.checked = masterCheckbox.checked);
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.querySelector('.ruili-sidebar');
+            sidebar.classList.toggle('mobile-open');
+        }
+
+        window.onload = function() {
+            const defaultBtn = document.querySelector("button[onclick*='year-2026']");
+            switchModule('year-2026', defaultBtn);
+        };
     </script>
 </body>
 </html>
