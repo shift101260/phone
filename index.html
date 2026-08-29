@@ -1,745 +1,582 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>睿立業務系統 - 案件評估 (RWD 藍金奢華版)</title>
-    <!-- Tailwind CSS -->
+    <title>睿立集團｜精密營運管理與結案系統</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome 圖標 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- 導入 ExcelJS 與 FileSaver 用於支援高階藍金配色 Excel 匯出 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 </head>
-<body class="bg-slate-50 text-slate-800 min-h-screen font-sans">
+<body class="bg-[#FBF9F5] text-stone-800 flex h-screen overflow-hidden font-sans">
 
-    <!-- 頂部導覽列：全面響應式調整 -->
-    <header class="bg-gradient-to-r from-blue-950 to-slate-900 text-white shadow-md px-4 py-4 md:px-6 sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto flex flex-col space-y-3 lg:space-y-0 lg:flex-row lg:justify-between lg:items-center">
-            <!-- 標題與標籤 -->
-            <div class="flex items-center space-x-3 justify-between lg:justify-start">
-                <div class="flex items-center space-x-2">
-                    <i class="fa-solid fa-layer-group text-xl md:text-2xl text-amber-400"></i>
-                    <h1 class="text-lg md:text-xl font-bold tracking-wider">睿立業務系統 <span class="text-[10px] bg-amber-500 text-slate-950 px-2 py-0.5 rounded-full font-bold ml-1">RWD 高級版</span></h1>
+    <!-- 側邊導覽列 -->
+    <aside class="w-64 bg-[#2C2A29] text-stone-300 flex flex-col justify-between hidden md:flex border-r border-stone-800">
+        <div>
+            <div class="p-6 border-b border-stone-800 flex items-center space-x-3">
+                <div class="bg-[#D4A373] text-white w-10 h-10 rounded-xl flex items-center justify-center font-bold text-xl shadow-xs">睿</div>
+                <div>
+                    <h1 class="text-white font-bold tracking-wider text-sm">睿立集團</h1>
+                    <p class="text-[10px] text-stone-400">RUILI PRECISION ERP</p>
                 </div>
-                <span id="caseCountMobile" class="lg:hidden text-xs bg-slate-800 px-2 py-1 rounded text-amber-400 font-medium border border-slate-700">共 0 筆</span>
             </div>
+            <nav class="p-4 space-y-1.5">
+                <button onclick="switchTab('dashboard', this)" class="tab-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-stone-800 transition"><i class="fa-solid fa-chart-line w-5"></i><span>戰情室 & 財報</span></button>
+                <button onclick="switchTab('marketing', this)" class="tab-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-stone-800 transition"><i class="fa-solid fa-bullhorn w-5"></i><span>行銷與 AI 腳本</span></button>
+                <button onclick="switchTab('crm', this)" class="tab-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-stone-800 transition"><i class="fa-solid fa-address-book w-5"></i><span>案件與 CRM (報價)</span></button>
+                <button onclick="switchTab('operations', this)" class="tab-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl bg-[#D4A373] text-white transition shadow-xs"><i class="fa-solid fa-list-check w-5"></i><span>簽約與工作看板</span></button>
+                <button onclick="switchTab('closing', this)" class="tab-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-stone-800 transition"><i class="fa-solid fa-file-invoice-dollar w-5"></i><span>請款與結案中心</span></button>
+            </nav>
+        </div>
+        <div class="p-4 border-t border-stone-800 text-xs text-stone-400 flex items-center justify-between">
+            <span>身分：<strong>管理者</strong></span>
+            <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        </div>
+    </aside>
+
+    <!-- 主畫面內容 -->
+    <main class="flex-1 flex flex-col h-full overflow-y-auto relative">
+        <header class="bg-[#FBF9F5] border-b border-stone-200 px-8 py-5 flex justify-between items-center">
+            <div>
+                <h2 id="page-title" class="text-xl font-bold text-stone-900 tracking-tight">簽約案件與工作看板</h2>
+                <p id="page-subtitle" class="text-xs text-stone-500 mt-0.5">精密多維度任務管控與一鍵 PDF 結案歸檔</p>
+            </div>
+            <div class="flex items-center space-x-3">
+                <span class="text-xs bg-emerald-50 text-emerald-700 font-medium px-3 py-1 rounded-full border border-emerald-200"><i class="fa-solid fa-bell mr-1"></i> Telegram / Bark 連線中</span>
+            </div>
+        </header>
+
+        <div class="p-8 max-w-[96%] mx-auto w-full flex-1 space-y-6">
             
-            <!-- 頂部控制列：手機端自動垂直堆疊，平板以上橫向排列 -->
-            <div class="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-2 items-stretch sm:items-center w-full lg:w-auto">
-                <div class="relative flex-1 sm:flex-initial">
-                    <input type="text" id="searchBar" oninput="filterCases()" placeholder="搜尋公司、經理、服務項目..." class="w-full sm:w-64 px-4 py-2 pl-10 rounded-lg text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 border border-slate-300">
-                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-slate-400 text-xs"></i>
+            <!-- 1. 戰情室 & 財報版型 -->
+            <section id="tab-dashboard" class="tab-content hidden space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+                    <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-2xs">
+                        <p class="text-xs text-stone-400 font-bold uppercase">2026 總簽約金額</p>
+                        <h3 class="text-2xl font-bold text-stone-900 mt-2">NT$ 24,500,000</h3>
+                        <span class="text-xs text-amber-700 font-semibold mt-1 inline-block">較去年同期 +18%</span>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-2xs">
+                        <p class="text-xs text-stone-400 font-bold uppercase">專案預估毛利</p>
+                        <h3 class="text-2xl font-bold text-[#D4A373] mt-2">NT$ 18,200,000</h3>
+                        <span class="text-xs text-stone-500 mt-1 inline-block">平均毛利率 74.2%</span>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-2xs">
+                        <p class="text-xs text-stone-400 font-bold uppercase">進行中案件數</p>
+                        <h3 class="text-2xl font-bold text-stone-900 mt-2">115 件</h3>
+                        <span class="text-xs text-red-600 font-semibold mt-1 inline-block">3 件異常 / 需關注</span>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-2xs">
+                        <p class="text-xs text-stone-400 font-bold uppercase">年度淨利預估</p>
+                        <h3 class="text-2xl font-bold text-emerald-700 mt-2">NT$ 11,200,000</h3>
+                        <span class="text-xs text-stone-500 mt-1 inline-block">扣除固定支出後結算</span>
+                    </div>
                 </div>
-                <div class="grid grid-cols-3 gap-2 sm:flex sm:space-x-2">
-                    <button onclick="openModal()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-2 rounded-lg text-xs md:text-sm font-semibold shadow flex items-center justify-center space-x-1 transition-all">
-                        <i class="fa-solid fa-plus"></i> <span class="hidden xs:inline">新增案件</span>
-                    </button>
-                    <button onclick="exportLuxuryExcel()" class="bg-blue-900 hover:bg-blue-800 text-amber-400 border border-amber-500/40 px-2.5 py-2 rounded-lg text-xs md:text-sm font-semibold flex items-center justify-center space-x-1 transition-all shadow-sm">
-                        <i class="fa-solid fa-file-excel"></i> <span>匯出藍金Excel</span>
-                    </button>
-                    <button onclick="saveToCloud()" class="bg-amber-500 hover:bg-amber-600 text-slate-950 px-2.5 py-2 rounded-lg text-xs md:text-sm font-bold shadow flex items-center justify-center space-x-1 transition-all">
-                        <i class="fa-solid fa-cloud-arrow-up"></i> <span>儲存更新</span>
-                    </button>
+                <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-2xs space-y-4">
+                    <h3 class="font-bold text-sm text-stone-900"><i class="fa-solid fa-chart-column text-[#D4A373] mr-2"></i> 歷年損益與財報對照 (YoY)</h3>
+                    <div class="p-4 bg-stone-50 rounded-xl border border-stone-200 text-xs text-stone-600">
+                        系統每年 12/31 自動進行財務快照封存，確保集團資產、綠能與不動產各事業體帳務透明合規。
+                    </div>
                 </div>
-            </div>
-        </div>
-    </header>
+            </section>
 
-    <!-- 主區塊 -->
-    <main class="p-4 md:p-6 max-w-7xl mx-auto">
-        <!-- 統計看板：手機雙列，平板/電腦六列並排 -->
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 mb-6" id="statsContainer">
-            <!-- 動態渲染統計數字 -->
-        </div>
+            <!-- 2. 行銷與 AI 腳本版型 -->
+            <section id="tab-marketing" class="tab-content hidden space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-2xs space-y-4">
+                        <h3 class="font-bold text-sm text-stone-900"><i class="fa-solid fa-robot text-[#D4A373] mr-2"></i> Threads / 社群熱門話題爬蟲</h3>
+                        <p class="text-xs text-stone-500">自動抓取市場地主最關心的農地變更、資產配置痛點，一鍵交由 AI 生成專業行銷貼文。</p>
+                        <div class="p-4 bg-stone-50 rounded-xl border border-stone-200 space-y-2">
+                            <span class="text-xs bg-[#EED7C5] text-stone-800 px-2.5 py-0.5 rounded font-semibold">🔥 熱門話題標籤</span>
+                            <p class="text-xs font-bold text-stone-900">「農地變更流程到底要卡多久？很多地主不知道送件的黃金期...」</p>
+                            <button onclick="alert('AI 正在為您撰寫高互動行銷貼文...')" class="mt-2 w-full bg-[#D4A373] hover:bg-[#C28E5F] text-white py-2 rounded-xl text-xs font-bold transition shadow-2xs">
+                                <i class="fa-solid fa-wand-magic-sparkles mr-1"></i> AI 自動生成行銷腳本
+                            </button>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-2xs space-y-4">
+                        <h3 class="font-bold text-sm text-stone-900"><i class="fa-solid fa-funnel-dollar text-emerald-700 mr-2"></i> 獲客與轉換漏斗成效</h3>
+                        <div class="space-y-3 pt-2 text-xs">
+                            <div><div class="flex justify-between mb-1 font-semibold"><span>曝光流量</span><span>1,200 人</span></div><div class="w-full bg-stone-100 h-2 rounded-full overflow-hidden"><div class="bg-[#D4A373] h-full w-full"></div></div></div>
+                            <div><div class="flex justify-between mb-1 font-semibold"><span>互動諮詢</span><span>450 人 (37%)</span></div><div class="w-full bg-stone-100 h-2 rounded-full overflow-hidden"><div class="bg-[#D4A373] h-full w-3/4"></div></div></div>
+                            <div><div class="flex justify-between mb-1 font-semibold"><span>正式簽約成交</span><span>18 人 (21%)</span></div><div class="w-full bg-stone-100 h-2 rounded-full overflow-hidden"><div class="bg-emerald-600 h-full w-1/4"></div></div></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-        <!-- 案件管理區塊容器 -->
-        <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-            <div class="p-4 bg-slate-50 border-b border-slate-200 flex justify-between items-center">
-                <h2 class="font-bold text-slate-700 flex items-center space-x-2 text-sm md:text-base">
-                    <i class="fa-solid fa-list-check text-blue-900"></i>
-                    <span>動態案件管理系統</span>
-                </h2>
-                <span id="caseCount" class="hidden lg:inline-block text-sm bg-slate-200 px-2 py-0.5 rounded text-slate-600 font-medium">共 0 筆案件</span>
-            </div>
+            <!-- 3. 案件與 CRM (報價) 版型 -->
+            <section id="tab-crm" class="tab-content hidden space-y-6">
+                <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-2xs space-y-4">
+                    <div class="flex justify-between items-center">
+                        <h3 class="font-bold text-sm text-stone-900"><i class="fa-solid fa-address-book text-[#D4A373] mr-2"></i> 客戶關係與專業報價管理 (CRM)</h3>
+                        <!-- 新增按鈕：點擊開啟線上報價單填寫與一鍵輸出 PDF 視窗 -->
+                        <button onclick="openModal('quoteModal')" class="bg-[#D4A373] hover:bg-[#C28E5F] text-white text-xs px-3.5 py-2 rounded-xl font-bold shadow-2xs transition">
+                            <i class="fa-solid fa-plus mr-1"></i> 新增潛在案件與線上報價
+                        </button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs border-collapse">
+                            <thead>
+                                <tr class="bg-stone-50 text-stone-500 uppercase border-b border-stone-200">
+                                    <th class="p-3">客戶 / 地主</th>
+                                    <th class="p-3">案件性質</th>
+                                    <th class="p-3">預估報價 (NT$)</th>
+                                    <th class="p-3">信任進度</th>
+                                    <th class="p-3 text-right">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-stone-100 text-stone-700">
+                                <tr>
+                                    <td class="p-3 font-bold text-stone-900">黃董 (台中大里)</td>
+                                    <td class="p-3">土地變更顧問</td>
+                                    <td class="p-3 font-semibold">NT$ 4,500,000</td>
+                                    <td class="p-3"><span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-bold">深度諮詢中</span></td>
+                                    <td class="p-3 text-right"><button onclick="openModal('quoteModal')" class="text-[#D4A373] font-bold hover:underline">查看線上報價單</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
 
-            <!-- 1. 桌機與平板橫放視圖 (Desktop & Tablet Landscape Table View) -->
-            <div class="hidden md:block overflow-x-auto">
-                <table class="w-full text-left border-collapse">
-                    <thead>
-                        <tr class="bg-slate-100 text-slate-600 text-xs font-bold uppercase tracking-wider border-b border-slate-200">
-                            <th class="py-3.5 px-4">狀態</th>
-                            <th class="py-3.5 px-4">公司名稱 (統編)</th>
-                            <th class="py-3.5 px-4">專案經理</th>
-                            <th class="py-3.5 px-4">服務項目</th>
-                            <th class="py-3.5 px-4">土地/建物總坪</th>
-                            <th class="py-3.5 px-4">ESG 評估指標</th>
-                            <th class="py-3.5 px-4 text-center">操作</th>
-                        </tr>
-                    </thead>
-                    <tbody id="caseTableBody" class="divide-y divide-slate-100 text-sm">
-                        <!-- 動態案件桌機版名單 -->
-                    </tbody>
-                </table>
-            </div>
+            <!-- 4. 簽約與工作看板 (原本的核心看板) -->
+            <section id="tab-operations" class="tab-content space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-5 pt-2">
+                    
+                    <!-- 欄位 1：秘書建檔 / 審查（含簽約金額覆寫與特約內容填載） -->
+                    <div class="bg-[#F4F1EA] p-4 rounded-2xl border border-stone-300/60 space-y-4 flex flex-col">
+                        <div class="flex justify-between items-center font-bold text-xs text-stone-700 px-1 uppercase tracking-wider">
+                            <span><i class="fa-solid fa-file-signature text-amber-600 mr-1.5"></i> 1. 秘書建檔 / 審查</span>
+                        </div>
+                        <div class="space-y-3 flex-1">
+                            <div id="card-1" class="bg-white p-4 rounded-xl border border-stone-200/90 shadow-2xs space-y-3 border-l-4 border-l-amber-500">
+                                <h4 class="font-bold text-sm text-stone-900">桃園楊梅工業地變更專案</h4>
+                                <p class="text-[11px] text-stone-500 bg-stone-50 p-2 rounded-lg"><b>特約：</b>須於 3 個月內取得初審同意書</p>
+                                <div class="pt-2 flex justify-between items-center text-xs border-t border-stone-100">
+                                    <span class="text-stone-400 text-[11px]">負責：王代書</span>
+                                    <button onclick="openModal('reviewModal')" class="text-[#D4A373] hover:underline font-bold text-[11px]">進入審查 &rarr;</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-            <!-- 2. 手機端精緻卡片無視圖 (Mobile Responsive Card View) -->
-            <div id="caseCardContainer" class="block md:hidden p-4 space-y-4 bg-slate-50">
-                <!-- 動態手機卡片名單 -->
-            </div>
+                    <!-- 欄位 2：生產作業執行中 -->
+                    <div class="bg-[#F4F1EA] p-4 rounded-2xl border border-stone-300/60 space-y-4 flex flex-col">
+                        <div class="flex justify-between items-center font-bold text-xs text-stone-700 px-1 uppercase tracking-wider">
+                            <span><i class="fa-solid fa-gears text-blue-600 mr-1.5"></i> 2. 生產作業執行中</span>
+                        </div>
+                        <div class="space-y-3 flex-1">
+                            <div id="card-2" class="bg-white p-4 rounded-xl border border-stone-200/90 shadow-2xs space-y-3 border-l-4 border-l-red-500">
+                                <h4 class="font-bold text-sm text-stone-900">台中七期商辦資產顧問</h4>
+                                <p class="text-[11px] text-red-700 bg-red-50 p-2 rounded-lg"><b>NAS 異常：</b>檔案上傳停滯超過 5 天</p>
+                                <div class="pt-2 flex justify-between items-center text-xs border-t border-stone-100">
+                                    <span class="text-stone-400 text-[11px]">負責：陳專員</span>
+                                    <button onclick="openModal('alertModal')" class="bg-red-50 hover:bg-red-100 text-red-600 px-2.5 py-1 rounded-lg font-bold text-[11px] transition">🚨 異常回報</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 欄位 3：階段請款 / 會計 -->
+                    <div class="bg-[#F4F1EA] p-4 rounded-2xl border border-stone-300/60 space-y-4 flex flex-col">
+                        <div class="flex justify-between items-center font-bold text-xs text-stone-700 px-1 uppercase tracking-wider">
+                            <span><i class="fa-solid fa-file-invoice-dollar text-purple-600 mr-1.5"></i> 3. 階段請款 / 會計</span>
+                        </div>
+                        <div class="space-y-3 flex-1">
+                            <div id="card-3" class="bg-white p-4 rounded-xl border border-stone-200/90 shadow-2xs space-y-3 border-l-4 border-l-blue-500">
+                                <h4 class="font-bold text-sm text-stone-900">彰化芳苑太陽能土地整合</h4>
+                                <p class="text-[11px] text-stone-500 bg-stone-50 p-2 rounded-lg"><b>特約：</b>環評初審通過後請款 40%</p>
+                                <div class="pt-2 flex justify-between items-center text-xs border-t border-stone-100">
+                                    <span class="text-stone-400 text-[11px]">負責：林經理</span>
+                                    <button onclick="openModal('invoiceModal')" class="bg-blue-600 hover:bg-blue-700 text-white px-2.5 py-1 rounded-lg font-bold text-[11px] transition">產生請款單</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 欄位 4：準備結案 / 歸檔 -->
+                    <div class="bg-[#F4F1EA] p-4 rounded-2xl border border-stone-300/60 space-y-4 flex flex-col">
+                        <div class="flex justify-between items-center font-bold text-xs text-stone-700 px-1 uppercase tracking-wider">
+                            <span><i class="fa-solid fa-flag-checkered text-emerald-600 mr-1.5"></i> 4. 準備結案 / 歸檔</span>
+                        </div>
+                        <div class="space-y-3 flex-1">
+                            <div id="card-4" class="bg-white p-4 rounded-xl border border-stone-200/90 shadow-2xs space-y-3 border-l-4 border-l-emerald-500">
+                                <h4 class="font-bold text-sm text-stone-900">新竹竹北商用土地案</h4>
+                                <p class="text-[11px] text-stone-500 bg-stone-50 p-2 rounded-lg"><b>特約：</b>完工領證後 7 日內結清</p>
+                                <div class="pt-2 flex justify-between items-center text-xs border-t border-stone-100">
+                                    <span class="text-stone-400 text-[11px]">負責：林經理</span>
+                                    <button onclick="openModal('closingModal')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1 rounded-lg font-bold text-[11px] transition"><i class="fa-solid fa-file-pdf mr-1"></i> 一鍵結案 (PDF)</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- 5. 請款與結案中心版型 -->
+            <section id="tab-closing" class="tab-content hidden space-y-6">
+                <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-2xs space-y-4">
+                    <h3 class="font-bold text-sm text-stone-900"><i class="fa-solid fa-file-invoice-dollar text-emerald-700 mr-2"></i> 集團請款與結案歷史總覽中心</h3>
+                    <p class="text-xs text-stone-500">在此集中管理所有已開立的正式請款單、已封存的 PDF 結案報告與介紹人佣金撥款紀錄。</p>
+                    <div class="p-4 bg-stone-50 rounded-xl border border-stone-200 text-xs text-stone-700 space-y-2">
+                        <div class="flex justify-between font-bold border-b border-stone-200 pb-2">
+                            <span>專案名稱</span><span>請款狀態</span><span>結案報告</span><span>操作</span>
+                        </div>
+                        <div class="flex justify-between items-center pt-1">
+                            <span>新竹竹北商用土地案</span>
+                            <span class="text-emerald-700 font-bold">已全數結清</span>
+                            <span class="text-stone-600">已歸檔 (PDF)</span>
+                            <button onclick="openModal('closingModal')" class="text-xs bg-stone-200 px-3 py-1 rounded-lg font-bold">檢視報表</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
         </div>
     </main>
 
-    <!-- 新增/編輯彈窗 (Modal) -->
-    <div id="caseModal" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm hidden flex justify-center items-center z-50 p-2 md:p-4">
-        <div class="bg-white rounded-2xl shadow-xl w-full max-w-4xl max-h-[95vh] lg:max-h-[90vh] overflow-y-auto border border-slate-100 animate-in fade-in zoom-in-95 duration-200">
-            <!-- Header -->
-            <div class="p-4 md:p-5 border-b border-slate-200 flex justify-between items-center sticky top-0 bg-white z-10">
-                <h3 id="modalTitle" class="text-base md:text-lg font-bold text-slate-800 flex items-center space-x-2">
-                    <i class="fa-solid fa-pen-to-square text-blue-900"></i> <span>新增公司案件評估</span>
-                </h3>
-                <button onclick="closeModal()" class="text-slate-400 hover:text-slate-600 text-xl p-1"><i class="fa-solid fa-xmark"></i></button>
+    <!-- ========================================== -->
+    <!-- 互動彈窗模板區塊                            -->
+    <!-- ========================================== -->
+
+    <!-- [新增功能] 線上報價單填寫與一鍵輸出 PDF 預覽彈窗 -->
+    <div id="quoteModal" class="fixed inset-0 bg-black/60 backdrop-blur-xs hidden flex items-center justify-center z-50 p-4 overflow-y-auto">
+        <div class="bg-white w-full max-w-3xl rounded-2xl shadow-2xl overflow-hidden border border-stone-200 my-8">
+            <div class="bg-[#2C2A29] text-white px-6 py-4 flex justify-between items-center print:hidden">
+                <h3 class="font-bold text-sm"><i class="fa-solid fa-file-lines text-[#D4A373] mr-2"></i> 專案線上報價單（可直接填寫並一鍵輸出）</h3>
+                <div class="flex items-center space-x-3">
+                    <button onclick="window.print()" class="bg-[#D4A373] hover:bg-[#C28E5F] text-white px-3 py-1.5 rounded-lg text-xs font-bold transition"><i class="fa-solid fa-print mr-1"></i> 列印 / 轉存 PDF 蓋大小章</button>
+                    <button onclick="closeModal('quoteModal')" class="text-stone-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+                </div>
             </div>
-
-            <!-- Form Body -->
-            <form id="caseForm" onsubmit="handleFormSubmit(event)" class="p-4 md:p-6 space-y-5">
-                <input type="hidden" id="editCaseId">
-
-                <!-- 一、專案人員與狀態 -->
-                <div class="bg-slate-50 p-3 md:p-4 rounded-xl border border-slate-200">
-                    <h4 class="font-bold text-blue-950 text-xs md:text-sm mb-3 flex items-center space-x-1.5"><span class="w-1 h-4 bg-blue-900 rounded-full inline-block"></span><span>一、專案負責與狀態</span></h4>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-500 mb-1">案件狀態 *</label>
-                            <select id="caseStatus" required class="w-full border border-slate-300 rounded-lg p-2 text-xs md:text-sm focus:ring-2 focus:ring-blue-900 bg-white">
-                                <option value="初期評估">初期評估 (綠色)</option>
-                                <option value="已報價">已報價 (藍色)</option>
-                                <option value="準備簽約">準備簽約 (金色)</option>
-                                <option value="已簽約">已簽約 (紅色)</option>
-                                <option value="結案">結案 (紫色)</option>
-                                <option value="沒下文">沒下文 (黑色)</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-500 mb-1">專案經理 *</label>
-                            <select id="projectManager" required class="w-full border border-slate-300 rounded-lg p-2 text-xs md:text-sm focus:ring-2 focus:ring-blue-900 bg-white">
-                                <option value="樊靖畇">樊靖畇</option>
-                                <option value="鄭家承">鄭家承</option>
-                                <option value="陳宥騰">陳宥騰</option>
-                                <option value="楊裕憲">楊裕憲</option>
-                                <option value="黃逸豪">黃逸豪</option>
-                                <option value="李宜璇">李宜璇</option>
-                                <option value="王瑋聆">王瑋聆</option>
-                                <option value="許先生">許先生</option>
-                            </select>
-                        </div>
-                        <div class="sm:col-span-2 md:col-span-1">
-                            <label class="block text-xs font-semibold text-slate-500 mb-1">案件來源</label>
-                            <input type="text" id="caseSource" placeholder="例如：開發、舊客介紹" class="w-full border border-slate-300 rounded-lg p-2 text-xs md:text-sm focus:ring-2 focus:ring-blue-900">
-                        </div>
+            <div class="p-8 sm:p-12 space-y-6 bg-white text-stone-800 font-sans">
+                <div class="flex justify-between items-start border-b border-stone-200 pb-6">
+                    <div>
+                        <h1 class="text-2xl font-bold tracking-wider text-stone-900">睿立集團</h1>
+                        <p class="text-xs text-stone-500 mt-1">RUILI GROUP LAND ADMINISTRATION & ASSET ADVISORY</p>
+                        <p class="text-xs text-stone-500 mt-0.5">統一編號：88362109 | 台北市信義區金融路 88 號</p>
                     </div>
-                    <div class="mt-3">
-                        <label class="block text-xs font-semibold text-slate-500 mb-1">業務即時狀態備註</label>
-                        <textarea id="statusRemark" rows="2" placeholder="請輸入當前進度追蹤備註..." class="w-full border border-slate-300 rounded-lg p-2 text-xs md:text-sm focus:ring-2 focus:ring-blue-900"></textarea>
+                    <div class="text-right">
+                        <h2 class="text-xl font-bold text-[#D4A373] tracking-widest uppercase">QUOTATION</h2>
+                        <p class="text-xs text-stone-500 mt-1">報價單編號：QT-2026-0829</p>
                     </div>
                 </div>
-
-                <!-- 二、公司基本資料 -->
-                <div class="bg-slate-50 p-3 md:p-4 rounded-xl border border-slate-200">
-                    <h4 class="font-bold text-blue-950 text-xs md:text-sm mb-3 flex items-center space-x-1.5"><span class="w-1 h-4 bg-blue-900 rounded-full inline-block"></span><span>二、公司基本資料</span></h4>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
-                        <div class="sm:col-span-2">
-                            <label class="block text-xs font-semibold text-slate-500 mb-1">公司名稱 *</label>
-                            <input type="text" id="companyName" required class="w-full border border-slate-300 rounded-lg p-2 text-xs md:text-sm focus:ring-2 focus:ring-blue-900">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-500 mb-1">統一編號</label>
-                            <input type="text" id="companyTaxId" class="w-full border border-slate-300 rounded-lg p-2 text-xs md:text-sm focus:ring-2 focus:ring-blue-900">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-500 mb-1">工廠登記證字號</label>
-                            <input type="text" id="factoryRegId" class="w-full border border-slate-300 rounded-lg p-2 text-xs md:text-sm focus:ring-2 focus:ring-blue-900">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-500 mb-1">產業類型</label>
-                            <input type="text" id="industryType" placeholder="如: 金屬製品製造業" class="w-full border border-slate-300 rounded-lg p-2 text-xs md:text-sm focus:ring-2 focus:ring-blue-900">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-500 mb-1">聯絡人</label>
-                            <input type="text" id="contactPerson" class="w-full border border-slate-300 rounded-lg p-2 text-xs md:text-sm focus:ring-2 focus:ring-blue-900">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-500 mb-1">聯絡電話</label>
-                            <input type="text" id="contactPhone" class="w-full border border-slate-300 rounded-lg p-2 text-xs md:text-sm focus:ring-2 focus:ring-blue-900">
-                        </div>
-                        <div class="sm:col-span-2 md:col-span-2">
-                            <label class="block text-xs font-semibold text-slate-500 mb-1">E-mail</label>
-                            <input type="email" id="contactEmail" class="w-full border border-slate-300 rounded-lg p-2 text-xs md:text-sm focus:ring-2 focus:ring-blue-900">
-                        </div>
-                        <div class="grid grid-cols-1 sm:col-span-2 md:col-span-4">
-                            <label class="block text-xs font-semibold text-slate-500 mb-1">工廠地址</label>
-                            <input type="text" id="factoryAddress" class="w-full border border-slate-300 rounded-lg p-2 text-xs md:text-sm focus:ring-2 focus:ring-blue-900">
+                <!-- 互動輸入欄位：方便現場或線上填寫 -->
+                <div class="grid grid-cols-2 gap-6 bg-stone-50 p-4 rounded-xl border border-stone-200 text-xs">
+                    <div>
+                        <label class="text-stone-400 block mb-1 font-semibold">客戶 / 買受人：</label>
+                        <input type="text" id="q-client" value="林董 (彰化員林)" class="w-full bg-white border border-stone-300 rounded-lg p-2 font-bold text-stone-900 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="text-stone-400 block mb-1 font-semibold">報價案件名稱：</label>
+                        <input type="text" id="q-project" value="彰化員林農地變更專案規劃" class="w-full bg-white border border-stone-300 rounded-lg p-2 font-bold text-stone-900 focus:outline-none">
+                    </div>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-stone-100 text-stone-600 text-xs uppercase border-b border-stone-200">
+                                <th class="p-3">專業服務項目與說明</th>
+                                <th class="p-3 text-center">預估天數/期程</th>
+                                <th class="p-3 text-right">預估金額 (NT$)</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-xs divide-y divide-stone-100">
+                            <tr>
+                                <td class="p-3"><input type="text" value="特定工廠與土地變更可行性評估及規畫" class="w-full bg-transparent border-b border-stone-200 pb-1 focus:outline-none font-medium"></td>
+                                <td class="p-3 text-center">30 天</td>
+                                <td class="p-3 text-right font-medium">NT$ 3,500,000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="flex justify-end pt-2">
+                    <div class="w-72 space-y-2 text-xs">
+                        <div class="flex justify-between text-stone-600"><span>預估總計：</span><span>NT$ 3,500,000</span></div>
+                        <div class="flex justify-between text-stone-600"><span>營業稅 5%：</span><span>NT$ 175,000</span></div>
+                        <div class="flex justify-between text-stone-900 font-bold text-sm pt-2 border-t border-stone-300">
+                            <span>報價總金額含稅：</span><span class="text-[#D4A373] text-base">NT$ 3,675,000</span>
                         </div>
                     </div>
                 </div>
-
-                <!-- 服務項目明細層 -->
-                <div class="bg-slate-50 p-3 md:p-4 rounded-xl border border-slate-200">
-                    <div class="flex justify-between items-center mb-3">
-                        <h4 class="font-bold text-blue-950 text-xs md:text-sm flex items-center space-x-1.5"><span class="w-1 h-4 bg-blue-900 rounded-full inline-block"></span><span>服務項目明細</span></h4>
-                        <button type="button" onclick="addServiceRow()" class="text-xs bg-blue-900 hover:bg-indigo-9究 text-white px-2.5 py-1 rounded flex items-center space-x-1"><i class="fa-solid fa-plus"></i> <span>新增項目</span></button>
-                    </div>
-                    <div id="servicesContainer" class="space-y-2">
-                        <!-- 動態服務項目列 -->
-                    </div>
+            </div>
+            <div class="bg-stone-50 px-6 py-4 border-t border-stone-200 flex justify-between items-center print:hidden">
+                <span class="text-xs text-stone-500">提示：此報價單可一鍵輸出 PDF 傳給秘書列印並蓋上公司大小章。</span>
+                <div class="flex space-x-3">
+                    <button onclick="closeModal('quoteModal')" class="px-4 py-2 bg-stone-200 text-stone-700 rounded-xl text-xs">關閉</button>
+                    <button onclick="alert('✅ 報價單已成功封存！若客戶確認將可一鍵拋轉至簽約案件。'); closeModal('quoteModal');" class="px-5 py-2 bg-[#D4A373] hover:bg-[#C28E5F] text-white rounded-xl text-xs font-bold transition shadow-xs">確認並拋轉至簽約案件</button>
                 </div>
-
-                <!-- 三、土地基本資料 -->
-                <div class="bg-slate-50 p-3 md:p-4 rounded-xl border border-slate-200">
-                    <div class="flex justify-between items-center mb-3">
-                        <h4 class="font-bold text-blue-950 text-xs md:text-sm flex items-center space-x-1.5"><span class="w-1 h-4 bg-blue-900 rounded-full inline-block"></span><span>三、土地基本資料</span></h4>
-                        <button type="button" onclick="addLandRow()" class="text-xs bg-blue-900 hover:bg-blue-800 text-white px-2.5 py-1 rounded flex items-center space-x-1"><i class="fa-solid fa-plus"></i> <span>地段地號</span></button>
-                    </div>
-                    
-                    <div id="landsContainer" class="space-y-2 mb-3">
-                        <!-- 地段地號動態列 -->
-                    </div>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 border-t border-slate-200 pt-3">
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-500 mb-1">土地總坪數 (坪)</label>
-                            <input type="number" step="0.01" id="totalLandPing" class="w-full bg-slate-100 border border-slate-300 rounded-lg p-2 text-xs md:text-sm font-bold text-blue-900" readonly placeholder="下方加總">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-500 mb-1">都市計畫內使用分區</label>
-                            <input type="text" id="urbanZone" placeholder="如: 工業區" class="w-full border border-slate-300 rounded-lg p-2 text-xs md:text-sm focus:ring-2 focus:ring-blue-900">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-500 mb-1">都市計畫外使用地類別</label>
-                            <input type="text" id="nonUrbanZone" placeholder="如: 丁種建築用地" class="w-full border border-slate-300 rounded-lg p-2 text-xs md:text-sm focus:ring-2 focus:ring-blue-900">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 四、建物基本資料 -->
-                <div class="bg-slate-50 p-3 md:p-4 rounded-xl border border-slate-200">
-                    <div class="flex justify-between items-center mb-3">
-                        <h4 class="font-bold text-blue-950 text-xs md:text-sm flex items-center space-x-1.5"><span class="w-1 h-4 bg-blue-900 rounded-full inline-block"></span><span>四、建物基本資料</span></h4>
-                        <button type="button" onclick="addBuildingRow()" class="text-xs bg-blue-900 hover:bg-blue-800 text-white px-2.5 py-1 rounded flex items-center space-x-1"><i class="fa-solid fa-plus"></i> <span>建號</span></button>
-                    </div>
-                    
-                    <div id="buildingsContainer" class="space-y-2 mb-3">
-                        <!-- 建號動態列 -->
-                    </div>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 border-t border-slate-200 pt-3">
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-500 mb-1">建造年份</label>
-                            <input type="text" id="buildYear" placeholder="如: 1998" class="w-full border border-slate-300 rounded-lg p-2 text-xs md:text-sm focus:ring-2 focus:ring-blue-900">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-500 mb-1">合法建物坪數 (坪)</label>
-                            <input type="number" step="0.01" id="legalBuildPing" class="w-full border border-slate-300 rounded-lg p-2 text-xs md:text-sm focus:ring-2 focus:ring-blue-900">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-500 mb-1">違章建物坪數 (坪)</label>
-                            <input type="number" step="0.01" id="illegalBuildPing" class="w-full border border-slate-300 rounded-lg p-2 text-xs md:text-sm focus:ring-2 focus:ring-blue-900">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 五、ESG 評估 -->
-                <div class="bg-slate-50 p-3 md:p-4 rounded-xl border border-slate-200">
-                    <h4 class="font-bold text-blue-950 text-xs md:text-sm mb-3 flex items-center space-x-1.5"><span class="w-1 h-4 bg-blue-900 rounded-full inline-block"></span><span>五、ESG 評估與能耗狀況</span></h4>
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-3">
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-500 mb-1">是否有接班人</label>
-                            <select id="esgSuccessor" class="w-full border border-slate-300 rounded-lg p-2 text-xs md:text-sm focus:ring-2 focus:ring-blue-900 bg-white">
-                                <option value="是">是</option>
-                                <option value="否">否</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-500 mb-1">產品是否外銷</label>
-                            <select id="esgExport" class="w-full border border-slate-300 rounded-lg p-2 text-xs md:text-sm focus:ring-2 focus:ring-blue-900 bg-white">
-                                <option value="是">是</option>
-                                <option value="否">否</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-500 mb-1">是否受歐盟減碳要求</label>
-                            <select id="esgCarbon" class="w-full border border-slate-300 rounded-lg p-2 text-xs md:text-sm focus:ring-2 focus:ring-blue-900 bg-white">
-                                <option value="是">是</option>
-                                <option value="否">否</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 border-t border-slate-200 pt-3">
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-500 mb-1">每月平均電費 (元)</label>
-                            <input type="number" id="esgElectricity" class="w-full border border-slate-300 rounded-lg p-2 text-xs md:text-sm focus:ring-2 focus:ring-blue-900">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-500 mb-1">馬力 (HP)</label>
-                            <input type="number" id="esgHp" class="w-full border border-slate-300 rounded-lg p-2 text-xs md:text-sm focus:ring-2 focus:ring-blue-900">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-500 mb-1">契約容量 (kW)</label>
-                            <input type="number" id="esgKw" class="w-full border border-slate-300 rounded-lg p-2 text-xs md:text-sm focus:ring-2 focus:ring-blue-900">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Footer 控制 -->
-                <div class="border-t border-slate-200 pt-4 flex justify-end space-x-2 bg-white sticky bottom-0 z-10">
-                    <button type="button" onclick="closeModal()" class="px-4 py-2 border border-slate-300 rounded-lg text-xs md:text-sm font-medium text-slate-700 hover:bg-slate-50">取消</button>
-                    <button type="submit" class="px-5 py-2 bg-blue-900 hover:bg-blue-950 text-white rounded-lg text-xs md:text-sm font-semibold shadow">確認儲存</button>
-                </div>
-            </form>
+            </div>
         </div>
     </div>
 
-    <!-- 核心運作 JavaScript -->
+    <!-- 1. 秘書建檔與審查（處理報價金額 vs 簽約金額不同、填寫特約內容） -->
+    <div id="reviewModal" class="fixed inset-0 bg-black/50 backdrop-blur-xs hidden flex items-center justify-center z-50 p-4">
+        <div class="bg-white w-full max-w-xl rounded-2xl shadow-2xl overflow-hidden border border-stone-200">
+            <div class="bg-[#2C2A29] text-white px-6 py-4 flex justify-between items-center">
+                <h3 class="font-bold text-sm"><i class="fa-solid fa-file-signature text-[#D4A373] mr-2"></i> 秘書建檔與代書審查作業（合約金額與特約填載）</h3>
+                <button onclick="closeModal('reviewModal')" class="text-stone-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div class="p-6 space-y-4 text-xs text-stone-700">
+                <div class="p-3 bg-amber-50 rounded-xl border border-amber-200 text-amber-900 font-medium">
+                    ℹ️ 提示：原始線上報價金額為 NT$ 3,500,000。請秘書依據正式紙本合約內容填寫下方的**實際簽約金額**與**特別約定條款**。
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="font-bold block mb-1 text-stone-900">正式簽約日期：</label>
+                        <input type="date" value="2026-06-15" class="w-full bg-stone-50 border border-stone-300 rounded-xl p-2.5 text-xs focus:outline-none font-bold">
+                    </div>
+                    <div>
+                        <label class="font-bold block mb-1 text-stone-900">正式合約總額 (NT$)：</label>
+                        <input type="text" value="3,800,000" class="w-full bg-stone-50 border border-stone-300 rounded-xl p-2.5 text-xs focus:outline-none font-bold text-red-700">
+                    </div>
+                </div>
+                <div>
+                    <label class="font-bold block mb-1 text-stone-900">特別約定條款 (特約內容填載)：</label>
+                    <textarea class="w-full bg-stone-50 border border-stone-300 rounded-xl p-3 h-20 text-xs focus:outline-none font-medium">須於 3 個月內取得初審同意書，逾期罰則依合約辦理。包含指定代書協同辦理。</textarea>
+                </div>
+            </div>
+            <div class="bg-stone-50 px-6 py-3 border-t border-stone-200 flex justify-end space-x-3">
+                <button onclick="closeModal('reviewModal')" class="px-4 py-2 bg-stone-200 text-stone-700 rounded-xl text-xs font-medium">取消</button>
+                <button onclick="submitReviewAction(this)" class="px-4 py-2 bg-[#D4A373] text-white rounded-xl text-xs font-medium shadow-2xs">確認無誤並推進至工作看板</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. 立即發送推播警報 -->
+    <div id="alertModal" class="fixed inset-0 bg-black/50 backdrop-blur-xs hidden flex items-center justify-center z-50 p-4">
+        <div class="bg-white w-full max-w-md rounded-2xl shadow-2xl overflow-hidden border border-stone-200">
+            <div class="bg-red-600 text-white px-6 py-4 flex justify-between items-center">
+                <h3 class="font-bold text-sm"><i class="fa-solid fa-triangle-exclamation mr-2"></i> 異常回報與即時推播</h3>
+                <button onclick="closeModal('alertModal')" class="text-red-200 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div class="p-6 space-y-4 text-xs text-stone-700">
+                <p class="text-stone-500">此動作將立即透過 **Telegram / Bark** 發送緊急推播給總監與負責人！</p>
+                <div>
+                    <label class="font-bold block mb-1 text-stone-900">異常說明：</label>
+                    <textarea id="alert-reason" class="w-full bg-stone-50 border border-stone-300 rounded-xl p-3 h-24 text-xs focus:outline-none">NAS 檔案上傳停滯超過 5 天，影響後續進度。</textarea>
+                </div>
+            </div>
+            <div class="bg-stone-50 px-6 py-3 border-t border-stone-200 flex justify-end space-x-3">
+                <button onclick="closeModal('alertModal')" class="px-4 py-2 bg-stone-200 text-stone-700 rounded-xl text-xs font-medium">取消</button>
+                <button onclick="submitAlertAction(this)" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs font-medium shadow-2xs">立即發送推播警報</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. 正式請款單預覽與開立彈窗（綁定收款期程） -->
+    <div id="invoiceModal" class="fixed inset-0 bg-black/60 backdrop-blur-xs hidden flex items-center justify-center z-50 p-4 overflow-y-auto">
+        <div class="bg-white w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden border border-stone-200 my-8">
+            <div class="bg-[#2C2A29] text-white px-6 py-4 flex justify-between items-center print:hidden">
+                <h3 class="font-bold text-sm"><i class="fa-solid fa-file-invoice text-[#D4A373] mr-2"></i> 正式請款單預覽（工作看板連動）</h3>
+                <div class="flex items-center space-x-3">
+                    <button onclick="window.print()" class="bg-stone-700 hover:bg-stone-600 text-stone-200 px-3 py-1.5 rounded-lg text-xs font-medium transition"><i class="fa-solid fa-print mr-1"></i> 列印 / 轉存 PDF</button>
+                    <button onclick="closeModal('invoiceModal')" class="text-stone-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+                </div>
+            </div>
+            <div class="p-8 sm:p-12 space-y-6 bg-white text-stone-800 font-sans">
+                <div class="flex justify-between items-start border-b border-stone-200 pb-6">
+                    <div>
+                        <h1 class="text-2xl font-bold tracking-wider text-stone-900">睿立集團</h1>
+                        <p class="text-xs text-stone-500 mt-1">RUILI GROUP LAND & ASSET ADVISORY</p>
+                        <p class="text-xs text-stone-500 mt-0.5">統一編號：88362109 | 台北市信義區金融路 88 號</p>
+                    </div>
+                    <div class="text-right">
+                        <h2 class="text-xl font-bold text-[#D4A373] tracking-widest uppercase">Invoice</h2>
+                        <p class="text-xs text-stone-500 mt-1">單據編號：INV-2026-0828</p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-6 bg-stone-50 p-4 rounded-xl border border-stone-200 text-xs">
+                    <div>
+                        <span class="text-stone-400 block mb-1">客戶 / 買受人：</span>
+                        <strong class="text-stone-900 text-sm">彰化芳苑綠能開發股份有限公司</strong>
+                    </div>
+                    <div>
+                        <span class="text-stone-400 block mb-1">專案名稱：</span>
+                        <strong class="text-stone-900 text-sm">彰化芳苑太陽能土地整合專案</strong>
+                    </div>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-stone-100 text-stone-600 text-xs uppercase border-b border-stone-200">
+                                <th class="p-3">項次與說明</th>
+                                <th class="p-3 text-center">計價基準</th>
+                                <th class="p-3 text-right">金額 (NT$)</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-xs divide-y divide-stone-100">
+                            <tr>
+                                <td class="p-3"><strong>第二期工程期款（環評初審通過）</strong></td>
+                                <td class="p-3 text-center">40%</td>
+                                <td class="p-3 text-right font-medium">NT$ 2,000,000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="flex justify-end pt-2">
+                    <div class="w-72 space-y-2 text-xs">
+                        <div class="flex justify-between text-stone-600"><span>銷售額合計：</span><span>NT$ 2,000,000</span></div>
+                        <div class="flex justify-between text-stone-600"><span>營業稅 5%：</span><span>NT$ 100,000</span></div>
+                        <div class="flex justify-between text-stone-900 font-bold text-sm pt-2 border-t border-stone-300">
+                            <span>本期應收總額：</span><span class="text-blue-600 text-base">NT$ 2,100,000</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-stone-50 px-6 py-4 border-t border-stone-200 flex justify-between items-center print:hidden">
+                <span class="text-xs text-stone-500">入帳後將自動連動佣金撥款與後續結案程序</span>
+                <div class="flex space-x-3">
+                    <button onclick="closeModal('invoiceModal')" class="px-4 py-2 bg-stone-200 text-stone-700 rounded-xl text-xs">關閉</button>
+                    <button onclick="submitInvoiceAction(this)" class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition">確定產生請款單並入帳</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. 正式 PDF 結案報告預覽與歸檔彈窗 -->
+    <div id="closingModal" class="fixed inset-0 bg-black/60 backdrop-blur-xs hidden flex items-center justify-center z-50 p-4 overflow-y-auto">
+        <div class="bg-white w-full max-w-3xl rounded-2xl shadow-2xl overflow-hidden border border-stone-200 my-8">
+            <div class="bg-emerald-800 text-white px-6 py-4 flex justify-between items-center print:hidden">
+                <h3 class="font-bold text-sm"><i class="fa-solid fa-file-pdf text-emerald-300 mr-2"></i> 專案正式結案報告 (PDF 預覽版)</h3>
+                <div class="flex items-center space-x-3">
+                    <button onclick="window.print()" class="bg-emerald-900 hover:bg-emerald-700 text-emerald-100 px-3 py-1.5 rounded-lg text-xs font-medium"><i class="fa-solid fa-print mr-1"></i> 列印 / 轉存 PDF</button>
+                    <button onclick="closeModal('closingModal')" class="text-emerald-200 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+                </div>
+            </div>
+            <div class="p-8 sm:p-12 space-y-6 bg-white text-stone-800 font-sans">
+                <div class="flex justify-between items-start border-b border-stone-200 pb-6">
+                    <div>
+                        <h1 class="text-2xl font-bold tracking-wider text-stone-900">睿立集團</h1>
+                        <p class="text-xs text-stone-500 mt-1">RUILI GROUP ASSET ADVISORY & LAND ADMINISTRATION</p>
+                    </div>
+                    <div class="text-right">
+                        <span class="bg-emerald-100 text-emerald-800 font-bold px-3 py-1 rounded-full text-xs">🟢 圓滿結案 (CLOSED)</span>
+                        <p class="text-xs text-stone-500 mt-2">報告編號：CLOSE-2026-0828</p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-6 bg-stone-50 p-4 rounded-xl border border-stone-200 text-xs">
+                    <div>
+                        <span class="text-stone-400 block mb-1">專案名稱：</span>
+                        <strong class="text-stone-900 text-sm">新竹竹北商用土地案</strong>
+                    </div>
+                    <div>
+                        <span class="text-stone-400 block mb-1">主辦經理：</span>
+                        <p class="text-stone-600">林經理 | 協同代書：黃代書</p>
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <h4 class="font-bold text-xs uppercase tracking-wider text-stone-500">專案財務與毛利結算表</h4>
+                    <table class="w-full text-left border-collapse text-xs">
+                        <thead>
+                            <tr class="bg-stone-100 text-stone-600 border-b border-stone-200">
+                                <th class="p-3">財務項目說明</th>
+                                <th class="p-3 text-right">金額 (NT$)</th>
+                                <th class="p-3 text-right">備註</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-stone-100">
+                            <tr><td class="p-3">總營業收入（尾款已結清）</td><td class="p-3 text-right font-semibold">NT$ 2,500,000</td><td class="p-3 text-right text-stone-500">100%</td></tr>
+                            <tr><td class="p-3">(-) 外部直接成本 / 佣金</td><td class="p-3 text-right text-red-600">NT$ 300,000</td><td class="p-3 text-right text-stone-500">12%</td></tr>
+                            <tr class="bg-emerald-50/50"><td class="p-3 font-bold">(=) 專案最終淨毛利</td><td class="p-3 text-right font-bold text-emerald-700">NT$ 2,200,000</td><td class="p-3 text-right font-bold text-emerald-700">88.0% 毛利率</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="bg-stone-50 p-4 rounded-xl border border-stone-200 text-xs space-y-1">
+                    <strong class="text-stone-900 block">專案執行成果摘要：</strong>
+                    <p class="text-stone-600">本專案於執行期間歷經地籍重測與土地變更審查，尾款已全數入帳，並已產出正式結案報告與歸檔。</p>
+                </div>
+            </div>
+            <div class="bg-stone-50 px-6 py-4 border-t border-stone-200 flex justify-between items-center print:hidden">
+                <span class="text-xs text-stone-500">點擊確認後將正式封存專案並歸檔</span>
+                <div class="flex space-x-3">
+                    <button onclick="closeModal('closingModal')" class="px-4 py-2 bg-stone-200 text-stone-700 rounded-xl text-xs">關閉</button>
+                    <button onclick="submitClosingAction(this)" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition">確認 PDF 並正式結案歸檔</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 互動 JavaScript 邏輯 -->
     <script>
-        // 初始化空白資料庫結構
-        let casesData = JSON.parse(localStorage.getItem('ruili_cases')) || [];
-
-        // 核心狀態樣式表
-        const statusConfig = {
-            '初期評估': { bg: 'bg-emerald-100', text: 'text-emerald-800', border: 'border-emerald-300', dot: 'bg-emerald-500' },
-            '已報價': { bg: 'bg-blue-100', text: 'text-blue-800', border: 'border-blue-300', dot: 'bg-blue-500' },
-            '準備簽約': { bg: 'bg-amber-100', text: 'text-amber-800', border: 'border-amber-400', dot: 'bg-amber-500' },
-            '已簽約': { bg: 'bg-rose-100', text: 'text-rose-800', border: 'border-rose-300', dot: 'bg-rose-500' },
-            '結案': { bg: 'bg-purple-100', text: 'text-purple-800', border: 'border-purple-300', dot: 'bg-purple-500' },
-            '沒下文': { bg: 'bg-slate-800', text: 'text-white', border: 'border-slate-900', dot: 'bg-slate-400' }
-        };
-
-        document.addEventListener("DOMContentLoaded", () => {
-            renderTableAndCards(casesData);
-            updateStats();
-        });
-
-        // 同時渲染桌機版表格與手機版卡片
-        function renderTableAndCards(data) {
-            const tbody = document.getElementById('caseTableBody');
-            const cardContainer = document.getElementById('caseCardContainer');
-            
-            // 更新計數器
-            const countStr = `共 ${data.length} 筆案件`;
-            document.getElementById('caseCount').innerText = countStr;
-            document.getElementById('caseCountMobile').innerText = `共 ${data.length} 筆`;
-
-            tbody.innerHTML = '';
-            cardContainer.innerHTML = '';
-
-            if(data.length === 0) {
-                const emptyHTML = `<div class="text-center py-8 text-slate-400"><i class="fa-solid fa-folder-open text-3xl mb-2 block"></i>目前無任何案件資料</div>`;
-                tbody.innerHTML = `<tr><td colspan="7" class="text-center py-8 text-slate-400">${emptyHTML}</td></tr>`;
-                cardContainer.innerHTML = emptyHTML;
-                return;
+        function switchTab(tabId, btnElement) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(el => { 
+                el.classList.remove('bg-[#D4A373]', 'text-white', 'shadow-xs'); 
+                el.classList.add('hover:bg-stone-800'); 
+            });
+            document.getElementById('tab-' + tabId).classList.remove('hidden');
+            if(btnElement) {
+                btnElement.classList.remove('hover:bg-stone-800');
+                btnElement.classList.add('bg-[#D4A373]', 'text-white', 'shadow-xs');
             }
 
-            data.forEach(item => {
-                const cfg = statusConfig[item.status] || statusConfig['初期評估'];
-                const totalLand = item.lands.reduce((acc, l) => acc + (parseFloat(l.ping) || 0), 0).toFixed(1);
-                const totalBuild = ((parseFloat(item.legalBuildPing) || 0) + (parseFloat(item.illegalBuildPing) || 0)).toFixed(1);
-                const serviceNames = item.services.map(s => s.name).join(', ') || '無項目';
-
-                // 1. 桌機與平板橫放視圖 (Table Row)
-                const tr = document.createElement('tr');
-                tr.className = "hover:bg-slate-50 transition-colors";
-                tr.innerHTML = `
-                    <td class="py-3 px-4">
-                        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold ${cfg.bg} ${cfg.text} border ${cfg.border}">
-                            <span class="w-1.5 h-1.5 rounded-full ${cfg.dot} mr-1.5"></span>${item.status}
-                        </span>
-                    </td>
-                    <td class="py-3 px-4 font-medium text-slate-900">
-                        <div class="font-bold text-slate-800">${item.companyName}</div>
-                        <div class="text-xs text-slate-400">${item.companyTaxId || '無統編'}</div>
-                    </td>
-                    <td class="py-3 px-4 text-slate-600 font-medium">${item.projectManager}</td>
-                    <td class="py-3 px-4"><span class="text-xs bg-blue-50 text-blue-900 px-2 py-1 rounded border border-blue-100 max-w-[180px] inline-block truncate" title="${serviceNames}">${serviceNames}</span></td>
-                    <td class="py-3 px-4 text-xs text-slate-600">
-                        <div>地: <strong class="text-slate-800">${totalLand}</strong> 坪</div>
-                        <div>建: <strong class="text-slate-800">${totalBuild}</strong> 坪</div>
-                    </td>
-                    <td class="py-3 px-4 text-xs">
-                        <span class="px-1.5 py-0.5 rounded ${item.esgExport === '是' ? 'bg-cyan-100 text-cyan-900 font-medium' : 'bg-slate-100'}">外銷: ${item.esgExport}</span>
-                        <span class="px-1.5 py-0.5 rounded ${item.esgSuccessor === '是' ? 'bg-emerald-100 text-emerald-900 font-medium' : 'bg-slate-100'} ml-1">接班: ${item.esgSuccessor}</span>
-                    </td>
-                    <td class="py-3 px-4 text-center space-x-1.5">
-                        <button onclick="editCase('${item.id}')" class="text-blue-700 hover:text-blue-900 p-1"><i class="fa-solid fa-marker"></i></button>
-                        <button onclick="deleteCase('${item.id}')" class="text-rose-600 hover:text-rose-800 p-1"><i class="fa-solid fa-trash-can"></i></button>
-                    </td>
-                `;
-                tbody.appendChild(tr);
-
-                // 2. 手機直放視圖 (Responsive Cards)
-                const card = document.createElement('div');
-                card.className = "bg-white p-4 rounded-xl shadow-sm border border-slate-200 space-y-3";
-                card.innerHTML = `
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <h4 class="font-bold text-base text-slate-800">${item.companyName}</h4>
-                            <p class="text-xs text-slate-400">統編: ${item.companyTaxId || '無'} | 經理: ${item.projectManager}</p>
-                        </div>
-                        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold ${cfg.bg} ${cfg.text} border ${cfg.border}">
-                            ${item.status}
-                        </span>
-                    </div>
-                    <div class="text-xs text-slate-600 bg-slate-50 p-2.5 rounded-lg space-y-1">
-                        <div><strong class="text-slate-700">主要服務:</strong> <span class="text-blue-900 font-medium">${serviceNames}</span></div>
-                        <div class="grid grid-cols-2 gap-1 mt-1">
-                            <div><strong>土地坪數:</strong> ${totalLand} 坪</div>
-                            <div><strong>建物坪數:</strong> ${totalBuild} 坪</div>
-                        </div>
-                        <div class="pt-1 flex space-x-2 border-t border-slate-200 mt-1">
-                            <span class="text-[10px] px-1.5 py-0.5 rounded ${item.esgExport === '是' ? 'bg-cyan-100 text-cyan-900' : 'bg-slate-100'}">外銷: ${item.esgExport}</span>
-                            <span class="text-[10px] px-1.5 py-0.5 rounded ${item.esgSuccessor === '是' ? 'bg-emerald-100 text-emerald-900' : 'bg-slate-100'}">接班: ${item.esgSuccessor}</span>
-                            <span class="text-[10px] px-1.5 py-0.5 rounded ${item.esgCarbon === '是' ? 'bg-amber-100 text-amber-900' : 'bg-slate-100'}">歐盟減碳: ${item.esgCarbon}</span>
-                        </div>
-                    </div>
-                    ${item.statusRemark ? `<p class="text-xs text-slate-500 italic bg-amber-50/60 p-2 rounded border border-amber-100/70"><i class="fa-regular fa-comment-dots mr-1"></i>${item.statusRemark}</p>` : ''}
-                    <div class="flex justify-end space-x-3 pt-1 border-t border-slate-100 text-sm">
-                        <button onclick="editCase('${item.id}')" class="text-blue-700 font-semibold flex items-center space-x-1"><i class="fa-solid fa-marker"></i> <span>編輯詳情</span></button>
-                        <button onclick="deleteCase('${item.id}')" class="text-rose-600 font-semibold flex items-center space-x-1"><i class="fa-solid fa-trash-can"></i> <span>刪除</span></button>
-                    </div>
-                `;
-                cardContainer.appendChild(card);
-            });
-        }
-
-        // 統計看板更新
-        function updateStats() {
-            const statsContainer = document.getElementById('statsContainer');
-            const counts = { '初期評估': 0, '已報價': 0, '準備簽約': 0, '已簽約': 0, '結案': 0, '沒下文': 0 };
-            casesData.forEach(c => { if(counts[c.status] !== undefined) counts[c.status]++; });
-
-            statsContainer.innerHTML = Object.keys(counts).map(key => {
-                const cfg = statusConfig[key];
-                return `
-                    <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
-                        <div>
-                            <p class="text-[11px] font-bold text-slate-400 tracking-tight">${key}</p>
-                            <p class="text-lg font-black text-slate-800 mt-0.5">${counts[key]}</p>
-                        </div>
-                        <span class="w-2.5 h-2.5 rounded-full ${cfg.dot} shrink-0 ml-2"></span>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        // 開啟彈窗（新增模式）
-        function openModal() {
-            document.getElementById('caseForm').reset();
-            document.getElementById('editCaseId').value = '';
-            document.getElementById('modalTitle').innerText = '新增公司案件評估';
-            document.getElementById('servicesContainer').innerHTML = '';
-            document.getElementById('landsContainer').innerHTML = '';
-            document.getElementById('buildingsContainer').innerHTML = '';
-            
-            addServiceRow();
-            addLandRow();
-            addBuildingRow();
-
-            document.getElementById('caseModal').classList.remove('hidden');
-        }
-
-        function closeModal() {
-            document.getElementById('caseModal').classList.add('hidden');
-        }
-
-        // 動態增減欄位控制：服務項目 (支援手機端彈性縮緊與自適應換行)
-        function addServiceRow(data = {name:'', desc:'', quote:''}) {
-            const div = document.createElement('div');
-            div.className = "flex flex-col sm:flex-row space-y-1 sm:space-y-0 sm:space-x-2 items-stretch sm:items-center bg-white p-2.5 rounded-lg border border-slate-200 shadow-sm";
-            div.innerHTML = `
-                <input type="text" placeholder="項目名稱 (如: 特定工廠變更)" value="${data.name}" class="w-full sm:w-1/3 border border-slate-300 rounded p-1.5 text-xs focus:ring-1 focus:ring-blue-900" required>
-                <input type="text" placeholder="案件說明/評估結果" value="${data.desc}" class="w-full sm:w-5/12 border border-slate-300 rounded p-1.5 text-xs focus:ring-1 focus:ring-blue-900">
-                <div class="flex items-center space-x-1 w-full sm:w-2/12">
-                    <input type="number" placeholder="報價" value="${data.quote}" class="w-full border border-slate-300 rounded p-1.5 text-xs focus:ring-1 focus:ring-blue-900">
-                    <button type="button" onclick="this.parentElement.parentElement.remove()" class="text-slate-400 hover:text-rose-600 p-1.5 sm:p-1"><i class="fa-solid fa-trash"></i></button>
-                </div>
-            `;
-            document.getElementById('servicesContainer').appendChild(div);
-        }
-
-        // 動態增減欄位控制：地段地號
-        function addLandRow(data = {section:'', no:'', m2:'', ping:''}) {
-            const div = document.createElement('div');
-            div.className = "grid grid-cols-2 sm:flex sm:space-x-2 items-center gap-1.5 bg-white p-2.5 rounded-lg border border-slate-200 shadow-sm relative";
-            div.innerHTML = `
-                <input type="text" placeholder="地段" value="${data.section}" class="border border-slate-300 rounded p-1.5 text-xs focus:ring-1 focus:ring-blue-900 w-full">
-                <input type="text" placeholder="地號" value="${data.no}" class="border border-slate-300 rounded p-1.5 text-xs focus:ring-1 focus:ring-blue-900 w-full">
-                <input type="number" step="0.01" placeholder="平方公尺" value="${data.m2}" oninput="calcPing(this, 'm2')" class="border border-slate-300 rounded p-1.5 text-xs focus:ring-1 focus:ring-blue-900 w-full">
-                <div class="flex items-center space-x-1 w-full">
-                    <input type="number" step="0.01" placeholder="坪數" value="${data.ping}" oninput="calcPing(this, 'ping')" class="border border-slate-300 rounded p-1.5 text-xs font-semibold text-blue-900 bg-blue-50/50 w-full land-ping-input">
-                    <button type="button" onclick="this.parentElement.parentElement.remove(); sumTotalLandPing();" class="text-slate-400 hover:text-rose-600 p-1"><i class="fa-solid fa-trash"></i></button>
-                </div>
-            `;
-            document.getElementById('landsContainer').appendChild(div);
-        }
-
-        // 動態增減欄位控制：建號
-        function addBuildingRow(data = {no:'', m2:'', ping:''}) {
-            const div = document.createElement('div');
-            div.className = "grid grid-cols-3 sm:flex sm:space-x-2 items-center gap-1.5 bg-white p-2.5 rounded-lg border border-slate-200 shadow-sm";
-            div.innerHTML = `
-                <input type="text" placeholder="建號" value="${data.no}" class="border border-slate-300 rounded p-1.5 text-xs focus:ring-1 focus:ring-blue-900 w-full">
-                <input type="number" step="0.01" placeholder="平方公尺" value="${data.m2}" oninput="calcBuildingPing(this, 'm2')" class="border border-slate-300 rounded p-1.5 text-xs focus:ring-1 focus:ring-blue-900 w-full">
-                <div class="flex items-center space-x-1 w-full">
-                    <input type="number" step="0.01" placeholder="坪數" value="${data.ping}" oninput="calcBuildingPing(this, 'ping')" class="border border-slate-300 rounded p-1.5 text-xs focus:ring-1 focus:ring-blue-900 w-full building-ping-input">
-                    <button type="button" onclick="this.parentElement.parentElement.remove()" class="text-slate-400 hover:text-rose-600 p-1"><i class="fa-solid fa-trash"></i></button>
-                </div>
-            `;
-            document.getElementById('buildingsContainer').appendChild(div);
-        }
-
-        function calcPing(element, type) {
-            const row = element.closest('.grid, .flex');
-            const inputs = row.querySelectorAll('input');
-            const m2Input = inputs[2];
-            const pingInput = inputs[3];
-            if(type === 'm2' && m2Input.value) {
-                pingInput.value = (parseFloat(m2Input.value) * 0.3025).toFixed(2);
-            } else if(type === 'ping' && pingInput.value) {
-                m2Input.value = (parseFloat(pingInput.value) / 0.3025).toFixed(2);
-            }
-            sumTotalLandPing();
-        }
-
-        function calcBuildingPing(element, type) {
-            const row = element.closest('.grid, .flex');
-            const inputs = row.querySelectorAll('input');
-            const m2Input = inputs[1];
-            const pingInput = inputs[2];
-            if(type === 'm2' && m2Input.value) {
-                pingInput.value = (parseFloat(m2Input.value) * 0.3025).toFixed(2);
-            } else if(type === 'ping' && pingInput.value) {
-                m2Input.value = (parseFloat(pingInput.value) / 0.3025).toFixed(2);
-            }
-        }
-
-        function sumTotalLandPing() {
-            let total = 0;
-            document.querySelectorAll('.land-ping-input').forEach(input => { total += parseFloat(input.value) || 0; });
-            document.getElementById('totalLandPing').value = total.toFixed(2);
-        }
-
-        function handleFormSubmit(e) {
-            e.preventDefault();
-            
-            const services = [];
-            document.querySelectorAll('#servicesContainer > div').forEach(row => {
-                const inputs = row.querySelectorAll('input');
-                if(inputs[0].value) services.push({ name: inputs[0].value, desc: inputs[1].value, quote: inputs[2].value });
-            });
-
-            const lands = [];
-            document.querySelectorAll('#landsContainer > div').forEach(row => {
-                const inputs = row.querySelectorAll('input');
-                if(inputs[0].value || inputs[1].value) lands.push({ section: inputs[0].value, no: inputs[1].value, m2: inputs[2].value, ping: inputs[3].value });
-            });
-
-            const buildings = [];
-            document.querySelectorAll('#buildingsContainer > div').forEach(row => {
-                const inputs = row.querySelectorAll('input');
-                if(inputs[0].value) buildings.push({ no: inputs[0].value, m2: inputs[1].value, ping: inputs[2].value });
-            });
-
-            const caseId = document.getElementById('editCaseId').value;
-            const caseObject = {
-                id: caseId || 'case_' + Date.now(),
-                status: document.getElementById('caseStatus').value,
-                projectManager: document.getElementById('projectManager').value,
-                caseSource: document.getElementById('caseSource').value,
-                statusRemark: document.getElementById('statusRemark').value,
-                companyName: document.getElementById('companyName').value,
-                companyTaxId: document.getElementById('companyTaxId').value,
-                factoryRegId: document.getElementById('factoryRegId').value,
-                industryType: document.getElementById('industryType').value,
-                contactPerson: document.getElementById('contactPerson').value,
-                contactPhone: document.getElementById('contactPhone').value,
-                contactEmail: document.getElementById('contactEmail').value,
-                factoryAddress: document.getElementById('factoryAddress').value,
-                urbanZone: document.getElementById('urbanZone').value,
-                nonUrbanZone: document.getElementById('nonUrbanZone').value,
-                buildYear: document.getElementById('buildYear').value,
-                legalBuildPing: document.getElementById('legalBuildPing').value,
-                illegalBuildPing: document.getElementById('illegalBuildPing').value,
-                esgSuccessor: document.getElementById('esgSuccessor').value,
-                esgExport: document.getElementById('esgExport').value,
-                esgCarbon: document.getElementById('esgCarbon').value,
-                esgElectricity: document.getElementById('esgElectricity').value,
-                esgHp: document.getElementById('esgHp').value,
-                esgKw: document.getElementById('esgKw').value,
-                services: services,
-                lands: lands,
-                buildings: buildings,
-                updatedAt: new Date().toLocaleString()
+            const titles = {
+                'dashboard': ['戰情室與年度財報', '即時掌握營運數據、專案毛利與年度收支對比'],
+                'marketing': ['行銷與 AI 腳本中心', 'Threads 自動爬蟲話題與獲客漏斗分析'],
+                'crm': ['案件管理與 CRM', '客戶信任歷程與專業報價藝術'],
+                'operations': ['簽約案件與工作看板', '精密多維度任務管控、代書協同與紅綠燈逾期自動預警'],
+                'closing': ['請款與結案中心', '合約付款期程管控與 PDF 結案報告歸檔管理']
             };
-
-            if(caseId) {
-                const idx = casesData.findIndex(c => c.id === caseId);
-                casesData[idx] = caseObject;
-            } else {
-                casesData.unshift(caseObject);
-            }
-
-            localStorage.setItem('ruili_cases', JSON.stringify(casesData));
-            renderTableAndCards(casesData);
-            updateStats();
-            closeModal();
-        }
-
-        function editCase(id) {
-            const item = casesData.find(c => c.id === id);
-            if(!item) return;
-
-            openModal();
-            document.getElementById('modalTitle').innerText = '編輯案件評估 - ' + item.companyName;
-            document.getElementById('editCaseId').value = item.id;
-            
-            document.getElementById('caseStatus').value = item.status;
-            document.getElementById('projectManager').value = item.projectManager;
-            document.getElementById('caseSource').value = item.caseSource || '';
-            document.getElementById('statusRemark').value = item.statusRemark || '';
-            document.getElementById('companyName').value = item.companyName;
-            document.getElementById('companyTaxId').value = item.companyTaxId || '';
-            document.getElementById('factoryRegId').value = item.factoryRegId || '';
-            document.getElementById('industryType').value = item.industryType || '';
-            document.getElementById('contactPerson').value = item.contactPerson || '';
-            document.getElementById('contactPhone').value = item.contactPhone || '';
-            document.getElementById('contactEmail').value = item.contactEmail || '';
-            document.getElementById('factoryAddress').value = item.factoryAddress || '';
-            document.getElementById('urbanZone').value = item.urbanZone || '';
-            document.getElementById('nonUrbanZone').value = item.nonUrbanZone || '';
-            document.getElementById('buildYear').value = item.buildYear || '';
-            document.getElementById('legalBuildPing').value = item.legalBuildPing || '';
-            document.getElementById('illegalBuildPing').value = item.illegalBuildPing || '';
-            document.getElementById('esgSuccessor').value = item.esgSuccessor || '是';
-            document.getElementById('esgExport').value = item.esgExport || '是';
-            document.getElementById('esgCarbon').value = item.esgCarbon || '是';
-            document.getElementById('esgElectricity').value = item.esgElectricity || '';
-            document.getElementById('esgHp').value = item.esgHp || '';
-            document.getElementById('esgKw').value = item.esgKw || '';
-
-            document.getElementById('servicesContainer').innerHTML = '';
-            if(item.services && item.services.length > 0) item.services.forEach(s => addServiceRow(s)); else addServiceRow();
-
-            document.getElementById('landsContainer').innerHTML = '';
-            if(item.lands && item.lands.length > 0) item.lands.forEach(l => addLandRow(l)); else addLandRow();
-
-            document.getElementById('buildingsContainer').innerHTML = '';
-            if(item.buildings && item.buildings.length > 0) item.buildings.forEach(b => addBuildingRow(b)); else addBuildingRow();
-
-            sumTotalLandPing();
-        }
-
-        function deleteCase(id) {
-            if(confirm('確定要刪除此筆工廠案件評估資料嗎？')) {
-                casesData = casesData.filter(c => c.id !== id);
-                localStorage.setItem('ruili_cases', JSON.stringify(casesData));
-                renderTableAndCards(casesData);
-                updateStats();
+            if(titles[tabId]) {
+                document.getElementById('page-title').innerText = titles[tabId][0];
+                document.getElementById('page-subtitle').innerText = titles[tabId][1];
             }
         }
 
-        function filterCases() {
-            const query = document.getElementById('searchBar').value.toLowerCase();
-            const filtered = casesData.filter(c => {
-                const sNames = c.services.map(s => s.name).join(' ').toLowerCase();
-                return c.companyName.toLowerCase().includes(query) || 
-                       (c.companyTaxId && c.companyTaxId.includes(query)) ||
-                       c.projectManager.toLowerCase().includes(query) ||
-                       sNames.includes(query);
-            });
-            renderTableAndCards(filtered);
+        function openModal(modalId) { document.getElementById(modalId).classList.remove('hidden'); }
+        function closeModal(modalId) { document.getElementById(modalId).classList.add('hidden'); }
+
+        function submitReviewAction(btn) {
+            const originalText = btn.innerHTML;
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-1"></i> 處理中...`;
+            btn.disabled = true;
+            setTimeout(() => {
+                alert('✅ 審查通過！正式簽約金額與特約已寫入系統，案件已成功推進至「生產作業執行中」。');
+                document.getElementById('card-1').style.opacity = '0.3';
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                closeModal('reviewModal');
+            }, 600);
         }
 
-        function saveToCloud() {
-            localStorage.setItem('ruili_cases', JSON.stringify(casesData));
-            alert('【睿立提示】資料已與本地資料庫完全同步保存！');
+        function submitAlertAction(btn) {
+            const originalText = btn.innerHTML;
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-1"></i> 正在發送 Telegram...`;
+            btn.disabled = true;
+            setTimeout(() => {
+                alert('🚨 Telegram / Bark 緊急推播已成功送達管理者手機！');
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                closeModal('alertModal');
+            }, 600);
         }
 
-        // 🌟 奢華高階：一鍵匯出「顧問藍底 ＋ 金色文字」頂級配色 Excel 報表
-        async function exportLuxuryExcel() {
-            if(casesData.length === 0) { alert('目前無資料可供匯出！'); return; }
+        function submitInvoiceAction(btn) {
+            const originalText = btn.innerHTML;
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-1"></i> 正在寫入會計帳與連動佣金...`;
+            btn.disabled = true;
+            setTimeout(() => {
+                alert('📄 正式請款單已成功開立！會計帳收入與佣金支出已自動完成後端連動記錄。');
+                document.getElementById('card-3').style.opacity = '0.3';
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                closeModal('invoiceModal');
+            }, 800);
+        }
 
-            const workbook = new ExcelJS.Workbook();
-            const worksheet = workbook.addWorksheet('睿立業務案件明細');
-
-            // 建立藍金主題欄位表頭
-            worksheet.columns = [
-                { header: '案件狀態', key: 'status', width: 14 },
-                { header: '公司名稱', key: 'companyName', width: 28 },
-                { header: '統一編號', key: 'taxId', width: 15 },
-                { header: '專案負責人', key: 'pm', width: 14 },
-                { header: '主要服務項目', key: 'services', width: 35 },
-                { header: '土地總坪數', key: 'land', width: 14 },
-                { header: '建物總坪數', key: 'build', width: 14 },
-                { header: '外銷', key: 'export', width: 10 },
-                { header: '二代接班', key: 'successor', width: 10 },
-                { header: '即時進度備註', key: 'remark', width: 30 }
-            ];
-
-            // 1. 針對表頭行進行【顧問藍 #1E3A8A】底色與【尊爵金 #D4AF37】粗體文字染色
-            const headerRow = worksheet.getRow(1);
-            headerRow.height = 26;
-            headerRow.eachCell((cell) => {
-                cell.fill = {
-                    type: 'pattern',
-                    pattern: 'solid',
-                    fgColor: { argb: 'FF1E3A8A' } // 睿立專業顧問藍
-                };
-                cell.font = {
-                    name: '微軟正黑體',
-                    color: { argb: 'FFD4AF37' }, // 奢華金文字
-                    bold: true,
-                    size: 11
-                };
-                cell.alignment = { vertical: 'middle', horizontal: 'center' };
-                cell.border = {
-                    bottom: { style: 'medium', color: { argb: 'FFD4AF37' } }
-                };
-            });
-
-            // 2. 注入資料並設定細節格線與對齊
-            casesData.forEach(c => {
-                const totalLand = c.lands.reduce((acc, l) => acc + (parseFloat(l.ping) || 0), 0).toFixed(1);
-                const totalBuild = ((parseFloat(c.legalBuildPing) || 0) + (parseFloat(c.illegalBuildPing) || 0)).toFixed(1);
-                const serviceNames = c.services.map(s => s.name).join('、');
-
-                const newRow = worksheet.addRow({
-                    status: c.status,
-                    companyName: c.companyName,
-                    taxId: c.companyTaxId || '',
-                    pm: c.projectManager,
-                    services: serviceNames,
-                    land: parseFloat(totalLand),
-                    build: parseFloat(totalBuild),
-                    export: c.esgExport,
-                    successor: c.esgSuccessor,
-                    remark: c.statusRemark || ''
-                });
-
-                newRow.height = 22;
-                newRow.alignment = { vertical: 'middle' };
-                
-                // 設定內文字型與基礎輕微細格線
-                newRow.eachCell((cell) => {
-                    cell.font = { name: '微軟正黑體', size: 10 };
-                    cell.border = {
-                        bottom: { style: 'thin', color: { argb: 'FFE2E8F0' } }
-                    };
-                });
-            });
-
-            // 3. 匯出二進位活頁簿檔案並下載
-            const buffer = await workbook.xlsx.writeBuffer();
-            saveAs(new Blob([buffer]), `睿立專業案件明細表_藍金版_${new Date().toISOString().slice(0,10)}.xlsx`);
+        function submitClosingAction(btn) {
+            const originalText = btn.innerHTML;
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-1"></i> PDF 封存與雲端歸檔中...`;
+            btn.disabled = true;
+            setTimeout(() => {
+                alert('🎉 專案正式結案！尾款請款單與 PDF 結案報告已成功產出並封存至系統。');
+                document.getElementById('card-4').style.opacity = '0.3';
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                closeModal('closingModal');
+            }, 800);
         }
     </script>
 </body>
