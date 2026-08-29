@@ -53,11 +53,7 @@
                 </button>
                 
                 <button onclick="switchModule('four-stages', this)" class="nav-btn w-full flex items-center space-x-3 px-4 py-2.5 rounded-xl hover:bg-stone-800 text-stone-300 transition">
-                    <i class="fa-solid fa-stairs w-5 text-amber-400"></i><span>4 大營運階段動態模擬</span>
-                </button>
-
-                <button onclick="switchModule('handoff-pipeline', this)" class="nav-btn w-full flex items-center space-x-3 px-4 py-2.5 rounded-xl hover:bg-stone-800 text-stone-300 transition">
-                    <i class="fa-solid fa-people-arrows w-5 text-sky-400"></i><span>跨角色交棒專屬列表</span>
+                    <i class="fa-solid fa-stairs w-5 text-amber-400"></i><span>4 大營運階段與交棒總覽</span>
                 </button>
 
                 <div class="pt-2 pb-1 px-3 text-[10px] font-bold uppercase tracking-wider text-stone-500">年度案件快速切換</div>
@@ -245,7 +241,7 @@
                 let srv = services[i % services.length];
                 data['2026'].push({
                     id: idStr,
-                    name: `${client}(${srv}專案)`,
+                    name: `${client}(${srv}专案)`,
                     client: client,
                     service: srv,
                     days: (i * 3) % 20,
@@ -294,9 +290,7 @@
                         <p class="text-xs text-stone-500">掌握集團整體財報與案件生命週期流向。</p>
                     </div>`;
             } else if(moduleName === 'four-stages') {
-                renderFourStagesView();
-            } else if(moduleName === 'handoff-pipeline') {
-                renderHandoffPipelineView('secretary');
+                renderFourStagesWithPipelineView('secretary');
             } else {
                 container.innerHTML = `
                     <div class="bg-white p-6 rounded-2xl border border-ruili-border shadow-2xs space-y-2">
@@ -306,72 +300,10 @@
             }
         }
 
-        // 🌟 核心展示：4 大營運階段動態模擬看板
-        function renderFourStagesView() {
+        // 🌟 核心整合：上方 4 大營運階段動態模擬 + 下方跨角色交棒專屬列表
+        function renderFourStagesWithPipelineView(activeRole) {
             const container = document.getElementById('app-container');
-            container.innerHTML = `
-                <div class="space-y-6">
-                    <div class="bg-white p-6 rounded-2xl border border-ruili-border shadow-2xs space-y-2">
-                        <h2 class="text-base font-bold text-stone-900">睿立集團 4 大核心營運階段動態模擬</h2>
-                        <p class="text-xs text-stone-500">點擊下方各階段的「模擬操作卡片」，即可直接體驗各關卡的審查、交棒、請款與結案歸檔流程。</p>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-                        <!-- 階段一 -->
-                        <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-2xs space-y-4 flex flex-col justify-between">
-                            <div class="space-y-2">
-                                <span class="px-2.5 py-0.5 bg-amber-100 text-amber-800 rounded text-[10px] font-bold">階段一：入口閘道</span>
-                                <h3 class="font-bold text-stone-900 text-sm">1. 秘書建檔 / 審查</h3>
-                                <p class="text-xs text-stone-500">新案成交後進行紙本合約大小章覆核、特約填載與掃描歸檔。</p>
-                            </div>
-                            <button onclick="openModal('reviewModal')" class="w-full py-2 bg-stone-900 hover:bg-ruili-brand text-white rounded-xl text-xs font-bold transition">
-                                <i class="fa-solid fa-file-signature mr-1"></i> 模擬秘書審查建檔
-                            </button>
-                        </div>
-
-                        <!-- 階段二 -->
-                        <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-2xs space-y-4 flex flex-col justify-between">
-                            <div class="space-y-2">
-                                <span class="px-2.5 py-0.5 bg-sky-100 text-sky-800 rounded text-[10px] font-bold">階段二：核心戰場</span>
-                                <h3 class="font-bold text-stone-900 text-sm">2. 生產作業跨角色交棒</h3>
-                                <p class="text-xs text-stone-500">地政士、特助與秘書長期抗戰，以滯留天數自動置頂防止漏案。</p>
-                            </div>
-                            <button onclick="openModal('handoffModal')" class="w-full py-2 bg-sky-600 hover:opacity-95 text-white rounded-xl text-xs font-bold transition">
-                                <i class="fa-solid fa-people-arrows mr-1"></i> 模擬跨角色交棒
-                            </button>
-                        </div>
-
-                        <!-- 階段三 -->
-                        <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-2xs space-y-4 flex flex-col justify-between">
-                            <div class="space-y-2">
-                                <span class="px-2.5 py-0.5 bg-amber-100 text-amber-800 rounded text-[10px] font-bold">階段三：財務關卡</span>
-                                <h3 class="font-bold text-stone-900 text-sm">3. 階段請款 / 會計</h3>
-                                <p class="text-xs text-stone-500">專案達成里程碑時的財務對帳、期款比例計算與 5% 發票開立。</p>
-                            </div>
-                            <button onclick="openModal('accountingModal')" class="w-full py-2 bg-amber-600 hover:opacity-95 text-white rounded-xl text-xs font-bold transition">
-                                <i class="fa-solid fa-coins mr-1"></i> 模擬會計請款作業
-                            </button>
-                        </div>
-
-                        <!-- 階段四 -->
-                        <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-2xs space-y-4 flex flex-col justify-between">
-                            <div class="space-y-2">
-                                <span class="px-2.5 py-0.5 bg-emerald-100 text-emerald-800 rounded text-[10px] font-bold">階段四：最終站</span>
-                                <h3 class="font-bold text-stone-900 text-sm">4. 準備結案 / 歸檔</h3>
-                                <p class="text-xs text-stone-500">工程與法規全數完成，一鍵產出正式 PDF 結案報告並永久封存。</p>
-                            </div>
-                            <button onclick="openModal('closingModal')" class="w-full py-2 bg-emerald-600 hover:opacity-95 text-white rounded-xl text-xs font-bold transition">
-                                <i class="fa-solid fa-flag-checkered mr-1"></i> 模擬結案與 PDF 產出
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
-        // 跨角色交棒專屬列表 (對應階段二的實作)
-        function renderHandoffPipelineView(activeRole) {
-            const container = document.getElementById('app-container');
+            
             const rolesConfig = [
                 { key: 'secretary', name: '秘書室專區', desc: '新案建檔與合約覆核' },
                 { key: 'surveyor', name: '地政士團隊', desc: '土地測量與法規送件' },
@@ -383,7 +315,7 @@
             casesList.sort((a, b) => b.days - a.days);
 
             let tabsHtml = rolesConfig.map(r => `
-                <button onclick="renderHandoffPipelineView('${r.key}')" class="px-4 py-2.5 rounded-xl text-xs font-bold transition ${activeRole === r.key ? 'bg-ruili-brand text-white shadow-xs' : 'bg-white hover:bg-stone-100 text-stone-700 border border-stone-200'}">
+                <button onclick="renderFourStagesWithPipelineView('${r.key}')" class="px-4 py-2.5 rounded-xl text-xs font-bold transition ${activeRole === r.key ? 'bg-ruili-brand text-white shadow-xs' : 'bg-white hover:bg-stone-100 text-stone-700 border border-stone-200'}">
                     ${r.name}
                 </button>
             `).join('');
@@ -402,12 +334,73 @@
             `).join('');
 
             container.innerHTML = `
-                <div class="space-y-6">
-                    <div class="bg-white p-6 rounded-2xl border border-ruili-border shadow-2xs space-y-3">
-                        <h2 class="text-base font-bold text-stone-900">跨角色交棒專屬列表 (階段二實作)</h2>
-                        <div class="flex flex-wrap gap-2 pt-2">${tabsHtml}</div>
+                <div class="space-y-8">
+                    <!-- 上方：4 大營運階段動態模擬總覽 -->
+                    <div class="space-y-4">
+                        <div class="bg-white p-6 rounded-2xl border border-ruili-border shadow-2xs space-y-2">
+                            <h2 class="text-base font-bold text-stone-900">睿立集團 4 大核心營運階段動態模擬</h2>
+                            <p class="text-xs text-stone-500">點擊下方各階段的「模擬操作卡片」，即可直接體驗各關卡的審查、交棒、請款與結案歸檔流程。</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+                            <!-- 階段一 -->
+                            <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-2xs space-y-4 flex flex-col justify-between">
+                                <div class="space-y-2">
+                                    <span class="px-2.5 py-0.5 bg-amber-100 text-amber-800 rounded text-[10px] font-bold">階段一：入口閘道</span>
+                                    <h3 class="font-bold text-stone-900 text-sm">1. 秘書建檔 / 審查</h3>
+                                    <p class="text-xs text-stone-500">新案成交後進行紙本合約大小章覆核、特約填載與掃描歸檔。</p>
+                                </div>
+                                <button onclick="openModal('reviewModal')" class="w-full py-2 bg-stone-900 hover:bg-ruili-brand text-white rounded-xl text-xs font-bold transition">
+                                    <i class="fa-solid fa-file-signature mr-1"></i> 模擬秘書審查建檔
+                                </button>
+                            </div>
+
+                            <!-- 階段二 -->
+                            <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-2xs space-y-4 flex flex-col justify-between">
+                                <div class="space-y-2">
+                                    <span class="px-2.5 py-0.5 bg-sky-100 text-sky-800 rounded text-[10px] font-bold">階段二：核心戰場</span>
+                                    <h3 class="font-bold text-stone-900 text-sm">2. 生產作業跨角色交棒</h3>
+                                    <p class="text-xs text-stone-500">地政士、特助與秘書長期抗戰，以滯留天數自動置頂防止漏案。</p>
+                                </div>
+                                <button onclick="openModal('handoffModal')" class="w-full py-2 bg-sky-600 hover:opacity-95 text-white rounded-xl text-xs font-bold transition">
+                                    <i class="fa-solid fa-people-arrows mr-1"></i> 模擬跨角色交棒
+                                </button>
+                            </div>
+
+                            <!-- 階段三 -->
+                            <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-2xs space-y-4 flex flex-col justify-between">
+                                <div class="space-y-2">
+                                    <span class="px-2.5 py-0.5 bg-amber-100 text-amber-800 rounded text-[10px] font-bold">階段三：財務關卡</span>
+                                    <h3 class="font-bold text-stone-900 text-sm">3. 階段請款 / 會計</h3>
+                                    <p class="text-xs text-stone-500">專案達成里程碑時的財務對帳、期款比例計算與 5% 發票開立。</p>
+                                </div>
+                                <button onclick="openModal('accountingModal')" class="w-full py-2 bg-amber-600 hover:opacity-95 text-white rounded-xl text-xs font-bold transition">
+                                    <i class="fa-solid fa-coins mr-1"></i> 模擬會計請款作業
+                                </button>
+                            </div>
+
+                            <!-- 階段四 -->
+                            <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-2xs space-y-4 flex flex-col justify-between">
+                                <div class="space-y-2">
+                                    <span class="px-2.5 py-0.5 bg-emerald-100 text-emerald-800 rounded text-[10px] font-bold">階段四：最終站</span>
+                                    <h3 class="font-bold text-stone-900 text-sm">4. 準備結案 / 歸檔</h3>
+                                    <p class="text-xs text-stone-500">工程與法規全數完成，一鍵產出正式 PDF 結案報告並永久封存。</p>
+                                </div>
+                                <button onclick="openModal('closingModal')" class="w-full py-2 bg-emerald-600 hover:opacity-95 text-white rounded-xl text-xs font-bold transition">
+                                    <i class="fa-solid fa-flag-checkered mr-1"></i> 模擬結案與 PDF 產出
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">${cardsHtml}</div>
+
+                    <!-- 下方：跨角色交棒專屬列表 (階段二實作) -->
+                    <div class="space-y-4 pt-4 border-t border-stone-200">
+                        <div class="bg-white p-6 rounded-2xl border border-ruili-border shadow-2xs space-y-3">
+                            <h2 class="text-base font-bold text-stone-900">跨角色交棒專屬列表 (階段二實作)</h2>
+                            <div class="flex flex-wrap gap-2 pt-2">${tabsHtml}</div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">${cardsHtml}</div>
+                    </div>
                 </div>
             `;
         }
