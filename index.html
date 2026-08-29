@@ -162,7 +162,7 @@
         </div>
     </div>
 
-    <!-- 1-2. 案件簽核詳細表單彈窗 (已拿掉收款日期與結案日期) -->
+    <!-- 1-2. 案件簽核詳細表單彈窗 -->
     <div id="approvalModal" class="fixed inset-0 bg-black/50 backdrop-blur-xs hidden flex items-center justify-center z-50 p-4 overflow-y-auto">
         <div class="bg-white w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden border border-stone-200 my-8">
             <div class="bg-[#2C2A29] text-white px-6 py-4 flex justify-between items-center sticky top-0 z-10">
@@ -347,7 +347,7 @@
         </div>
     </div>
 
-    <!-- 3-2. 待結案專區：公文審查與接收詳細彈窗 (結案條件改為自行輸入) -->
+    <!-- 3-2. 待結案專區：公文審查與接收詳細彈窗 -->
     <div id="pendingClosingModal" class="fixed inset-0 bg-black/60 backdrop-blur-xs hidden flex items-center justify-center z-50 p-4 overflow-y-auto">
         <div class="bg-white w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden border border-stone-200 my-8">
             <div class="bg-[#2C2A29] text-white px-6 py-4 flex justify-between items-center sticky top-0 z-10">
@@ -432,7 +432,7 @@
         </div>
     </div>
 
-    <!-- 4-2. 結案收尾流水線詳細彈窗 (加入「尾款收款日期」與「結案日期」強制驗證欄位) -->
+    <!-- 4-2. 結案收尾流水線詳細彈窗 -->
     <div id="closingPipelineModal" class="fixed inset-0 bg-black/60 backdrop-blur-xs hidden flex items-center justify-center z-50 p-4 overflow-y-auto">
         <div class="bg-white w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden border border-stone-200 my-8">
             <div class="bg-[#2C2A29] text-white px-6 py-4 flex justify-between items-center sticky top-0 z-10">
@@ -638,7 +638,6 @@
             openModal('closingPipelineModal');
         }
 
-        // 🌟 強制驗證邏輯：必須填寫尾款收款日期與結案日期才能完成結案
         function validateAndSubmitClosing() {
             const payDate = document.getElementById('input-pay-date').value;
             const closeDate = document.getElementById('input-close-date').value;
@@ -737,7 +736,6 @@
             } else if(moduleName === 'workflow-overview') {
                 renderWorkflowOverviewWithPipelineView('secretary');
             } else if(moduleName === 'closing') {
-                // 🌟 結案中心：先顯示已結案案件清單，點選右側 PDF 按鈕即可預覽報告
                 container.innerHTML = `
                     <div class="space-y-6">
                         <div class="bg-white p-6 rounded-2xl border border-ruili-border shadow-2xs space-y-2">
@@ -788,7 +786,7 @@
             }
         }
 
-        // 🌟 核心架構：上方三大主軸流程 + 下方跨角色交棒專屬列表 (5 大角色)
+        // 🌟 現代美學設計的工作看板 (莫蘭迪色系 + 精緻卡片質感)
         function renderWorkflowOverviewWithPipelineView(activeRole) {
             const container = document.getElementById('app-container');
             
@@ -803,86 +801,105 @@
             let casesList = globalCasesData['2026'].filter((_, idx) => idx % 5 === (activeRole === 'secretary' ? 0 : activeRole === 'assistant' ? 1 : activeRole === 'surveyor' ? 2 : activeRole === 'accountant' ? 3 : 4));
             casesList.sort((a, b) => b.days - a.days);
 
+            // 🌟 更精緻、具有尊榮質感的角色切換分頁按鈕
             let tabsHtml = rolesConfig.map(r => `
-                <button onclick="renderWorkflowOverviewWithPipelineView('${r.key}')" class="px-4 py-2.5 rounded-xl text-xs font-bold transition ${activeRole === r.key ? 'bg-ruili-brand text-white shadow-xs' : 'bg-white hover:bg-stone-100 text-stone-700 border border-stone-200'}">
-                    ${r.name}
+                <button onclick="renderWorkflowOverviewWithPipelineView('${r.key}')" class="px-5 py-2.5 rounded-xl text-xs font-semibold transition-all duration-200 flex items-center space-x-2 ${activeRole === r.key ? 'bg-gradient-to-r from-stone-800 to-stone-900 text-white shadow-md scale-[1.02]' : 'bg-stone-100 hover:bg-stone-200 text-stone-600 border border-stone-200/60'}">
+                    <span>${r.name}</span>
                 </button>
             `).join('');
 
+            // 🌟 高級化設計的任務卡片
             let cardsHtml = casesList.map(c => `
-                <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-2xs space-y-3">
+                <div class="bg-white/90 backdrop-blur-md p-5 rounded-2xl border border-stone-200/80 shadow-xs hover:shadow-lg transition-all duration-300 space-y-3.5 group">
                     <div class="flex justify-between items-center text-xs">
-                        <span class="font-mono font-bold text-stone-500">${c.id}</span>
-                        <span class="text-rose-600 font-bold">⚠️ 已滯留 ${c.days} 天</span>
+                        <span class="font-mono font-bold text-stone-400 bg-stone-100 px-2.5 py-1 rounded-lg">${c.id}</span>
+                        <span class="text-rose-600 bg-rose-50 border border-rose-100 px-2.5 py-0.5 rounded-full font-semibold text-[11px]">⚠️ 滯留 ${c.days} 天</span>
                     </div>
-                    <h3 class="font-bold text-stone-900 text-sm">${c.name}</h3>
-                    <button onclick="openModal('handoffModal')" class="w-full py-2 bg-stone-900 hover:bg-ruili-brand text-white rounded-xl text-xs font-bold transition">
-                        執行完畢並交棒
+                    <h3 class="font-bold text-stone-900 text-sm group-hover:text-amber-700 transition-colors">${c.name}</h3>
+                    <button onclick="openModal('handoffModal')" class="w-full py-2.5 bg-gradient-to-r from-stone-800 to-stone-900 hover:from-amber-600 hover:to-amber-700 text-white rounded-xl text-xs font-bold transition-all duration-300 shadow-sm">
+                        <i class="fa-solid fa-arrow-right-arrow-left mr-1.5 opacity-80"></i> 執行完畢並交棒
                     </button>
                 </div>
             `).join('');
 
             container.innerHTML = `
                 <div class="space-y-8">
-                    <!-- 上方：工作看板三大核心主里程碑 -->
+                    <!-- 上方：工作看板三大核心主里程碑 (高質感卡片佈局) -->
                     <div class="space-y-4">
-                        <div class="bg-white p-6 rounded-2xl border border-ruili-border shadow-2xs space-y-2">
-                            <h2 class="text-base font-bold text-stone-900">睿立集團｜工作看板核心流程與交棒總覽</h2>
-                            <p class="text-xs text-stone-500">點擊下方各工作階段的「模擬操作卡片」，即可直接掌控從合約簽核、等候公文到結案收尾的完整流水線。</p>
+                        <div class="bg-gradient-to-br from-white via-stone-50/50 to-stone-100/50 p-6 rounded-3xl border border-stone-200/80 shadow-xs space-y-2">
+                            <h2 class="text-base font-bold text-stone-900 flex items-center">
+                                <i class="fa-solid fa-compass text-amber-600 mr-2.5 text-lg"></i> 睿立集團｜工作看板核心流程與交棒總覽
+                            </h2>
+                            <p class="text-xs text-stone-500 leading-relaxed">點擊下方各工作階段的「模擬操作卡片」，即可直接掌控從合約簽核、等候公文到結案收尾的完整流水線。</p>
                         </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                             
                             <!-- 階段 1：案件簽核 -->
-                            <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-2xs space-y-4 flex flex-col justify-between">
-                                <div class="space-y-2">
+                            <div class="bg-white p-6 rounded-3xl border border-stone-200/80 shadow-xs hover:shadow-xl transition-all duration-300 space-y-5 flex flex-col justify-between group">
+                                <div class="space-y-3">
                                     <div class="flex justify-between items-center">
-                                        <span class="px-2.5 py-0.5 bg-amber-100 text-amber-800 rounded text-[10px] font-bold">階段 1</span>
-                                        <span class="px-2.5 py-0.5 bg-rose-100 text-rose-700 rounded-full text-[10px] font-bold animate-pulse">3 件待簽核</span>
+                                        <span class="px-3 py-1 bg-amber-50 text-amber-800 border border-amber-200/60 rounded-xl text-[11px] font-bold tracking-wide">STAGE 01</span>
+                                        <span class="px-3 py-1 bg-rose-50 text-rose-700 border border-rose-200/60 rounded-full text-[11px] font-bold animate-pulse flex items-center space-x-1">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-rose-500 inline-block"></span>
+                                            <span>3 件待簽核</span>
+                                        </span>
                                     </div>
-                                    <h3 class="font-bold text-stone-900 text-sm">1. 案件簽核 / 受理</h3>
-                                    <p class="text-xs text-stone-500">成交後進行正式合約登錄、條款覆核與跨部門交辦作業啟動。</p>
+                                    <h3 class="font-bold text-stone-900 text-sm group-hover:text-amber-700 transition-colors">1. 案件簽核 / 受理</h3>
+                                    <p class="text-xs text-stone-500 leading-relaxed">成交後進行正式合約登錄、條款覆核與跨部門交辦作業啟動。</p>
                                 </div>
-                                <button onclick="openModal('pendingListModal')" class="w-full py-2.5 bg-stone-900 hover:bg-ruili-brand text-white rounded-xl text-xs font-bold transition">
-                                    <i class="fa-solid fa-file-signature mr-1.5"></i> 秘書待簽核案件
+                                <button onclick="openModal('pendingListModal')" class="w-full py-3 bg-stone-900 hover:bg-stone-800 text-white rounded-xl text-xs font-bold transition-all shadow-sm flex items-center justify-center space-x-2">
+                                    <i class="fa-solid fa-file-signature text-amber-400"></i>
+                                    <span>秘書待簽核案件</span>
                                 </button>
                             </div>
 
                             <!-- 階段 2：待結案專區 -->
-                            <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-2xs space-y-4 flex flex-col justify-between">
-                                <div class="space-y-2">
+                            <div class="bg-white p-6 rounded-3xl border border-stone-200/80 shadow-xs hover:shadow-xl transition-all duration-300 space-y-5 flex flex-col justify-between group">
+                                <div class="space-y-3">
                                     <div class="flex justify-between items-center">
-                                        <span class="px-2.5 py-0.5 bg-purple-100 text-purple-800 rounded text-[10px] font-bold">階段 2</span>
-                                        <span class="px-2.5 py-0.5 bg-purple-100 text-purple-700 rounded-full text-[10px] font-bold">2 件待結案</span>
+                                        <span class="px-3 py-1 bg-purple-50 text-purple-800 border border-purple-200/60 rounded-xl text-[11px] font-bold tracking-wide">STAGE 02</span>
+                                        <span class="px-3 py-1 bg-purple-50 text-purple-700 border border-purple-200/60 rounded-full text-[11px] font-bold flex items-center space-x-1">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-purple-500 inline-block"></span>
+                                            <span>2 件待結案</span>
+                                        </span>
                                     </div>
-                                    <h3 class="font-bold text-stone-900 text-sm">2. 待結案專區</h3>
-                                    <p class="text-xs text-stone-500">所有技術流程拋轉完畢，集中列管等待主管機關核發最後一張公文。</p>
+                                    <h3 class="font-bold text-stone-900 text-sm group-hover:text-purple-700 transition-colors">2. 待結案專區</h3>
+                                    <p class="text-xs text-stone-500 leading-relaxed">所有技術流程拋轉完畢，集中列管等待主管機關核發最後一張公文。</p>
                                 </div>
-                                <button onclick="openModal('pendingClosingListModal')" class="w-full py-2.5 bg-purple-600 hover:opacity-95 text-white rounded-xl text-xs font-bold transition">
-                                    <i class="fa-solid fa-hourglass-half mr-1.5"></i> 待結案專區列表
+                                <button onclick="openModal('pendingClosingListModal')" class="w-full py-3 bg-purple-700 hover:bg-purple-800 text-white rounded-xl text-xs font-bold transition-all shadow-sm flex items-center justify-center space-x-2">
+                                    <i class="fa-solid fa-hourglass-half text-purple-200"></i>
+                                    <span>待結案專區列表</span>
                                 </button>
                             </div>
 
                             <!-- 階段 3：結案收尾流水線 -->
-                            <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-2xs space-y-4 flex flex-col justify-between">
-                                <div class="space-y-2">
-                                    <span class="px-2.5 py-0.5 bg-emerald-100 text-emerald-800 rounded text-[10px] font-bold">階段 3</span>
-                                    <h3 class="font-bold text-stone-900 text-sm">3. 結案收尾流水線</h3>
-                                    <p class="text-xs text-stone-500">收到公文後依序：問發票、發請款單、收款入帳、寄發票、產出結案報告。</p>
+                            <div class="bg-white p-6 rounded-3xl border border-stone-200/80 shadow-xs hover:shadow-xl transition-all duration-300 space-y-5 flex flex-col justify-between group">
+                                <div class="space-y-3">
+                                    <span class="px-3 py-1 bg-emerald-50 text-emerald-800 border border-emerald-200/60 rounded-xl text-[11px] font-bold tracking-wide inline-block">STAGE 03</span>
+                                    <h3 class="font-bold text-stone-900 text-sm group-hover:text-emerald-700 transition-colors">3. 結案收尾流水線</h3>
+                                    <p class="text-xs text-stone-500 leading-relaxed">收到公文後依序：問發票、發請款單、收款入帳、寄發票、產出結案報告。</p>
                                 </div>
-                                <button onclick="openModal('closingPipelineListModal')" class="w-full py-2.5 bg-emerald-600 hover:opacity-95 text-white rounded-xl text-xs font-bold transition">
-                                    <i class="fa-solid fa-flag-checkered mr-1.5"></i> 模擬結案收尾流水線
+                                <button onclick="openModal('closingPipelineListModal')" class="w-full py-3 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl text-xs font-bold transition-all shadow-sm flex items-center justify-center space-x-2">
+                                    <i class="fa-solid fa-flag-checkered text-emerald-200"></i>
+                                    <span>模擬結案收尾流水線</span>
                                 </button>
                             </div>
                         </div>
                     </div>
 
                     <!-- 下方：工作看板 (生產作業執行中) -->
-                    <div class="space-y-4 pt-4 border-t border-stone-200">
-                        <div class="bg-white p-6 rounded-2xl border border-ruili-border shadow-2xs space-y-3">
-                            <h2 class="text-base font-bold text-stone-900">工作看板：跨角色交棒專屬列表 (個人執行清單)</h2>
-                            <p class="text-xs text-stone-500">點擊不同角色分頁，系統會自動將長期進行中且久置未動的案件置頂排序。</p>
-                            <div class="flex flex-wrap gap-2 pt-2">${tabsHtml}</div>
+                    <div class="space-y-5 pt-4 border-t border-stone-200/80">
+                        <div class="bg-white p-6 rounded-3xl border border-stone-200/80 shadow-xs space-y-4">
+                            <div class="flex flex-col md:flex-row md:items-center justify-between gap-2">
+                                <div>
+                                    <h2 class="text-base font-bold text-stone-900 flex items-center">
+                                        <i class="fa-solid fa-users-viewfinder text-stone-700 mr-2.5"></i> 工作看板：跨角色交棒專屬列表
+                                    </h2>
+                                    <p class="text-xs text-stone-500 mt-1">點擊不同角色分頁，系統會自動將長期進行中且久置未動的案件置頂排序。</p>
+                                </div>
+                            </div>
+                            <div class="flex flex-wrap gap-2.5 pt-2">${tabsHtml}</div>
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-4 gap-5">${cardsHtml}</div>
                     </div>
