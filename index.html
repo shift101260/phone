@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>睿立集團｜精密營運管理與動態交棒系統</title>
+    <title>睿立集團｜精密營運管理與工作看板系統</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -53,7 +53,7 @@
                 </button>
                 
                 <button onclick="switchModule('workflow-overview', this)" class="nav-btn w-full flex items-center space-x-3 px-4 py-2.5 rounded-xl hover:bg-stone-800 text-stone-300 transition">
-                    <i class="fa-solid fa-stairs w-5 text-amber-400"></i><span>營運主流程與交棒總覽</span>
+                    <i class="fa-solid fa-list-check w-5 text-amber-400"></i><span>工作看板</span>
                 </button>
 
                 <div class="pt-2 pb-1 px-3 text-[10px] font-bold uppercase tracking-wider text-stone-500">年度案件快速切換</div>
@@ -99,7 +99,7 @@
     </main>
 
     <!-- ========================================== -->
-    <!-- 互動彈窗模板區塊 (對應四大新流程)          -->
+    <!-- 互動彈窗模板區塊                           -->
     <!-- ========================================== -->
 
     <!-- 1. 案件簽核彈窗 -->
@@ -311,7 +311,7 @@
             }
         }
 
-        // 🌟 核心架構：上方四大新營運流程模擬 + 下方跨角色交棒專屬列表 (受理階段)
+        // 🌟 核心架構：上方工作看板四大流程模擬 + 下方跨角色交棒專屬列表 (受理階段)
         function renderWorkflowOverviewWithPipelineView(activeRole) {
             const container = document.getElementById('app-container');
             
@@ -346,11 +346,11 @@
 
             container.innerHTML = `
                 <div class="space-y-8">
-                    <!-- 上方：四大新營運流程總覽 (簽核 ➔ 受理 ➔ 待結案專區 ➔ 結案收尾流水線) -->
+                    <!-- 上方：工作看板四大核心流程模擬 (簽核 ➔ 受理 ➔ 待結案專區 ➔ 結案收尾流水線) -->
                     <div class="space-y-4">
                         <div class="bg-white p-6 rounded-2xl border border-ruili-border shadow-2xs space-y-2">
-                            <h2 class="text-base font-bold text-stone-900">睿立集團 4 大核心營運與交棒流程模擬</h2>
-                            <p class="text-xs text-stone-500">點擊下方各階段的「模擬操作卡片」，即可直接體驗從合約簽核、跨角色交棒、等候公文到結案收尾的完整流水線。</p>
+                            <h2 class="text-base font-bold text-stone-900">睿立集團｜工作看板核心流程與交棒總覽</h2>
+                            <p class="text-xs text-stone-500">點擊下方各工作階段的「模擬操作卡片」，即可直接掌控從合約簽核、受理交棒、等候公文到結案收尾的完整流水線。</p>
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -407,7 +407,7 @@
                     <!-- 下方：受理階段的跨角色交棒專屬列表 -->
                     <div class="space-y-4 pt-4 border-t border-stone-200">
                         <div class="bg-white p-6 rounded-2xl border border-ruili-border shadow-2xs space-y-3">
-                            <h2 class="text-base font-bold text-stone-900">受理階段：跨角色交棒專屬列表 (個人執行清單)</h2>
+                            <h2 class="text-base font-bold text-stone-900">工作看板：跨角色交棒專屬列表 (個人執行清單)</h2>
                             <p class="text-xs text-stone-500">點擊不同角色分頁，系統會自動將長期進行中且久置未動的案件置頂排序。</p>
                             <div class="flex flex-wrap gap-2 pt-2">${tabsHtml}</div>
                         </div>
