@@ -253,15 +253,11 @@
             };
 
             let data = { '2027': [], '2026': [], '2025': [], '2024': [], '2023': [], '2022': [], '2021': [] };
-            let totalCount = 0;
-
-            // 針對各年度分发 200 筆資料 (2026 年為大宗約 120 筆，其餘年份各分佈 10~20 筆)
             const yearDistribution = { '2027': 25, '2026': 115, '2025': 30, '2024': 15, '2023': 10, '2022': 5, '2021': 5 };
 
             for (let yr in yearDistribution) {
                 let count = yearDistribution[yr];
                 for (let i = 1; i <= count; i++) {
-                    totalCount++;
                     let idStr = `${yr}-${String(i).padStart(3, '0')}`;
                     let client = clients[(i + parseInt(yr)) % clients.length];
                     let dist = districts[i % districts.length];
@@ -325,16 +321,8 @@
                         </div>
                     </div>`;
             } else if(moduleName === 'kanban') {
-                container.innerHTML = `
-                    <div class="space-y-6">
-                        <div class="bg-white p-6 rounded-2xl border border-ruili-border shadow-2xs space-y-2">
-                            <h2 class="text-base font-bold text-stone-900">工作看板 SOP</h2>
-                            <p class="text-xs text-stone-500">生產作業標準化流程、案件紅綠燈異常與系統推播預警。</p>
-                            <div class="pt-4 flex gap-3">
-                                <button onclick="openModal('reviewModal')" class="px-4 py-2 bg-stone-800 text-white rounded-xl text-xs font-bold">測試：開啟秘書審查/紙本歸檔與特約填寫彈窗</button>
-                            </div>
-                        </div>
-                    </div>`;
+                // 預設進入工作看板時顯示「版本 A：橫向欄位看板模式」
+                renderKanbanView('kanban-card');
             } else if(moduleName === 'all-cases') {
                 container.innerHTML = `
                     <div class="space-y-6">
@@ -351,7 +339,6 @@
                         </div>
 
                         <div class="bg-white rounded-2xl border border-stone-200 shadow-2xs overflow-hidden">
-                            <!-- 設定 max-h-[600px] 與 overflow-y-auto，確保 200 筆資料捲動順暢 -->
                             <div class="overflow-x-auto max-h-[600px] overflow-y-auto">
                                 <table class="w-full text-left text-xs min-w-[700px]">
                                     <thead class="sticky top-0 bg-stone-50 z-10 shadow-xs">
@@ -394,6 +381,183 @@
                         </div>
                     </div>`;
             }
+        }
+
+        // 🌟 渲染工作看板（支援切換為 版本A: 橫向卡片流 或 版本B: 列表清單）
+        function renderKanbanView(mode) {
+            const container = document.getElementById('app-container');
+
+            if (mode === 'kanban-card') {
+                container.innerHTML = `
+                    <div class="space-y-4 h-[calc(100vh-100px)] flex flex-col">
+                        <div class="bg-white p-5 rounded-2xl border border-ruili-border shadow-2xs flex flex-col md:flex-row md:items-center justify-between gap-4 shrink-0">
+                            <div>
+                                <h2 class="text-base font-bold text-stone-950">工作看板 SOP 執行與控管</h2>
+                                <p class="text-xs text-stone-500">版本 A：橫向欄位卡片流，各階段獨立垂直捲動，全面掌握 200 筆案件分流。</p>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <button onclick="renderKanbanView('kanban-card')" class="px-3 py-1.5 bg-ruili-brand text-white rounded-xl text-xs font-bold shadow-xs">橫向卡片流</button>
+                                <button onclick="renderKanbanView('table-list')" class="px-3 py-1.5 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded-xl text-xs font-bold transition">高效清單列表</button>
+                            </div>
+                        </div>
+
+                        <!-- 橫向看板容器 -->
+                        <div class="flex-1 overflow-x-auto overflow-y-hidden pb-4">
+                            <div class="flex gap-6 h-full min-w-[1200px]">
+                                <!-- 欄位 1 -->
+                                <div class="w-80 bg-stone-100/90 rounded-2xl border border-stone-200 flex flex-col h-full shadow-xs">
+                                    <div class="p-4 border-b border-stone-200 flex justify-between items-center bg-stone-200/60 rounded-t-2xl shrink-0">
+                                        <span class="font-bold text-xs text-stone-800 flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span> 1. 秘書建檔/審查</span>
+                                        <span class="bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded-md">階段控管</span>
+                                    </div>
+                                    <div class="p-3 flex-1 overflow-y-auto space-y-3" id="k-col-1"></div>
+                                </div>
+                                <!-- 欄位 2 -->
+                                <div class="w-80 bg-stone-100/90 rounded-2xl border border-stone-200 flex flex-col h-full shadow-xs">
+                                    <div class="p-4 border-b border-stone-200 flex justify-between items-center bg-stone-200/60 rounded-t-2xl shrink-0">
+                                        <span class="font-bold text-xs text-stone-800 flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span> 2. 生產作業執行中</span>
+                                        <span class="bg-blue-100 text-blue-800 text-[10px] font-bold px-2 py-0.5 rounded-md">SOP 進行中</span>
+                                    </div>
+                                    <div class="p-3 flex-1 overflow-y-auto space-y-3" id="k-col-2"></div>
+                                </div>
+                                <!-- 欄位 3 -->
+                                <div class="w-80 bg-stone-100/90 rounded-2xl border border-stone-200 flex flex-col h-full shadow-xs">
+                                    <div class="p-4 border-b border-stone-200 flex justify-between items-center bg-stone-200/60 rounded-t-2xl shrink-0">
+                                        <span class="font-bold text-xs text-stone-800 flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-purple-500"></span> 3. 階段請款/會計</span>
+                                        <span class="bg-purple-100 text-purple-800 text-[10px] font-bold px-2 py-0.5 rounded-md">會計對帳</span>
+                                    </div>
+                                    <div class="p-3 flex-1 overflow-y-auto space-y-3" id="k-col-3"></div>
+                                </div>
+                                <!-- 欄位 4 -->
+                                <div class="w-80 bg-stone-100/90 rounded-2xl border border-stone-200 flex flex-col h-full shadow-xs">
+                                    <div class="p-4 border-b border-stone-200 flex justify-between items-center bg-stone-200/60 rounded-t-2xl shrink-0">
+                                        <span class="font-bold text-xs text-stone-800 flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> 4. 準備結案/歸檔</span>
+                                        <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-md">產出 PDF</span>
+                                    </div>
+                                    <div class="p-3 flex-1 overflow-y-auto space-y-3" id="k-col-4"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                // 填入 200 筆卡片
+                populateKanbanCards();
+
+            } else {
+                container.innerHTML = `
+                    <div class="space-y-4 h-[calc(100vh-100px)] flex flex-col">
+                        <div class="bg-white p-5 rounded-2xl border border-ruili-border shadow-2xs flex flex-col md:flex-row md:items-center justify-between gap-4 shrink-0">
+                            <div>
+                                <h2 class="text-base font-bold text-stone-950">工作看板清單模式</h2>
+                                <p class="text-xs text-stone-500">版本 B：高效清單列表，支援即時過濾、勾選與快速檢索 200 筆案件。</p>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <div class="flex items-center space-x-2">
+                                    <button onclick="renderKanbanView('kanban-card')" class="px-3 py-1.5 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded-xl text-xs font-bold transition">橫向卡片流</button>
+                                    <button onclick="renderKanbanView('table-list')" class="px-3 py-1.5 bg-ruili-brand text-white rounded-xl text-xs font-bold shadow-xs">高效清單列表</button>
+                                </div>
+                                <div class="relative">
+                                    <input type="text" id="kanban-search-input" oninput="filterKanbanTable()" placeholder="快速搜尋..." class="px-3 py-1.5 pl-8 text-xs border border-stone-300 rounded-xl w-48 focus:outline-none">
+                                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-stone-400 text-xs"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 表格容器 -->
+                        <div class="flex-1 bg-white rounded-2xl border border-stone-200 shadow-xs overflow-hidden flex flex-col">
+                            <div class="overflow-y-auto flex-1">
+                                <table class="w-full text-left text-xs">
+                                    <thead class="bg-stone-50 sticky top-0 border-b border-stone-200 text-stone-500 font-medium z-10">
+                                        <tr>
+                                            <th class="py-3 px-4 w-10 text-center"><input type="checkbox"></th>
+                                            <th class="py-3 px-4">案件編號</th>
+                                            <th class="py-3 px-4">客戶與案名</th>
+                                            <th class="py-3 px-4">服務細項</th>
+                                            <th class="py-3 px-4">SOP 目前進度階段</th>
+                                            <th class="py-3 px-4">簽約金額</th>
+                                            <th class="py-3 px-4">備註說明</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="kanban-table-tbody" class="divide-y divide-stone-100">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                populateKanbanTable();
+            }
+        }
+
+        function populateKanbanCards() {
+            const clients = ['張董事長', '黃總經理', '林董', '陳小姐', '何董', '吳律師', '趙伯伯', '周代書', '劉董'];
+            const services = ['土地變更', '特定工廠專用區', '綠能申設', '資產顧問', '土地重劃'];
+            const colMap = { 0: 'k-col-1', 1: 'k-col-2', 2: 'k-col-3', 3: 'k-col-4' };
+
+            for (let i = 1; i <= 200; i++) {
+                let colIndex = i % 4;
+                let targetCol = document.getElementById(colMap[colIndex]);
+                if (!targetCol) continue;
+                let client = clients[i % clients.length];
+                let srv = services[i % services.length];
+                let amount = ((i % 10) + 1) * 300000;
+
+                let card = document.createElement('div');
+                card.className = "bg-white p-3.5 rounded-xl border border-stone-200 shadow-2xs space-y-2 hover:border-stone-400 transition cursor-pointer";
+                card.innerHTML = `
+                    <div class="flex justify-between items-center text-[10px] text-stone-400">
+                        <span class="font-mono font-bold text-stone-600">2026-${String(i).padStart(3, '0')}</span>
+                        <span class="px-2 py-0.5 bg-stone-100 rounded text-stone-600">${srv}</span>
+                    </div>
+                    <div class="font-bold text-stone-900 text-xs">${client} 專案委託</div>
+                    <div class="flex justify-between items-center pt-1 border-t border-stone-100 text-xs">
+                        <span class="text-stone-500 text-[11px]">合約金額</span>
+                        <span class="font-bold text-ruili-brand">NT$ ${amount.toLocaleString()}</span>
+                    </div>
+                `;
+                targetCol.appendChild(card);
+            }
+        }
+
+        function populateKanbanTable() {
+            const clients = ['張董事長', '黃總經理', '林董', '陳小姐', '何董', '吳律師', '趙伯伯', '周代書', '劉董'];
+            const services = ['土地變更', '特定工廠專用區', '綠能申設', '資產顧問', '土地重劃'];
+            const stages = ['1. 秘書建檔/審查', '2. 生產作業執行中', '3. 階段請款/會計', '4. 準備結案/歸檔'];
+            const tbody = document.getElementById('kanban-table-tbody');
+            if (!tbody) return;
+
+            let html = '';
+            for (let i = 1; i <= 200; i++) {
+                let idStr = `2026-${String(i).padStart(3, '0')}`;
+                let client = clients[i % clients.length];
+                let srv = services[i % services.length];
+                let stage = stages[i % stages.length];
+                let amount = ((i % 10) + 1) * 300000;
+
+                html += `
+                    <tr class="hover:bg-stone-50/80 transition kanban-list-row" data-keyword="${idStr} ${client} ${srv} ${stage}">
+                        <td class="py-3 px-4 text-center"><input type="checkbox" class="rounded border-stone-300"></td>
+                        <td class="py-3 px-4 font-mono font-bold text-stone-600">${idStr}</td>
+                        <td class="py-3 px-4 font-bold text-stone-900">${client} (${srv}專案)</td>
+                        <td class="py-3 px-4 text-stone-600">${srv}</td>
+                        <td class="py-3 px-4"><span class="px-2.5 py-1 bg-stone-100 text-stone-700 rounded-lg text-[11px] font-bold">${stage}</span></td>
+                        <td class="py-3 px-4 font-bold text-ruili-brand">NT$ ${amount.toLocaleString()}</td>
+                        <td class="py-3 px-4 text-stone-400">標準作業程序正常推進中</td>
+                    </tr>
+                `;
+            }
+            tbody.innerHTML = html;
+        }
+
+        function filterKanbanTable() {
+            let keyword = document.getElementById('kanban-search-input').value.toLowerCase();
+            let rows = document.querySelectorAll('.kanban-list-row');
+            rows.forEach(row => {
+                let text = row.getAttribute('data-keyword').toLowerCase();
+                row.style.display = text.includes(keyword) ? '' : 'none';
+            });
         }
 
         function renderAllCasesRows() {
@@ -464,12 +628,11 @@
                             </div>
                             <span class="px-2.5 py-0.5 rounded-md text-[11px] font-bold ${sec.badge} section-badge">${filtered.length} 件</span>
                         </div>
-                        <!-- 設定 max-h-[400px] 與 overflow-y-auto，單一區塊案件過多時可獨立捲動 -->
                         <div class="overflow-x-auto max-h-[400px] overflow-y-auto">
                             <table class="w-full text-left text-xs min-w-[700px]">
                                 <thead class="sticky top-0 bg-white z-10 shadow-xs">
                                     <tr class="border-b border-stone-100 text-stone-400 font-medium">
-                                        <th class="py-2.5 px-4 w-10 text-center"><input type="checkbox" onclick="toggleSelectAll(this, '${sec.key}')" class="rounded border-stone-300"></th>
+                                        <th class="py-2.5 px-4 w-10 text-center"><input type="checkbox" class="rounded border-stone-300"></th>
                                         <th class="py-2.5 px-4 whitespace-nowrap">客戶名稱與案名</th>
                                         <th class="py-2.5 px-4 whitespace-nowrap">服務細項</th>
                                         <th class="py-2.5 px-4 whitespace-nowrap">工作進度</th>
@@ -520,13 +683,6 @@
                 const text = row.getAttribute('data-keyword').toLowerCase();
                 row.style.display = text.includes(keyword) ? '' : 'none';
             });
-        }
-
-        function toggleSelectAll(masterCheckbox, sectionKey) {
-            const tbody = document.querySelector(`.section-tbody-${sectionKey}`);
-            if(!tbody) return;
-            const checkboxes = tbody.querySelectorAll('.case-checkbox');
-            checkboxes.forEach(cb => cb.checked = masterCheckbox.checked);
         }
 
         function toggleSidebar() {
