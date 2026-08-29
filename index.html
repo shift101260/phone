@@ -110,14 +110,14 @@
     </main>
 
     <!-- ========================================== -->
-    <!-- 互動彈窗模板區塊 (報價與秘書審查)         -->
+    <!-- 互動彈窗模板區塊                           -->
     <!-- ========================================== -->
 
     <!-- 1. 線上報價單填寫與一鍵輸出 PDF 預覽彈窗 -->
     <div id="quoteModal" class="fixed inset-0 bg-black/60 backdrop-blur-xs hidden flex items-center justify-center z-50 p-4 overflow-y-auto">
         <div class="bg-white w-full max-w-3xl rounded-2xl shadow-2xl overflow-hidden border border-stone-200 my-8">
             <div class="bg-[#2C2A29] text-white px-6 py-4 flex justify-between items-center print:hidden">
-                <h3 class="font-bold text-sm"><i class="fa-solid fa-file-lines text-ruili-brand mr-2"></i> 專案線上報價單（可直接填寫並一鍵輸出）</h3>
+                <h3 class="font-bold text-sm"><i class="fa-solid fa-file-lines text-ruili-brand mr-2"></i> 專案線上報價單（保留原始報價紀錄）</h3>
                 <div class="flex items-center space-x-3">
                     <button onclick="window.print()" class="bg-ruili-brand hover:opacity-90 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition"><i class="fa-solid fa-print mr-1"></i> 列印 / 轉存 PDF 蓋大小章</button>
                     <button onclick="closeModal('quoteModal')" class="text-stone-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
@@ -151,7 +151,7 @@
                             <tr class="bg-stone-100 text-stone-600 text-xs uppercase border-b border-stone-200">
                                 <th class="p-3">專業服務項目與說明</th>
                                 <th class="p-3 text-center">預估天數/期程</th>
-                                <th class="p-3 text-right">預估金額 (NT$)</th>
+                                <th class="p-3 text-right">預估報價金額 (NT$)</th>
                             </tr>
                         </thead>
                         <tbody class="text-xs divide-y divide-stone-100">
@@ -168,32 +168,41 @@
                         <div class="flex justify-between text-stone-600"><span>預估總計：</span><span>NT$ 3,500,000</span></div>
                         <div class="flex justify-between text-stone-600"><span>營業稅 5%：</span><span>NT$ 175,000</span></div>
                         <div class="flex justify-between text-stone-900 font-bold text-sm pt-2 border-t border-stone-300">
-                            <span>報價總金額含稅：</span><span class="text-ruili-brand text-base">NT$ 3,675,000</span>
+                            <span>原始報價總額含稅：</span><span class="text-ruili-brand text-base">NT$ 3,675,000</span>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="bg-stone-50 px-6 py-4 border-t border-stone-200 flex justify-between items-center print:hidden">
-                <span class="text-xs text-stone-500">提示：此報價單可一鍵輸出 PDF 傳給秘書列印並蓋上公司大小章。</span>
+                <span class="text-xs text-stone-500">提示：送出後原始報價金額將封存保留，供後續比對。</span>
                 <div class="flex space-x-3">
                     <button onclick="closeModal('quoteModal')" class="px-4 py-2 bg-stone-200 text-stone-700 rounded-xl text-xs">關閉</button>
-                    <button onclick="alert('✅ 報價單已成功封存！若客戶確認將可一鍵拋轉至簽約案件。'); closeModal('quoteModal');" class="px-5 py-2 bg-ruili-brand hover:opacity-90 text-white rounded-xl text-xs font-bold transition shadow-xs">確認並拋轉至簽約案件</button>
+                    <button onclick="alert('✅ 原始報價單已封存，並可獨立拋轉至簽約案件！'); closeModal('quoteModal');" class="px-5 py-2 bg-ruili-brand hover:opacity-90 text-white rounded-xl text-xs font-bold transition shadow-xs">確認並拋轉至簽約案件</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- 2. 秘書建檔與審查彈窗（處理報價金額 vs 簽約金額不同、填寫特約內容） -->
+    <!-- 2. 秘書建檔與審查彈窗（舊報價保留、填寫正式合約金額、特約與上傳掃描檔） -->
     <div id="reviewModal" class="fixed inset-0 bg-black/50 backdrop-blur-xs hidden flex items-center justify-center z-50 p-4">
         <div class="bg-white w-full max-w-xl rounded-2xl shadow-2xl overflow-hidden border border-stone-200">
             <div class="bg-[#2C2A29] text-white px-6 py-4 flex justify-between items-center">
-                <h3 class="font-bold text-sm"><i class="fa-solid fa-file-signature text-ruili-brand mr-2"></i> 秘書建檔與代書審查作業（合約金額與特約填載）</h3>
+                <h3 class="font-bold text-sm"><i class="fa-solid fa-file-signature text-ruili-brand mr-2"></i> 秘書紙本歸檔與合約登錄作業</h3>
                 <button onclick="closeModal('reviewModal')" class="text-stone-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
             <div class="p-6 space-y-4 text-xs text-stone-700">
-                <div class="p-3 bg-amber-50 rounded-xl border border-amber-200 text-amber-900 font-medium">
-                    ℹ️ 提示：原始線上報價金額與正式合約金額可能不同。請秘書依據紙本合約填寫下方的**實際簽約金額**與**特別約定條款**。
+                <!-- 資訊對照提示 -->
+                <div class="grid grid-cols-2 gap-3 p-3 bg-stone-50 rounded-xl border border-stone-200">
+                    <div>
+                        <span class="text-stone-400 block text-[11px]">原報價金額（已封存保留）：</span>
+                        <strong class="text-stone-700 text-sm">NT$ 3,675,000</strong>
+                    </div>
+                    <div>
+                        <span class="text-stone-400 block text-[11px]">原報價特約狀態：</span>
+                        <span class="text-stone-600 font-medium">無特別約定</span>
+                    </div>
                 </div>
+
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label class="font-bold block mb-1 text-stone-900">正式簽約日期：</label>
@@ -204,21 +213,32 @@
                         <input type="text" value="3,800,000" class="w-full bg-stone-50 border border-stone-300 rounded-xl p-2.5 text-xs focus:outline-none font-bold text-rose-700">
                     </div>
                 </div>
+
                 <div>
                     <label class="font-bold block mb-1 text-stone-900">特別約定條款 (特約內容填載)：</label>
-                    <textarea class="w-full bg-stone-50 border border-stone-300 rounded-xl p-3 h-20 text-xs focus:outline-none font-medium">須於 3 個月內取得初審同意書，逾期罰則依合約辦理。包含指定代書協同辦理。</textarea>
+                    <textarea class="w-full bg-stone-50 border border-stone-300 rounded-xl p-3 h-16 text-xs focus:outline-none font-medium">須於 3 個月內取得初審同意書，逾期罰則依合約辦理。包含指定代書協同辦理。</textarea>
+                </div>
+
+                <div>
+                    <label class="font-bold block mb-1 text-stone-900">紙本合約掃描檔上傳 (大小章確認)：</label>
+                    <div class="flex items-center space-x-3 bg-stone-50 border border-dashed border-stone-300 rounded-xl p-3">
+                        <i class="fa-solid fa-cloud-arrow-up text-lg text-ruili-brand"></i>
+                        <div class="flex-1 text-[11px] text-stone-500">
+                            已上傳：<span class="text-stone-900 font-bold">Contract_Signed_20260615.pdf</span> (已蓋大小章)
+                        </div>
+                        <button type="button" class="px-2.5 py-1 bg-stone-200 hover:bg-stone-300 text-stone-700 rounded-lg font-bold">重新上傳</button>
+                    </div>
                 </div>
             </div>
             <div class="bg-stone-50 px-6 py-3 border-t border-stone-200 flex justify-end space-x-3">
                 <button onclick="closeModal('reviewModal')" class="px-4 py-2 bg-stone-200 text-stone-700 rounded-xl text-xs font-medium">取消</button>
-                <button onclick="submitReviewAction(this)" class="px-4 py-2 bg-ruili-brand text-white rounded-xl text-xs font-medium shadow-2xs">確認無誤並推進</button>
+                <button onclick="submitReviewAction(this)" class="px-4 py-2 bg-ruili-brand text-white rounded-xl text-xs font-medium shadow-2xs">確認歸檔並推進案件</button>
             </div>
         </div>
     </div>
 
     <!-- 頁面切換與控制邏輯 -->
     <script>
-        // 模擬全集團案件資料庫
         let globalCasesData = {
             '2027': [
                 { id: '2027-01', name: '烏日區未來產業專區', client: '何董事長', service: '土地變更', progress: '評估中', amount: 'NT$ 3,000,000', note: '審查準備中', status: '案件評估' }
@@ -239,7 +259,6 @@
             '2021': []
         };
 
-        // 🌟 通用 Modal 開關控制
         function openModal(modalId) {
             const modal = document.getElementById(modalId);
             if (modal) modal.classList.remove('hidden');
@@ -252,10 +271,10 @@
 
         function submitReviewAction(btn) {
             const originalText = btn.innerHTML;
-            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-1"></i> 處理中...`;
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-1"></i> 紙本歸檔與資料寫入中...`;
             btn.disabled = true;
             setTimeout(() => {
-                alert('✅ 審查通過！正式簽約金額與特約已寫入系統。');
+                alert('✅ 紙本合約歸檔完成！原始報價已完整保留，正式合約金額、特約與掃描檔已成功入庫。');
                 btn.innerHTML = originalText;
                 btn.disabled = false;
                 closeModal('reviewModal');
@@ -289,7 +308,7 @@
                             <h2 class="text-base font-bold text-stone-900">工作看板 SOP</h2>
                             <p class="text-xs text-stone-500">生產作業標準化流程、案件紅綠燈異常與系統推播預警。</p>
                             <div class="pt-4 flex gap-3">
-                                <button onclick="openModal('reviewModal')" class="px-4 py-2 bg-stone-800 text-white rounded-xl text-xs font-bold">測試：開啟秘書審查/特約填寫彈窗</button>
+                                <button onclick="openModal('reviewModal')" class="px-4 py-2 bg-stone-800 text-white rounded-xl text-xs font-bold">測試：開啟秘書審查/紙本歸檔與特約填寫彈窗</button>
                             </div>
                         </div>
                     </div>`;
@@ -458,7 +477,7 @@
                                 <i class="fa-solid fa-plus text-[10px]"></i> 新增報價
                             </button>
                             <button onclick="openModal('reviewModal')" class="px-3 py-1.5 bg-stone-800 hover:bg-stone-700 text-white rounded-xl text-xs font-bold transition flex items-center gap-1">
-                                <i class="fa-solid fa-signature text-[10px]"></i> 審查/特約
+                                <i class="fa-solid fa-signature text-[10px]"></i> 紙本歸檔/特約
                             </button>
                         </div>
                     </div>
