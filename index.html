@@ -42,7 +42,7 @@
                 <div class="bg-ruili-brand text-white w-10 h-10 rounded-xl flex items-center justify-center font-bold text-xl shadow-xs">睿</div>
                 <div>
                     <h1 class="text-white font-bold tracking-wider text-sm">睿立集團</h1>
-                    <p class="text-[10px] text-stone-400">RUILI Group ERP</p>
+                    <p class="text-[10px] text-stone-400">RUILI Group ERP (200+ Cases)</p>
                 </div>
             </div>
             
@@ -53,16 +53,16 @@
                 </button>
                 
                 <button onclick="switchModule('kanban', this)" class="nav-btn w-full flex items-center space-x-3 px-4 py-2.5 rounded-xl hover:bg-stone-800 text-stone-300 transition">
-                    <i class="fa-solid fa-list-check w-5"></i><span>工作看板</span>
+                    <i class="fa-solid fa-list-check w-5"></i><span>工作看板 SOP</span>
                 </button>
 
                 <button onclick="switchModule('all-cases', this)" class="nav-btn w-full flex items-center space-x-3 px-4 py-2.5 rounded-xl hover:bg-stone-800 text-stone-300 transition">
-                    <i class="fa-solid fa-layer-group w-5 text-amber-500"></i><span>全集團案件總覽</span>
+                    <i class="fa-solid fa-layer-group w-5 text-amber-500"></i><span>全集團案件總覽 (200+)</span>
                 </button>
 
                 <div class="pt-2 pb-1 px-3 text-[10px] font-bold uppercase tracking-wider text-stone-500">年度案件快速切換</div>
                 <button onclick="switchModule('year-2027', this)" class="nav-btn w-full flex items-center space-x-3 px-4 py-2 rounded-xl hover:bg-stone-800 text-stone-300 transition"><i class="fa-solid fa-folder w-4 ml-1"></i><span>2027 案件管理</span></button>
-                <button onclick="switchModule('year-2026', this)" class="nav-btn w-full flex items-center space-x-3 px-4 py-2 rounded-xl hover:bg-stone-800 text-stone-300 transition"><i class="fa-solid fa-folder w-4 ml-1"></i><span>2026 案件管理</span></button>
+                <button onclick="switchModule('year-2026', this)" class="nav-btn w-full flex items-center space-x-3 px-4 py-2 rounded-xl hover:bg-stone-800 text-stone-300 transition"><i class="fa-solid fa-folder w-4 ml-1"></i><span>2026 案件管理 (大宗)</span></button>
                 <button onclick="switchModule('year-2025', this)" class="nav-btn w-full flex items-center space-x-3 px-4 py-2 rounded-xl hover:bg-stone-800 text-stone-300 transition"><i class="fa-solid fa-folder w-4 ml-1"></i><span>2025 案件管理</span></button>
                 <button onclick="switchModule('year-2024', this)" class="nav-btn w-full flex items-center space-x-3 px-4 py-2 rounded-xl hover:bg-stone-800 text-stone-300 transition"><i class="fa-solid fa-folder w-4 ml-1"></i><span>2024 案件管理</span></button>
                 <button onclick="switchModule('year-2023', this)" class="nav-btn w-full flex items-center space-x-3 px-4 py-2 rounded-xl hover:bg-stone-800 text-stone-300 transition"><i class="fa-solid fa-folder w-4 ml-1"></i><span>2023 案件管理</span></button>
@@ -146,7 +146,7 @@
                     </div>
                 </div>
                 <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse">
+                    <table class="w-full text-left border-collapse min-w-[500px]">
                         <thead>
                             <tr class="bg-stone-100 text-stone-600 text-xs uppercase border-b border-stone-200">
                                 <th class="p-3">專業服務項目與說明</th>
@@ -191,7 +191,6 @@
                 <button onclick="closeModal('reviewModal')" class="text-stone-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
             <div class="p-6 space-y-4 text-xs text-stone-700">
-                <!-- 資訊對照提示 -->
                 <div class="grid grid-cols-2 gap-3 p-3 bg-stone-50 rounded-xl border border-stone-200">
                     <div>
                         <span class="text-stone-400 block text-[11px]">原報價金額（已封存保留）：</span>
@@ -239,25 +238,49 @@
 
     <!-- 頁面切換與控制邏輯 -->
     <script>
-        let globalCasesData = {
-            '2027': [
-                { id: '2027-01', name: '烏日區未來產業專區', client: '何董事長', service: '土地變更', progress: '評估中', amount: 'NT$ 3,000,000', note: '審查準備中', status: '案件評估' }
-            ],
-            '2026': [
-                { id: '2026-01', name: '大雅區農地變更專案', client: '張先生', service: '農地變更', progress: '簽約中', amount: 'NT$ 2,500,000', note: '預計118通檢', status: '簽約案件' },
-                { id: '2026-02', name: '烏日區工廠合法化', client: '黃董事長', service: '特定工廠專用區', progress: '評估中', amount: 'NT$ 2,070,000', note: '廠房打掉重蓋，太陽能自建', status: '案件評估' },
-                { id: '2026-03', name: '潭子區綠能用地申設', client: '林總經理', service: '綠能申設', progress: '結案歸檔', amount: 'NT$ 1,500,000', note: '已完成全數審查', status: '結案中心' },
-                { id: '2026-04', name: '西屯區資產配置顧問', client: '陳小姐', service: '資產顧問', progress: '失敗', amount: 'NT$ 0', note: '客戶端暫緩投資', status: '失敗案件' },
-                { id: '2026-05', name: '北屯區土地重劃案', client: '王董', service: '土地重劃', progress: '廢件', amount: 'NT$ 0', note: '條件不符撤案', status: '廢件專區' }
-            ],
-            '2025': [
-                { id: '2025-01', name: '潭子綠能廠房申設', client: '林總經理', service: '綠能申設', progress: '已結案', amount: 'NT$ 1,800,000', note: '完美結案', status: '結案中心' }
-            ],
-            '2024': [],
-            '2023': [],
-            '2022': [],
-            '2021': []
-        };
+        // 🌟 自動生成 200 筆模擬案件的大型集團資料庫
+        function generateMockCases() {
+            const statuses = ['簽約案件', '案件評估', '結案中心', '廢件專區', '失敗案件'];
+            const services = ['土地變更', '特定工廠專用區', '綠能申設', '資產顧問', '土地重劃'];
+            const clients = ['張董事長', '黃總經理', '林董', '陳小姐', '何董', '吳律師', '趙伯伯', '周代書', '鄭主委', '劉董'];
+            const districts = ['烏日區', '大雅區', '潭子區', '西屯區', '北屯區', '沙鹿區', '員林市', '安南區', '竹北市', '桃園區'];
+            const progresses = {
+                '簽約案件': ['簽約中', '規劃中', '送件審查', '補件處理中'],
+                '案件評估': ['評估中', '初步場勘', '地政士聯審'],
+                '結案中心': ['結案歸檔', '已完工交件', '完美結案'],
+                '廢件專區': ['條件不符撤案', '期滿未補件', '主動撤銷'],
+                '失敗案件': ['客戶端暫緩投資', '競標未得標', '預算未過']
+            };
+
+            let data = { '2027': [], '2026': [], '2025': [], '2024': [], '2023': [], '2022': [], '2021': [] };
+            let totalCount = 0;
+
+            // 針對各年度分发 200 筆資料 (2026 年為大宗約 120 筆，其餘年份各分佈 10~20 筆)
+            const yearDistribution = { '2027': 25, '2026': 115, '2025': 30, '2024': 15, '2023': 10, '2022': 5, '2021': 5 };
+
+            for (let yr in yearDistribution) {
+                let count = yearDistribution[yr];
+                for (let i = 1; i <= count; i++) {
+                    totalCount++;
+                    let idStr = `${yr}-${String(i).padStart(3, '0')}`;
+                    let client = clients[(i + parseInt(yr)) % clients.length];
+                    let dist = districts[i % districts.length];
+                    let srv = services[i % services.length];
+                    let name = `${dist}${client.substring(0, 1)}${srv}專案第${i}號`;
+                    let status = statuses[i % statuses.length];
+                    let progList = progresses[status];
+                    let progress = progList[i % progList.length];
+                    let amountNum = status === '廢件專區' || status === '失敗案件' ? 0 : ((i % 15) + 1) * 300000;
+                    let amount = `NT$ ${amountNum.toLocaleString()}`;
+                    let note = status === '結案中心' ? '全數審查完畢，結案報告已產出' : (status === '簽約案件' ? '合規審查中，定期追蹤進度' : '等待後續補件與法規確認');
+
+                    data[yr].push({ id: idStr, name: name, client: client, service: srv, progress: progress, amount: amount, note: note, status: status });
+                }
+            }
+            return data;
+        }
+
+        let globalCasesData = generateMockCases();
 
         function openModal(modalId) {
             const modal = document.getElementById(modalId);
@@ -298,7 +321,7 @@
                     <div class="space-y-6">
                         <div class="bg-white p-6 rounded-2xl border border-ruili-border shadow-2xs space-y-2">
                             <h2 class="text-base font-bold text-stone-900">戰情室總覽</h2>
-                            <p class="text-xs text-stone-500">掌握集團整體 YoY 財報、營運案件數與跨通路效益分析。</p>
+                            <p class="text-xs text-stone-500">掌握集團整體 YoY 財報、營運案件數（現有 200+ 筆案件）與跨通路效益分析。</p>
                         </div>
                     </div>`;
             } else if(moduleName === 'kanban') {
@@ -318,26 +341,27 @@
                         <div class="bg-white p-6 rounded-2xl border border-ruili-border shadow-2xs space-y-3">
                             <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
                                 <div>
-                                    <h2 class="text-base font-bold text-stone-900">全集團案件總覽</h2>
-                                    <p class="text-xs text-stone-500">跨年份集中檢索所有歷史與進行中案件，掌握全局脈動。</p>
+                                    <h2 class="text-base font-bold text-stone-900">全集團案件總覽 (超過 200 筆資料庫)</h2>
+                                    <p class="text-xs text-stone-500">跨年份集中檢索所有歷史與進行中案件，支援全域關鍵字即時過濾。</p>
                                 </div>
                                 <div class="flex items-center space-x-2">
-                                    <input type="text" id="global-search-input" oninput="filterGlobalCases()" placeholder="全集團關鍵字搜尋..." class="px-3 py-1.5 text-xs border border-stone-200 rounded-xl focus:outline-none focus:border-stone-400 w-48">
+                                    <input type="text" id="global-search-input" oninput="filterGlobalCases()" placeholder="全集團關鍵字搜尋..." class="px-3 py-1.5 text-xs border border-stone-200 rounded-xl focus:outline-none focus:border-stone-400 w-56">
                                 </div>
                             </div>
                         </div>
 
                         <div class="bg-white rounded-2xl border border-stone-200 shadow-2xs overflow-hidden">
-                            <div class="overflow-x-auto">
-                                <table class="w-full text-left text-xs">
-                                    <thead>
-                                        <tr class="bg-stone-50/60 border-b border-stone-200 text-stone-400 font-medium">
+                            <!-- 設定 max-h-[600px] 與 overflow-y-auto，確保 200 筆資料捲動順暢 -->
+                            <div class="overflow-x-auto max-h-[600px] overflow-y-auto">
+                                <table class="w-full text-left text-xs min-w-[700px]">
+                                    <thead class="sticky top-0 bg-stone-50 z-10 shadow-xs">
+                                        <tr class="border-b border-stone-200 text-stone-400 font-medium">
                                             <th class="py-3 px-4">年度</th>
-                                            <th class="py-3 px-4">客戶名稱</th>
-                                            <th class="py-3 px-4">服務細項</th>
-                                            <th class="py-3 px-4">工作進度</th>
-                                            <th class="py-3 px-4">簽約金額</th>
-                                            <th class="py-3 px-4">目前狀態</th>
+                                            <th class="py-3 px-4 whitespace-nowrap">客戶名稱與案名</th>
+                                            <th class="py-3 px-4 whitespace-nowrap">服務細項</th>
+                                            <th class="py-3 px-4 whitespace-nowrap">工作進度</th>
+                                            <th class="py-3 px-4 whitespace-nowrap">簽約金額</th>
+                                            <th class="py-3 px-4 whitespace-nowrap">目前狀態</th>
                                         </tr>
                                     </thead>
                                     <tbody id="global-cases-tbody" class="divide-y divide-stone-100">
@@ -379,11 +403,11 @@
                     html += `
                         <tr class="hover:bg-stone-50/80 case-row-item" data-keyword="${c.client} ${c.name} ${c.service} ${c.note}">
                             <td class="py-3 px-4 text-stone-500 font-bold">${yr}</td>
-                            <td class="py-3 px-4 text-stone-900 font-semibold">${c.client} (${c.name})</td>
-                            <td class="py-3 px-4 text-stone-600">${c.service}</td>
-                            <td class="py-3 px-4"><span class="px-2 py-0.5 bg-stone-100 text-stone-700 rounded-md text-[11px]">${c.progress}</span></td>
-                            <td class="py-3 px-4 text-stone-900 font-bold">${c.amount}</td>
-                            <td class="py-3 px-4"><span class="px-2 py-0.5 bg-blue-50 text-blue-700 border border-blue-200 rounded-md text-[11px] font-bold">${c.status}</span></td>
+                            <td class="py-3 px-4 text-stone-900 font-semibold whitespace-nowrap">${c.client} (${c.name})</td>
+                            <td class="py-3 px-4 text-stone-600 whitespace-nowrap">${c.service}</td>
+                            <td class="py-3 px-4 whitespace-nowrap"><span class="px-2 py-0.5 bg-stone-100 text-stone-700 rounded-md text-[11px]">${c.progress}</span></td>
+                            <td class="py-3 px-4 text-stone-900 font-bold whitespace-nowrap">${c.amount}</td>
+                            <td class="py-3 px-4 whitespace-nowrap"><span class="px-2 py-0.5 bg-blue-50 text-blue-700 border border-blue-200 rounded-md text-[11px] font-bold">${c.status}</span></td>
                         </tr>`;
                 });
             }
@@ -419,11 +443,11 @@
                         <td class="py-3 px-4 w-10 text-center">
                             <input type="checkbox" class="case-checkbox rounded border-stone-300 text-sky-600 focus:ring-sky-500" value="${year}:${c.id}">
                         </td>
-                        <td class="py-3 px-4 text-stone-900 font-semibold">${c.client}</td>
-                        <td class="py-3 px-4 text-stone-600">${c.service}</td>
-                        <td class="py-3 px-4"><span class="px-2.5 py-1 bg-stone-100/80 text-stone-700 rounded-lg text-[11px] font-medium">${c.progress}</span></td>
-                        <td class="py-3 px-4 text-stone-900 font-bold">${c.amount}</td>
-                        <td class="py-3 px-4 text-stone-500 truncate max-w-xs">${c.note}</td>
+                        <td class="py-3 px-4 text-stone-900 font-semibold whitespace-nowrap">${c.client} (${c.name})</td>
+                        <td class="py-3 px-4 text-stone-600 whitespace-nowrap">${c.service}</td>
+                        <td class="py-3 px-4 whitespace-nowrap"><span class="px-2.5 py-1 bg-stone-100/80 text-stone-700 rounded-lg text-[11px] font-medium">${c.progress}</span></td>
+                        <td class="py-3 px-4 text-stone-900 font-bold whitespace-nowrap">${c.amount}</td>
+                        <td class="py-3 px-4 text-stone-500 min-w-[200px]">${c.note}</td>
                     </tr>
                 `).join('') : `
                     <tr>
@@ -440,15 +464,16 @@
                             </div>
                             <span class="px-2.5 py-0.5 rounded-md text-[11px] font-bold ${sec.badge} section-badge">${filtered.length} 件</span>
                         </div>
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-left text-xs">
-                                <thead>
-                                    <tr class="bg-white border-b border-stone-100 text-stone-400 font-medium">
+                        <!-- 設定 max-h-[400px] 與 overflow-y-auto，單一區塊案件過多時可獨立捲動 -->
+                        <div class="overflow-x-auto max-h-[400px] overflow-y-auto">
+                            <table class="w-full text-left text-xs min-w-[700px]">
+                                <thead class="sticky top-0 bg-white z-10 shadow-xs">
+                                    <tr class="border-b border-stone-100 text-stone-400 font-medium">
                                         <th class="py-2.5 px-4 w-10 text-center"><input type="checkbox" onclick="toggleSelectAll(this, '${sec.key}')" class="rounded border-stone-300"></th>
-                                        <th class="py-2.5 px-4">客戶名稱</th>
-                                        <th class="py-2.5 px-4">服務細項</th>
-                                        <th class="py-2.5 px-4">工作進度</th>
-                                        <th class="py-2.5 px-4">簽約金額</th>
+                                        <th class="py-2.5 px-4 whitespace-nowrap">客戶名稱與案名</th>
+                                        <th class="py-2.5 px-4 whitespace-nowrap">服務細項</th>
+                                        <th class="py-2.5 px-4 whitespace-nowrap">工作進度</th>
+                                        <th class="py-2.5 px-4 whitespace-nowrap">簽約金額</th>
                                         <th class="py-2.5 px-4">案件即時說明</th>
                                     </tr>
                                 </thead>
@@ -465,8 +490,8 @@
                 <div class="space-y-6">
                     <div class="bg-white p-5 rounded-2xl border border-ruili-border shadow-2xs flex flex-col md:flex-row md:items-center justify-between gap-4">
                         <div>
-                            <h2 class="text-base font-bold text-stone-950">${year} 年度案件管理中心</h2>
-                            <p class="text-xs text-stone-500">僅顯示與管理 ${year} 年度之案件，支援當年度關鍵字搜尋、勾選、刪除、恢復與狀態拋轉。</p>
+                            <h2 class="text-base font-bold text-stone-950">${year} 年度案件管理中心 (共 ${cases.length} 筆)</h2>
+                            <p class="text-xs text-stone-500">支援當年度關鍵字即時搜尋、勾選與狀態管理，單一區塊過多時可直接上下捲動。</p>
                         </div>
                         <div class="flex flex-wrap items-center gap-2">
                             <div class="relative">
