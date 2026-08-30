@@ -320,9 +320,14 @@
                         <p class="bg-amber-50/60 p-3.5 rounded-xl border border-amber-200 text-amber-900 leading-relaxed italic">「依客戶要求優先辦理初審與法規對接。」</p>
                     </div>
 
+                    <div class="space-y-2">
+                        <h4 class="font-bold text-amber-900 text-sm border-l-2 border-amber-500 pl-3">三、 跨部門交棒與責信檢討</h4>
+                        <p class="text-stone-700 leading-relaxed bg-stone-50 p-3 rounded-xl border border-stone-200">本案歷經秘書合約登錄、地政士測量送件、特助進度追蹤及財務長收款對帳，各階段交棒明確，無滯留異常。</p>
+                    </div>
+
                     <div class="space-y-3">
                         <h4 class="font-bold text-amber-900 text-sm border-l-2 border-amber-500 pl-3 flex items-center justify-between">
-                            <span>三、 歷程備註與追溯牆 (所有交辦歷程記錄)</span>
+                            <span>四、 歷程備註與追溯牆 (所有交辦歷程記錄)</span>
                             <span class="text-[10px] font-normal text-stone-400">責信追溯與跨角色交辦牆</span>
                         </h4>
                         <div class="space-y-2 bg-stone-50 p-4 rounded-xl border border-amber-200/60 max-h-48 overflow-y-auto">
@@ -340,10 +345,9 @@
 
             <div class="bg-stone-50 px-6 py-4 border-t border-amber-200 flex justify-between items-center sticky bottom-0 z-10">
                 <button onclick="closeModal('pdfModal')" class="px-5 py-2.5 bg-stone-200 hover:bg-stone-300 text-stone-700 rounded-xl font-medium transition">關閉預覽</button>
-                <!-- 修改為一鍵匯出 PDF 按鈕 -->
-                <button onclick="exportPdf()" class="px-6 py-2.5 bg-gradient-to-r from-amber-700 to-amber-600 hover:from-amber-600 hover:to-amber-500 text-white rounded-xl font-bold transition shadow-md flex items-center space-x-2">
-                    <i class="fa-solid fa-file-arrow-down"></i>
-                    <span>一鍵匯出 PDF</span>
+                <button onclick="alert('📥 正在下載白底金字尊榮版正式結案報告 PDF 檔案...')" class="px-6 py-2.5 bg-gradient-to-r from-amber-700 to-amber-600 hover:from-amber-600 hover:to-amber-500 text-white rounded-xl font-bold transition shadow-md flex items-center space-x-2">
+                    <i class="fa-solid fa-download"></i>
+                    <span>下載白底金字版 PDF 報告</span>
                 </button>
             </div>
         </div>
@@ -378,12 +382,6 @@
 
         function openPdfReport(id, client, service, amount) {
             openModal('pdfModal');
-        }
-
-        // 一鍵匯出 PDF 互動觸發函數
-        function exportPdf() {
-            alert('📥 正在執行一鍵匯出 PDF，白底金字正式結案報告已成功下載並歸檔！');
-            closeModal('pdfModal');
         }
 
         function submitStageAction(msg) {
@@ -476,7 +474,7 @@
 
             container.innerHTML = `
                 <div class="space-y-8">
-                    <!-- 上方：工作看板四大核心主里程碑 -->
+                    <!-- 上方：工作看板三大核心主里程碑 -->
                     <div class="space-y-4">
                         <div class="bg-gradient-to-br from-white via-stone-50/50 to-stone-100/50 p-6 rounded-3xl border border-stone-200/80 shadow-xs space-y-2">
                             <h2 class="text-base font-bold text-stone-900 flex items-center">
@@ -501,14 +499,14 @@
                                 </button>
                             </div>
 
-                            <!-- 階段 2 -->
+                            <!-- 執行中案件 -->
                             <div class="bg-white p-6 rounded-3xl border border-stone-200/80 shadow-xs space-y-5 flex flex-col justify-between">
                                 <div class="space-y-3">
                                     <div class="flex justify-between items-center">
-                                        <span class="px-3 py-1 bg-sky-50 text-sky-800 border border-sky-200/60 rounded-xl text-[11px] font-bold">STAGE 02</span>
+                                        <span class="px-3 py-1 bg-sky-50 text-sky-800 border border-sky-200/60 rounded-xl text-[11px] font-bold">STAGE 01.5</span>
                                         <span class="px-3 py-1 bg-sky-50 text-sky-700 border border-sky-200/60 rounded-full text-[10px] font-bold">1 件執行中</span>
                                     </div>
-                                    <h3 class="font-bold text-stone-900 text-sm">2. 執行中案件</h3>
+                                    <h3 class="font-bold text-stone-900 text-sm">執行中案件</h3>
                                     <p class="text-xs text-stone-500">跨角色交棒專屬列表總計。</p>
                                 </div>
                                 <button onclick="openModal('activeCasesListModal')" class="w-full py-3 bg-ruili-brand text-white rounded-xl text-xs font-bold transition-all shadow-xs hover:opacity-95">
@@ -516,14 +514,14 @@
                                 </button>
                             </div>
 
-                            <!-- 階段 3 -->
+                            <!-- 階段 2 -->
                             <div class="bg-white p-6 rounded-3xl border border-stone-200/80 shadow-xs space-y-5 flex flex-col justify-between">
                                 <div class="space-y-3">
                                     <div class="flex justify-between items-center">
-                                        <span class="px-3 py-1 bg-purple-50 text-purple-800 border border-purple-200/60 rounded-xl text-[11px] font-bold">STAGE 03</span>
+                                        <span class="px-3 py-1 bg-purple-50 text-purple-800 border border-purple-200/60 rounded-xl text-[11px] font-bold">STAGE 02</span>
                                         <span class="px-3 py-1 bg-purple-50 text-purple-700 border border-purple-200/60 rounded-full text-[10px] font-bold">1 件待結案</span>
                                     </div>
-                                    <h3 class="font-bold text-stone-900 text-sm">3. 待結案專區</h3>
+                                    <h3 class="font-bold text-stone-900 text-sm">2. 待結案專區</h3>
                                     <p class="text-xs text-stone-500">等待主管機關核發最後公文。</p>
                                 </div>
                                 <button onclick="openModal('pendingClosingListModal')" class="w-full py-3 bg-ruili-brand text-white rounded-xl text-xs font-bold transition-all shadow-xs hover:opacity-95">
@@ -531,14 +529,14 @@
                                 </button>
                             </div>
 
-                            <!-- 階段 4 -->
+                            <!-- 階段 3 -->
                             <div class="bg-white p-6 rounded-3xl border border-stone-200/80 shadow-xs space-y-5 flex flex-col justify-between">
                                 <div class="space-y-3">
                                     <div class="flex justify-between items-center">
-                                        <span class="px-3 py-1 bg-emerald-50 text-emerald-800 border border-emerald-200/60 rounded-xl text-[11px] font-bold">STAGE 04</span>
+                                        <span class="px-3 py-1 bg-emerald-50 text-emerald-800 border border-emerald-200/60 rounded-xl text-[11px] font-bold">STAGE 03</span>
                                         <span class="px-3 py-1 bg-emerald-50 text-emerald-700 border border-emerald-200/60 rounded-full text-[10px] font-bold">1 件收尾中</span>
                                     </div>
-                                    <h3 class="font-bold text-stone-900 text-sm">4. 結案收尾流水線</h3>
+                                    <h3 class="font-bold text-stone-900 text-sm">3. 結案收尾流水線</h3>
                                     <p class="text-xs text-stone-500">發票、請款、收款對帳與報告封存。</p>
                                 </div>
                                 <button onclick="openModal('closingPipelineListModal')" class="w-full py-3 bg-ruili-brand text-white rounded-xl text-xs font-bold transition-all shadow-xs hover:opacity-95">
@@ -553,7 +551,7 @@
                         <div class="bg-white p-6 rounded-3xl border border-stone-200/80 shadow-xs space-y-4">
                             <div>
                                 <h2 class="text-base font-bold text-stone-900 flex items-center">
-                                    <i class="fa-solid fa-users-viewfinder text-stone-700 mr-2.5"></i> 執行中案件工作看板
+                                    <i class="fa-solid fa-users-viewfinder text-stone-700 mr-2.5"></i> 工作看板：跨角色交棒專屬列表 (示範案例)
                                 </h2>
                                 <p class="text-xs text-stone-500 mt-1">切換角色分頁以檢視對應之進行中案件。</p>
                             </div>
