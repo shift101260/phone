@@ -1,15 +1,19 @@
-/**
- * 睿立集團系統｜太陽能發電效益與精算模組 (solar-calc.js)
- */
-function calculateSolarBenefit(panelAreaSqMeters, sunlightHoursPerDay = 3.5) {
-    // 假設每平方公尺太陽能板約可產出 0.2kW 功率，每日發電量試算
-    const kwOutput = panelAreaSqMeters * 0.2;
-    const dailyKWh = kwOutput * sunlightHoursPerDay;
-    const annualKWh = dailyKWh * 365;
+window.openSolarModal = function() {
+    document.getElementById('solar-modal').classList.remove('hidden');
+    window.calculateSolarAll();
+};
 
-    return {
-        kwOutput: kwOutput.toFixed(2),
-        dailyKWh: dailyKWh.toFixed(2),
-        annualKWh: annualKWh.toFixed(2)
-    };
-}
+window.closeSolarModal = () => document.getElementById('solar-modal').classList.add('hidden');
+
+window.calculateSolarAll = function() {
+    const roofPing = parseFloat(document.getElementById('solar-roof-ping').value || 0);
+    const taipowerPrice = parseFloat(document.getElementById('solar-taipower-price').value || 0);
+    const dailyGen = (roofPing / 1.5) * (590 / 1000) * 4;
+    const monthlyGen = dailyGen * 30;
+    const annualGen = dailyGen * 365;
+    const annualRev = annualGen * taipowerPrice;
+
+    document.getElementById('res-solar-daily-gen').textContent = `${dailyGen.toFixed(1)} 度`;
+    document.getElementById('res-solar-monthly-gen').textContent = `${Math.round(monthlyGen).toLocaleString()} 度`;
+    document.getElementById('res-solar-annual-rev').textContent = `NT$ ${Math.round(annualRev).toLocaleString()}`;
+};
