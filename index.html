@@ -476,7 +476,7 @@
 
             container.innerHTML = `
                 <div class="space-y-8">
-                    <!-- 上方：工作看板三大核心主里程碑 -->
+                    <!-- 上方：工作看板四大核心主里程碑 -->
                     <div class="space-y-4">
                         <div class="bg-gradient-to-br from-white via-stone-50/50 to-stone-100/50 p-6 rounded-3xl border border-stone-200/80 shadow-xs space-y-2">
                             <h2 class="text-base font-bold text-stone-900 flex items-center">
@@ -501,14 +501,14 @@
                                 </button>
                             </div>
 
-                            <!-- 執行中案件 -->
+                            <!-- 階段 2 -->
                             <div class="bg-white p-6 rounded-3xl border border-stone-200/80 shadow-xs space-y-5 flex flex-col justify-between">
                                 <div class="space-y-3">
                                     <div class="flex justify-between items-center">
-                                        <span class="px-3 py-1 bg-sky-50 text-sky-800 border border-sky-200/60 rounded-xl text-[11px] font-bold">STAGE 01.5</span>
+                                        <span class="px-3 py-1 bg-sky-50 text-sky-800 border border-sky-200/60 rounded-xl text-[11px] font-bold">STAGE 02</span>
                                         <span class="px-3 py-1 bg-sky-50 text-sky-700 border border-sky-200/60 rounded-full text-[10px] font-bold">1 件執行中</span>
                                     </div>
-                                    <h3 class="font-bold text-stone-900 text-sm">執行中案件</h3>
+                                    <h3 class="font-bold text-stone-900 text-sm">2. 執行中案件</h3>
                                     <p class="text-xs text-stone-500">跨角色交棒專屬列表總計。</p>
                                 </div>
                                 <button onclick="openModal('activeCasesListModal')" class="w-full py-3 bg-ruili-brand text-white rounded-xl text-xs font-bold transition-all shadow-xs hover:opacity-95">
@@ -516,14 +516,14 @@
                                 </button>
                             </div>
 
-                            <!-- 階段 2 -->
+                            <!-- 階段 3 -->
                             <div class="bg-white p-6 rounded-3xl border border-stone-200/80 shadow-xs space-y-5 flex flex-col justify-between">
                                 <div class="space-y-3">
                                     <div class="flex justify-between items-center">
-                                        <span class="px-3 py-1 bg-purple-50 text-purple-800 border border-purple-200/60 rounded-xl text-[11px] font-bold">STAGE 02</span>
+                                        <span class="px-3 py-1 bg-purple-50 text-purple-800 border border-purple-200/60 rounded-xl text-[11px] font-bold">STAGE 03</span>
                                         <span class="px-3 py-1 bg-purple-50 text-purple-700 border border-purple-200/60 rounded-full text-[10px] font-bold">1 件待結案</span>
                                     </div>
-                                    <h3 class="font-bold text-stone-900 text-sm">2. 待結案專區</h3>
+                                    <h3 class="font-bold text-stone-900 text-sm">3. 待結案專區</h3>
                                     <p class="text-xs text-stone-500">等待主管機關核發最後公文。</p>
                                 </div>
                                 <button onclick="openModal('pendingClosingListModal')" class="w-full py-3 bg-ruili-brand text-white rounded-xl text-xs font-bold transition-all shadow-xs hover:opacity-95">
@@ -531,14 +531,14 @@
                                 </button>
                             </div>
 
-                            <!-- 階段 3 -->
+                            <!-- 階段 4 -->
                             <div class="bg-white p-6 rounded-3xl border border-stone-200/80 shadow-xs space-y-5 flex flex-col justify-between">
                                 <div class="space-y-3">
                                     <div class="flex justify-between items-center">
-                                        <span class="px-3 py-1 bg-emerald-50 text-emerald-800 border border-emerald-200/60 rounded-xl text-[11px] font-bold">STAGE 03</span>
+                                        <span class="px-3 py-1 bg-emerald-50 text-emerald-800 border border-emerald-200/60 rounded-xl text-[11px] font-bold">STAGE 04</span>
                                         <span class="px-3 py-1 bg-emerald-50 text-emerald-700 border border-emerald-200/60 rounded-full text-[10px] font-bold">1 件收尾中</span>
                                     </div>
-                                    <h3 class="font-bold text-stone-900 text-sm">3. 結案收尾流水線</h3>
+                                    <h3 class="font-bold text-stone-900 text-sm">4. 結案收尾流水線</h3>
                                     <p class="text-xs text-stone-500">發票、請款、收款對帳與報告封存。</p>
                                 </div>
                                 <button onclick="openModal('closingPipelineListModal')" class="w-full py-3 bg-ruili-brand text-white rounded-xl text-xs font-bold transition-all shadow-xs hover:opacity-95">
