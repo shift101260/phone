@@ -7,11 +7,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- 引入獨立的全域色號變數樣式檔 -->
     <link rel="stylesheet" href="./css/variables.css">
     <link rel="stylesheet" href="./css/layout.css">
 
-    <!-- 讓 Tailwind 能夠抓取我們的 CSS 變數 -->
     <script>
         tailwind.config = {
             theme: {
@@ -37,7 +35,6 @@
     <!-- 左側功能導覽列 -->
     <aside class="ruili-sidebar text-stone-300 flex flex-col justify-between md:flex border-r border-ruili-dark">
         <div>
-            <!-- 品牌 Logo 與名稱 -->
             <div class="p-6 border-b border-ruili-dark flex items-center space-x-3 sticky top-0 bg-ruili-sidebar z-10">
                 <div class="bg-ruili-brand text-white w-10 h-10 rounded-xl flex items-center justify-center font-bold text-xl shadow-xs">睿</div>
                 <div>
@@ -46,14 +43,13 @@
                 </div>
             </div>
             
-            <!-- 功能選單 -->
             <nav id="nav-menu" class="p-4 space-y-1.5 text-xs">
-                <button onclick="switchModule('dashboard', this)" class="nav-btn w-full flex items-center space-x-3 px-4 py-2.5 rounded-xl bg-ruili-brand text-white transition shadow-xs font-bold">
+                <button onclick="switchModule('dashboard', this)" class="nav-btn w-full flex items-center space-x-3 px-4 py-2.5 rounded-xl hover:bg-stone-800 text-stone-300 transition">
                     <i class="fa-solid fa-chart-line w-5"></i><span>戰情室總覽</span>
                 </button>
                 
-                <button onclick="switchModule('kanban', this)" class="nav-btn w-full flex items-center space-x-3 px-4 py-2.5 rounded-xl hover:bg-stone-800 text-stone-300 transition">
-                    <i class="fa-solid fa-list-check w-5 text-amber-400"></i><span>工作看板</span>
+                <button onclick="switchModule('kanban', this)" class="nav-btn w-full flex items-center space-x-3 px-4 py-2.5 rounded-xl bg-ruili-brand text-white transition shadow-xs font-bold">
+                    <i class="fa-solid fa-list-check w-5 text-amber-400"></i><span>工作看板 (核心業務)</span>
                 </button>
 
                 <button onclick="switchModule('all-cases', this)" class="nav-btn w-full flex items-center space-x-3 px-4 py-2.5 rounded-xl hover:bg-stone-800 text-stone-300 transition">
@@ -73,7 +69,7 @@
                 </button>
                 
                 <button onclick="switchModule('closing', this)" class="nav-btn w-full flex items-center space-x-3 px-4 py-2.5 rounded-xl hover:bg-stone-800 text-stone-300 transition">
-                    <i class="fa-solid fa-flag-checkered w-5"></i><span>結案中心</span>
+                    <i class="fa-solid fa-flag-checkered w-5"></i><span>結案中心 (白底金字報告)</span>
                 </button>
             </nav>
         </div>
@@ -86,8 +82,6 @@
 
     <!-- 右側主畫面內容容器 -->
     <main class="ruili-main">
-        
-        <!-- 📱 手機版專屬頂部列 -->
         <div class="mobile-header-bar md:hidden flex items-center justify-between px-4 py-3 bg-[#2C2A29] text-white border-b border-[#292524]">
             <div class="flex items-center space-x-3">
                 <div class="bg-[#D4A373] text-white w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm shadow-xs">睿</div>
@@ -98,17 +92,16 @@
             </button>
         </div>
 
-        <!-- 主畫面內容 -->
         <div id="app-container" class="ruili-container space-y-6">
-            <!-- 預設載入內容 -->
+            <!-- 動態載入區塊 -->
         </div>
     </main>
 
     <!-- ========================================== -->
-    <!-- 互動彈窗模板區塊 (工作看板與結案報告流程) -->
+    <!-- 互動彈窗模板 (完整保留工作看板與結案細節) -->
     <!-- ========================================== -->
 
-    <!-- 1-1. 秘書待簽核案件列表彈窗 -->
+    <!-- 1. 秘書待簽核清單彈窗 -->
     <div id="pendingListModal" class="fixed inset-0 bg-black/50 backdrop-blur-xs hidden flex items-center justify-center z-50 p-4 overflow-y-auto">
         <div class="bg-white w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden border border-stone-200 my-8">
             <div class="bg-[#2C2A29] text-white px-6 py-4 flex justify-between items-center sticky top-0 z-10">
@@ -117,9 +110,9 @@
             </div>
             
             <div class="p-6 space-y-3 text-xs text-stone-700 bg-stone-50">
-                <p class="text-stone-500 mb-2">請選擇下方其中一筆待簽核案件進行合約登錄與交棒拋轉：</p>
+                <p class="text-stone-500 mb-2">請選擇下方待簽核案件進行合約登錄與交棒拋轉：</p>
                 
-                <div onclick="openApprovalDetail('2026-001', '林董農地變更專案', '土地變更', 'NT$ 3,800,000', '陳經理 / 10% / 匯款退佣', '第一期 30% / 第二期 30% / 第三期 40%', '依客戶要求優先辦理初審與水保審查')" class="bg-white p-4 rounded-xl border border-stone-200 hover:border-ruili-brand shadow-2xs cursor-pointer transition flex justify-between items-center group">
+                <div onclick="openApprovalDetail('2026-001', '林董農地變更專案', '土地變更', 'NT$ 3,800,000')" class="bg-white p-4 rounded-xl border border-stone-200 hover:border-ruili-brand shadow-2xs cursor-pointer transition flex justify-between items-center group">
                     <div class="space-y-1">
                         <div class="flex items-center space-x-2">
                             <span class="font-mono font-bold text-stone-400">2026-001</span>
@@ -140,7 +133,7 @@
         </div>
     </div>
 
-    <!-- 1-3. 案件簽核詳細表單彈窗 -->
+    <!-- 2. 簽核詳細表單彈窗 -->
     <div id="approvalModal" class="fixed inset-0 bg-black/50 backdrop-blur-xs hidden flex items-center justify-center z-50 p-4 overflow-y-auto">
         <div class="bg-white w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden border border-stone-200 my-8">
             <div class="bg-[#2C2A29] text-white px-6 py-4 flex justify-between items-center sticky top-0 z-10">
@@ -166,26 +159,50 @@
         </div>
     </div>
 
-    <!-- 5. 結案報告 PDF 預覽彈窗 (高級金字、白底純粹奢華風格) -->
+    <!-- 3. 白底金字尊榮版 PDF 結案報告預覽彈窗 -->
     <div id="pdfModal" class="fixed inset-0 bg-black/60 backdrop-blur-xs hidden flex items-center justify-center z-50 p-4 overflow-y-auto">
-        <div class="bg-white w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden border border-amber-200 my-8 text-stone-800">
-            <div class="bg-stone-50 text-amber-800 px-6 py-4 flex justify-between items-center sticky top-0 z-10 border-b border-amber-200/60">
-                <h3 class="font-bold text-sm tracking-widest flex items-center">
+        <div class="bg-white w-full max-w-3xl rounded-3xl shadow-2xl overflow-hidden border border-amber-200 my-8 text-stone-800">
+            <div class="bg-stone-50 text-amber-900 px-6 py-4 flex justify-between items-center sticky top-0 z-10 border-b border-amber-200/60">
+                <h3 class="font-bold text-xs tracking-widest flex items-center">
                     <i class="fa-solid fa-crown text-amber-600 mr-2"></i> 睿立集團・正式結案總結報告書 (GOLD & WHITE EDITION)
                 </h3>
                 <button onclick="closeModal('pdfModal')" class="text-stone-400 hover:text-stone-700"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
             
-            <div class="p-6 space-y-6 text-xs text-stone-700 max-h-[70vh] overflow-y-auto bg-white">
-                <div class="bg-gradient-to-b from-amber-50/30 to-white p-7 rounded-2xl border border-amber-200 shadow-sm space-y-6">
+            <div class="p-8 space-y-6 text-xs text-stone-700 max-h-[70vh] overflow-y-auto bg-white">
+                <div class="bg-gradient-to-b from-amber-50/20 to-white p-8 rounded-2xl border border-amber-200 shadow-sm space-y-6">
                     <div class="flex justify-between items-start border-b border-amber-200 pb-5">
                         <div>
                             <span class="px-3 py-1 bg-amber-100 text-amber-900 border border-amber-300 rounded-full font-bold text-[10px] tracking-wider uppercase">Official Closed Report</span>
-                            <h3 id="pdf-title" class="text-lg font-bold text-amber-900 mt-2 tracking-wide">睿立集團｜正式結案報告</h3>
+                            <h3 id="pdf-title" class="text-xl font-bold text-amber-900 mt-2 tracking-wide">睿立集團｜正式結案報告</h3>
                         </div>
                         <div class="text-right text-stone-500 space-y-0.5">
-                            <span class="block text-amber-800 font-mono text-[11px] font-bold">發布日期：2026-06-28</span>
-                            <span class="text-emerald-700 font-bold text-[11px] bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200 inline-block mt-1">● 狀態：已完美結案封存</span>
+                            <span class="block text-amber-800 font-mono text-xs font-bold">發布日期：2026-06-28</span>
+                            <span class="text-emerald-700 font-bold text-xs bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200 inline-block mt-1">● 狀態：已完美結案封存</span>
+                        </div>
+                    </div>
+
+                    <!-- 案件摘要表格 -->
+                    <div class="grid grid-cols-2 gap-4 bg-stone-50 p-4 rounded-xl border border-amber-100">
+                        <div><span class="text-stone-400 block text-[10px]">客戶 / 案主</span><strong id="pdf-client" class="text-stone-800 text-sm">-</strong></div>
+                        <div><span class="text-stone-400 block text-[10px]">總結案金額</span><strong id="pdf-amount" class="text-rose-600 text-sm">-</strong></div>
+                    </div>
+
+                    <!-- 執行成果亮點 -->
+                    <div class="space-y-2">
+                        <h4 class="font-bold text-amber-900 border-l-2 border-amber-600 pl-2">一、 專案執行成果摘要</h4>
+                        <p class="text-stone-600 leading-relaxed bg-amber-50/40 p-4 rounded-xl border border-amber-100/60">
+                            本專案歷經嚴謹的法規審查、水土保持規畫及主管機關會勘，已於 2026 年 6 月正式取得主管機關核發之合辦與變更證明文件。全案符合睿立集團最高品質控管標準。
+                        </p>
+                    </div>
+
+                    <!-- 財務清算與尾款備註 -->
+                    <div class="space-y-2">
+                        <h4 class="font-bold text-amber-900 border-l-2 border-amber-600 pl-2">二、 財務與尾款結清狀況</h4>
+                        <div class="bg-stone-50 p-4 rounded-xl border border-stone-200 text-stone-700 space-y-1">
+                            <p>● 第一期訂金：已全額收訖</p>
+                            <p>● 第二期進度款：已全額收訖</p>
+                            <p>● 第三期尾款（成功後收費）：已於結案日前全數入帳，案卷無任何財務瑕疵。</p>
                         </div>
                     </div>
                 </div>
@@ -195,7 +212,7 @@
                 <button onclick="closeModal('pdfModal')" class="px-5 py-2.5 bg-stone-200 text-stone-700 rounded-xl font-medium">關閉預覽</button>
                 <button onclick="exportPdf()" class="px-6 py-2.5 bg-gradient-to-r from-amber-700 to-amber-600 text-white rounded-xl font-bold transition shadow-md flex items-center space-x-2">
                     <i class="fa-solid fa-file-arrow-down"></i>
-                    <span>一鍵匯出 PDF</span>
+                    <span>一鍵匯出白底金字 PDF 報告</span>
                 </button>
             </div>
         </div>
@@ -205,14 +222,14 @@
     <script>
         let globalCasesData = {
             '2027': [
-                { id: '2027-01', name: '烏日區未來產業專區', client: '何董事長', service: '土地變更', progress: '評估中', amount: 'NT$ 3,000,000', note: '審查準備中', status: '案件評估' }
+                { id: '2027-01', name: '烏日區未來產業專區', client: '何董事長', service: '土地變更', progress: '評估中', amount: 'NT$ 3,000,000', note: '審查準備中' }
             ],
             '2026': [
-                { id: '2026-01', name: '大雅區農地變更專案', client: '張先生', service: '農地變更', progress: '簽約中', amount: 'NT$ 2,500,000', note: '預計118通檢', status: '簽約案件' },
-                { id: '2026-02', name: '烏日區工廠合法化', client: '黃董事長', service: '特定工廠專用區', progress: '評估中', amount: 'NT$ 2,070,000', note: '廠房打掉重蓋', status: '案件評估' },
-                { id: '2026-03', name: '潭子區綠能用地申設', client: '林總經理', service: '綠能申設', progress: '結案歸檔', amount: 'NT$ 1,500,000', note: '已完成全數審查', status: '結案中心' }
+                { id: '2026-01', name: '大雅區農地變更專案', client: '張先生', service: '農地變更', progress: '簽約中', amount: 'NT$ 2,500,000', note: '預計118通檢' },
+                { id: '2026-02', name: '烏日區工廠合法化', client: '黃董事長', service: '特定工廠專用區', progress: '評估中', amount: 'NT$ 2,070,000', note: '廠房打掉重蓋' },
+                { id: '2026-03', name: '潭子區綠能用地申設', client: '林總經理', service: '綠能申設', progress: '結案歸檔', amount: 'NT$ 1,500,000', note: '已完成全數審查' }
             ],
-            '2025': [], '2024': [], '2023': [], '2022': [], '2021': []
+            '2025': [], '2024': [], '2023': []
         };
 
         function openModal(modalId) {
@@ -236,11 +253,13 @@
 
         function openPdfReport(id, client, service, amount) {
             document.getElementById('pdf-title').innerText = `睿立集團｜${client} ${service}・結案總結報告`;
+            document.getElementById('pdf-client').innerText = client;
+            document.getElementById('pdf-amount').innerText = amount;
             openModal('pdfModal');
         }
 
         function exportPdf() {
-            alert('📥 正在執行一鍵匯出 PDF，白底金字正式結案報告已成功下載並歸檔！');
+            alert('📥 正在執行一鍵匯出 PDF，白底金字正式結案報告已成功下載並封存歸檔！');
             closeModal('pdfModal');
         }
 
@@ -268,7 +287,7 @@
                         <p class="text-xs text-stone-500">掌握集團整體財報與案件生命週期流向。</p>
                     </div>`;
             } else if(moduleName === 'kanban') {
-                renderWorkflowOverviewWithPipelineView('secretary');
+                renderWorkflowOverviewWithPipelineView();
             } else if(moduleName === 'all-cases') {
                 container.innerHTML = `
                     <div class="bg-white p-6 rounded-2xl border border-ruili-border shadow-2xs space-y-3">
@@ -283,41 +302,79 @@
                     <div class="space-y-6">
                         <div class="bg-white p-6 rounded-2xl border border-ruili-border shadow-2xs space-y-2">
                             <h2 class="text-base font-bold text-stone-900"><i class="fa-solid fa-flag-checkered text-emerald-600 mr-2"></i> 結案中心（正式結案報告清單）</h2>
-                            <p class="text-xs text-stone-500">點擊右側 PDF 按鈕即可檢閱白底金字尊榮版完整報告。</p>
+                            <p class="text-xs text-stone-500">點擊右側 PDF 按鈕即可檢閱白底金字尊榮版完整報告與財務結清清單。</p>
                         </div>
                         <div class="bg-white rounded-2xl border border-stone-200 shadow-2xs p-4 flex justify-between items-center text-xs">
-                            <div><strong>2026-03 潭子區綠能用地申設 (林總經理)</strong></div>
-                            <button onclick="openPdfReport('2026-03', '林總經理', '綠能申設專案', 'NT$ 1,500,000')" class="px-3 py-1.5 bg-ruili-brand text-white rounded-xl font-bold shadow-xs">
-                                <i class="fa-solid fa-file-pdf text-amber-400 mr-1"></i> PDF 報告
+                            <div class="space-y-1">
+                                <span class="font-mono text-stone-400">2026-03</span>
+                                <strong class="text-stone-900 text-sm block">潭子區綠能用地申設 (林總經理)</strong>
+                            </div>
+                            <button onclick="openPdfReport('2026-03', '林總經理', '綠能申設專案', 'NT$ 1,500,000')" class="px-4 py-2 bg-ruili-brand text-white rounded-xl font-bold shadow-xs hover:opacity-90 transition">
+                                <i class="fa-solid fa-file-pdf text-amber-300 mr-1.5"></i> 開啟 PDF 報告
                             </button>
                         </div>
                     </div>`;
             }
         }
 
-        // 🌟 工作看板核心視圖
-        function renderWorkflowOverviewWithPipelineView(activeRole) {
+        // 🌟 完整的工作看板核心視圖（包含四大里程碑與跨角色交棒功能）
+        function renderWorkflowOverviewWithPipelineView() {
             const container = document.getElementById('app-container');
             container.innerHTML = `
                 <div class="space-y-6">
                     <div class="bg-white p-6 rounded-3xl border border-stone-200/80 shadow-xs space-y-2">
                         <h2 class="text-base font-bold text-stone-900 flex items-center">
-                            <i class="fa-solid fa-compass text-amber-600 mr-2.5"></i> 睿立集團｜工作看板核心流程與交棒總覽
+                            <i class="fa-solid fa-compass text-amber-600 mr-2.5"></i> 睿立集團｜工作看板核心流程與跨角色交棒總覽
                         </h2>
-                        <p class="text-xs text-stone-500">點擊下方按鈕可直接啟動秘書待簽核與各階段流程。</p>
+                        <p class="text-xs text-stone-500">點擊下方按鈕可直接啟動秘書待簽核、各階段作業看板與結案收尾流程。</p>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                         <div class="bg-white p-6 rounded-3xl border border-stone-200 shadow-xs space-y-4">
-                            <h3 class="font-bold text-stone-900 text-sm">1. 案件簽核 / 受理</h3>
-                            <button onclick="openModal('pendingListModal')" class="w-full py-2.5 bg-ruili-brand text-white rounded-xl text-xs font-bold shadow-xs">
-                                秘書待簽核案件 (3 件)
+                            <div class="flex items-center justify-between">
+                                <span class="w-8 h-8 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-xs">1</span>
+                                <span class="text-[10px] text-stone-400 font-mono">STAGE 1</span>
+                            </div>
+                            <h3 class="font-bold text-stone-900 text-sm">案件簽核與受理</h3>
+                            <p class="text-stone-500 text-[11px] leading-relaxed">檢視待簽核合約、登錄客戶條件與分潤比例。</p>
+                            <button onclick="openModal('pendingListModal')" class="w-full py-2.5 bg-ruili-brand text-white rounded-xl text-xs font-bold shadow-xs transition hover:opacity-90">
+                                <i class="fa-solid fa-file-signature mr-1.5"></i> 秘書待簽核 (3 件)
                             </button>
                         </div>
+
                         <div class="bg-white p-6 rounded-3xl border border-stone-200 shadow-xs space-y-4">
-                            <h3 class="font-bold text-stone-900 text-sm">2. 結案收尾流水線</h3>
-                            <button onclick="switchModule('closing', document.querySelector('button[onclick*=\\'closing\\']'))" class="w-full py-2.5 bg-ruili-brand text-white rounded-xl text-xs font-bold shadow-xs">
-                                進入結案中心檢視
+                            <div class="flex items-center justify-between">
+                                <span class="w-8 h-8 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-xs">2</span>
+                                <span class="text-[10px] text-stone-400 font-mono">STAGE 2</span>
+                            </div>
+                            <h3 class="font-bold text-stone-900 text-sm">專案規劃與審查</h3>
+                            <p class="text-stone-500 text-[11px] leading-relaxed">土地變更、水保申請與跨部門協作交棒追溯。</p>
+                            <button onclick="alert('📂 正在載入專案規劃與審查進度看板...')" class="w-full py-2.5 bg-stone-100 text-stone-700 rounded-xl text-xs font-bold hover:bg-stone-200 transition">
+                                <i class="fa-solid fa-diagram-project mr-1.5"></i> 檢視規劃看板
+                            </button>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-3xl border border-stone-200 shadow-xs space-y-4">
+                            <div class="flex items-center justify-between">
+                                <span class="w-8 h-8 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-xs">3</span>
+                                <span class="text-[10px] text-stone-400 font-mono">STAGE 3</span>
+                            </div>
+                            <h3 class="font-bold text-stone-900 text-sm">主管會勘與送件</h3>
+                            <p class="text-stone-500 text-[11px] leading-relaxed">應對政府機關會勘、補件追蹤與進度控管。</p>
+                            <button onclick="alert('🏛️ 正在載入主管會勘與送件管理清單...')" class="w-full py-2.5 bg-stone-100 text-stone-700 rounded-xl text-xs font-bold hover:bg-stone-200 transition">
+                                <i class="fa-solid fa-building-shield mr-1.5"></i> 檢視送件清單
+                            </button>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-3xl border border-stone-200 shadow-xs space-y-4">
+                            <div class="flex items-center justify-between">
+                                <span class="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold text-xs">4</span>
+                                <span class="text-[10px] text-stone-400 font-mono">STAGE 4</span>
+                            </div>
+                            <h3 class="font-bold text-stone-900 text-sm">結案收尾與報告</h3>
+                            <p class="text-stone-500 text-[11px] leading-relaxed">尾款結清核對、一鍵匯出白底金字正式結案報告。</p>
+                            <button onclick="switchModule('closing', document.querySelector('button[onclick*=\\'closing\\']'))" class="w-full py-2.5 bg-ruili-brand text-white rounded-xl text-xs font-bold shadow-xs transition hover:opacity-90">
+                                <i class="fa-solid fa-flag-checkered mr-1.5"></i> 進入結案中心
                             </button>
                         </div>
                     </div>
