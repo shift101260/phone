@@ -14,11 +14,6 @@
     <!-- 引入資料同步與持久化模組 -->
     <script src="./js/api/data-sync.js"></script>
     
-    <!-- 引入獨立功能模組（表單與試算工具） -->
-    <script src="./js/modules/solar-calc.js"></script>
-    <script src="./js/modules/land-change-calc.js"></script>
-    <script src="./js/modules/payment-calc.js"></script>
-
     <!-- 讓 Tailwind 能夠抓取我們的 CSS 變數 -->
     <script>
         tailwind.config = {
@@ -114,7 +109,7 @@
         </div>
     </main>
 
-    <!-- ================= ========================== -->
+    <!-- ========================================== -->
     <!-- 互動彈窗模板區塊（已修復版面並大幅縮小按鈕） -->
     <!-- ========================================== -->
 
@@ -284,7 +279,7 @@
         </div>
     </div>
 
-    <!-- 2. 執行完畢並拋轉彈窗（已將按鈕大幅縮小並精緻化） -->
+    <!-- 2. 執行完畢並拋轉彈窗 -->
     <div id="handoffModal" class="fixed inset-0 bg-black/60 backdrop-blur-xs hidden flex items-center justify-center z-50 p-3 overflow-y-auto">
         <div class="bg-white w-full max-w-md rounded-2xl shadow-xl overflow-hidden border border-stone-200 my-6">
             <div class="bg-[#2C2A29] text-white px-5 py-3 flex justify-between items-center sticky top-0 z-10">
@@ -334,7 +329,6 @@
                 </div>
             </div>
 
-            <!-- 修復按鈕過大：調整為精緻輕量尺寸 -->
             <div class="bg-stone-50 px-4 py-3 border-t border-stone-200 flex justify-between items-center sticky bottom-0 z-10">
                 <button onclick="closeModal('handoffModal')" class="px-3.5 py-1.5 bg-stone-200 text-stone-700 rounded-xl font-medium text-xs">取消</button>
                 <div class="flex space-x-1.5">
@@ -543,12 +537,12 @@
         </div>
     </div>
 
-    <!-- 5. 結案報告 PDF 預覽彈窗 (已修復擁擠問題，排版流暢尊榮) -->
+    <!-- 5. 結案報告 PDF 預覽彈窗 -->
     <div id="pdfModal" class="fixed inset-0 bg-black/60 backdrop-blur-xs hidden flex items-center justify-center z-50 p-3 overflow-y-auto">
         <div class="bg-white w-full max-w-xl rounded-3xl shadow-2xl overflow-hidden border border-amber-200 my-6 text-stone-800">
             <div class="bg-stone-50 text-amber-800 px-5 py-3.5 flex justify-between items-center sticky top-0 z-10 border-b border-amber-200/60">
                 <h3 class="font-bold text-xs tracking-wider flex items-center">
-                    <i class="fa-solid fa-crown text-amber-600 mr-1.5"></i> 睿立集團・正式結案總結報告書
+                    <i class="fa-solid fa-crown text-amber-600 mr-1.5"></i> 睿立集團・正式結案總結報告
                 </h3>
                 <button onclick="closeModal('pdfModal')" class="text-stone-400 hover:text-stone-700"><i class="fa-solid fa-xmark text-base"></i></button>
             </div>
@@ -622,7 +616,6 @@
                 </div>
             </div>
 
-            <!-- 修復按鈕過大：縮小 PDF 預覽彈窗底部按鈕 -->
             <div class="bg-stone-50 px-4 py-3 border-t border-amber-200 flex justify-between items-center sticky bottom-0 z-10">
                 <button onclick="closeModal('pdfModal')" class="px-3.5 py-1.5 bg-stone-200 hover:bg-stone-300 text-stone-700 rounded-xl font-medium text-xs transition">關閉預覽</button>
                 <button onclick="exportPdf()" class="px-4 py-1.5 bg-gradient-to-r from-amber-700 to-amber-600 hover:from-amber-600 hover:to-amber-500 text-white rounded-xl font-bold transition shadow-sm flex items-center space-x-1.5 text-xs">
@@ -1273,5 +1266,8 @@
             switchModule('kanban', document.querySelector("button[onclick*='kanban']"));
         };
     </script>
+
+    <!-- 引入模組化主程式 (main.js) -->
+    <script type="module" src="./js/main.js"></script>
 </body>
 </html>
