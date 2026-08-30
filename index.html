@@ -1144,6 +1144,9 @@
                             <p class="text-xs text-stone-500 mt-0.5">管理 ${year} 年度案件，支援關鍵字搜尋、勾選、刪除、恢復與狀態拋轉。</p>
                         </div>
                         <div class="flex flex-wrap items-center gap-2">
+                        <button onclick="openAddCaseModal('${year}')" class="px-2.5 py-1.5 bg-ruili-brand hover:opacity-90 text-white rounded-xl text-xs font-bold transition flex items-center gap-1 shadow-xs cursor-pointer">
+    <i class="fa-solid fa-plus text-[10px]"></i> 新增
+</button>
                             <div class="relative">
                                 <input type="text" id="year-search-input" oninput="filterCurrentYearManagement()" placeholder="搜尋案件..." class="px-3 py-1.5 pl-7 text-xs border border-stone-200 rounded-xl focus:outline-none focus:border-stone-400 w-40">
                                 <i class="fa-solid fa-magnifying-glass absolute left-2.5 top-2.5 text-stone-400 text-[10px]"></i>
