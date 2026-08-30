@@ -1272,5 +1272,73 @@
 
     <!-- 引入模組化主程式 (main.js) -->
     <script type="module" src="./js/main.js"></script>
+    <!-- ========================================== -->
+    <!-- 互動彈窗區：新增／編輯案件資料彈窗 (Modal)   -->
+    <!-- ========================================== -->
+    <div id="editCaseModal" class="fixed inset-0 bg-black/60 backdrop-blur-xs hidden flex items-center justify-center z-50 p-3 overflow-y-auto">
+        <div class="bg-white w-full max-w-xl rounded-2xl shadow-xl overflow-hidden border border-stone-200 my-6 text-stone-800">
+            <div class="bg-[#2C2A29] text-white px-5 py-3 flex justify-between items-center sticky top-0 z-10">
+                <h3 class="font-bold text-xs flex items-center">
+                    <i class="fa-solid fa-circle-plus text-amber-400 mr-1.5"></i> 新增集團案件資料
+                </h3>
+                <button onclick="closeModal('editCaseModal')" class="text-stone-400 hover:text-white cursor-pointer"><i class="fa-solid fa-xmark text-base"></i></button>
+            </div>
+            
+            <div class="p-5 space-y-4 text-xs text-stone-700 max-h-[70vh] overflow-y-auto bg-white">
+                <!-- 隱藏欄位：記錄年度與案件ID -->
+                <input type="hidden" id="edit-case-year" value="2026">
+                <input type="hidden" id="edit-case-id" value="">
+
+                <div class="grid grid-cols-2 gap-3.5">
+                    <div>
+                        <label class="font-bold block mb-1 text-stone-900">客戶名稱 <span class="text-rose-500">*</span></label>
+                        <input type="text" id="edit-case-client" class="w-full bg-white border border-stone-300 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-ruili-brand font-bold shadow-2xs" placeholder="例：林董">
+                    </div>
+                    <div>
+                        <label class="font-bold block mb-1 text-stone-900">案件／專案名稱 <span class="text-rose-500">*</span></label>
+                        <input type="text" id="edit-case-name" class="w-full bg-white border border-stone-300 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-ruili-brand font-bold shadow-2xs" placeholder="例：農地變更專案">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3.5">
+                    <div>
+                        <label class="font-bold block mb-1 text-stone-900">服務細項／類別 <span class="text-rose-500">*</span></label>
+                        <input type="text" id="edit-case-service" class="w-full bg-white border border-stone-300 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-ruili-brand font-medium shadow-2xs" placeholder="例：土地變更">
+                    </div>
+                    <div>
+                        <label class="font-bold block mb-1 text-stone-900">簽約金額 <span class="text-rose-500">*</span></label>
+                        <input type="text" id="edit-case-amount" class="w-full bg-white border border-stone-300 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-ruili-brand font-mono font-bold text-rose-600 shadow-2xs" value="NT$ " placeholder="NT$ 3,800,000">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3.5">
+                    <div>
+                        <label class="font-bold block mb-1 text-stone-900">工作進度狀態</label>
+                        <input type="text" id="edit-case-progress" class="w-full bg-white border border-stone-300 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-ruili-brand font-medium shadow-2xs" value="新案建立" placeholder="例：水保審查中">
+                    </div>
+                    <div>
+                        <label class="font-bold block mb-1 text-stone-900">目前所處階段 <span class="text-rose-500">*</span></label>
+                        <select id="edit-case-status" class="w-full bg-white border border-stone-300 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-ruili-brand font-bold text-stone-900 shadow-2xs cursor-pointer">
+                            <option value="簽約案件">簽約案件</option>
+                            <option value="案件評估">案件評估</option>
+                            <option value="結案中心">結案中心</option>
+                            <option value="廢件專區">廢件專區</option>
+                            <option value="失敗案件">失敗案件</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="font-bold block mb-1 text-stone-900">案件即時說明與備註</label>
+                    <textarea id="edit-case-note" class="w-full bg-white border border-stone-300 rounded-xl p-2.5 h-20 text-xs focus:outline-none focus:border-ruili-brand font-medium shadow-2xs" placeholder="請輸入案件目前的詳細進度或特殊說明..."></textarea>
+                </div>
+            </div>
+
+            <div class="bg-stone-50 px-4 py-3 border-t border-stone-200 flex justify-between items-center sticky bottom-0 z-10">
+                <button onclick="closeModal('editCaseModal')" class="px-3.5 py-1.5 bg-stone-200 text-stone-700 rounded-xl text-xs font-medium hover:bg-stone-300 transition cursor-pointer">取消</button>
+                <button onclick="saveEditedCaseData()" class="px-4 py-1.5 bg-ruili-brand hover:opacity-90 text-white rounded-xl text-xs font-bold shadow-xs transition cursor-pointer">儲存新案件</button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
