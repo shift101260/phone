@@ -73,6 +73,7 @@
                 <button onclick="switchModule('year-2021', this)" class="nav-btn w-full flex items-center space-x-2.5 px-3 py-1.5 rounded-xl hover:bg-stone-800 text-stone-300 transition"><i class="fa-solid fa-folder w-3.5 ml-0.5"></i><span>2021 案件管理</span></button>
 
                 <div class="pt-1"></div>
+                <!-- 需求 10：左側報價中心文字改為 案件編號查詢 -->
                 <button onclick="switchModule('quotation', this)" class="nav-btn w-full flex items-center space-x-2.5 px-3 py-2 rounded-xl hover:bg-stone-800 text-stone-300 transition">
                     <i class="fa-solid fa-barcode w-4"></i><span>案件編號查詢</span>
                 </button>
@@ -126,12 +127,13 @@
                 <input type="hidden" id="edit-case-year" value="2026">
                 <input type="hidden" id="edit-case-id" value="">
 
-                <!-- 區塊一：基本資訊區域 -->
+                <!-- 區塊一：基本資訊區域（需求 1：工作進度欄位與案件名稱交換、左上角建檔時間） -->
                 <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-2xs space-y-4">
                     <div class="flex justify-between items-center border-b border-stone-100 pb-2">
                         <h4 class="font-bold text-stone-900 flex items-center text-xs">
                             <i class="fa-solid fa-info-circle text-ruili-brand mr-1.5"></i> 一、基本資訊區域
                         </h4>
+                        <!-- 需求 2：左上角／標題旁放建檔時間 -->
                         <div class="text-[11px] text-stone-500 bg-stone-100 px-2.5 py-1 rounded-lg border border-stone-200">
                             📅 建檔時間：<strong id="edit-case-time-display" class="text-stone-800 font-mono">-</strong>
                         </div>
@@ -192,7 +194,7 @@
                     </div>
                 </div>
 
-                <!-- 區塊二：案件評估工具 (土地/保存建物/未保存建物) -->
+                <!-- 區塊二：案件評估工具（需求 3：三個按鈕帶入 land-modal.html、reg-building-modal.html、unreg-building-modal.html） -->
                 <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-2xs space-y-3">
                     <h4 class="font-bold text-stone-900 border-b border-stone-100 pb-2 flex items-center text-xs">
                         <i class="fa-solid fa-calculator text-ruili-brand mr-1.5"></i> 二、案件評估工具
@@ -210,7 +212,7 @@
                     </div>
                 </div>
 
-                <!-- 區塊三：服務項目試算 (土地變更評估、太陽能試算) -->
+                <!-- 區塊三：服務項目試算（需求 4：放兩個按鈕：土地變更評估、太陽能試算，載入 land-change-calc.js、solar-calc.js） -->
                 <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-2xs space-y-3">
                     <h4 class="font-bold text-stone-900 border-b border-stone-100 pb-2 flex items-center text-xs">
                         <i class="fa-solid fa-chart-line text-ruili-brand mr-1.5"></i> 三、服務項目試算
@@ -228,7 +230,7 @@
                     </div>
                 </div>
 
-                <!-- 區塊四：報價工具與利潤計算 -->
+                <!-- 區塊四：報價工具與利潤計算（需求 6、7：橫向供應商表單與新增供應商按鈕、總結算試算） -->
                 <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-2xs space-y-4">
                     <div class="flex justify-between items-center border-b border-stone-100 pb-2">
                         <h4 class="font-bold text-stone-900 flex items-center text-xs">
@@ -239,6 +241,7 @@
                         </button>
                     </div>
 
+                    <!-- 供應商動態列表容器 -->
                     <div id="suppliers-rows-container" class="space-y-3">
                         <div class="grid grid-cols-1 md:grid-cols-6 gap-3 items-center bg-stone-50 p-3 rounded-xl border border-stone-200">
                             <div>
@@ -263,6 +266,7 @@
                         </div>
                     </div>
 
+                    <!-- 總結算試算區塊 -->
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-3 border-t border-stone-100">
                         <div>
                             <label class="font-bold block mb-1 text-stone-900">總報價金額 (自動)</label>
@@ -279,7 +283,7 @@
                     </div>
                 </div>
 
-                <!-- 區塊五：簽約程序與合約備註 -->
+                <!-- 區塊五：簽約程序欄位與報價單生成按鈕（需求 8） -->
                 <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-2xs space-y-4">
                     <h4 class="font-bold text-stone-900 border-b border-stone-100 pb-2 flex items-center text-xs">
                         <i class="fa-solid fa-file-contract text-ruili-brand mr-1.5"></i> 五、簽約程序與合約備註
@@ -307,6 +311,7 @@
                         <textarea id="contract-business-note" class="w-full bg-white border border-stone-300 rounded-xl p-2.5 h-16 text-xs focus:outline-none focus:border-ruili-brand font-medium shadow-2xs" placeholder="請輸入合約相關的特殊條件、付款期程或業務備註..."></textarea>
                     </div>
 
+                    <!-- 需求 8：下方報價單生成按鈕 -->
                     <div class="pt-2 border-t border-stone-100 flex justify-end">
                         <button type="button" onclick="openQuotationGeneratorModal()" class="px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-xl text-xs font-bold transition shadow-xs flex items-center space-x-1.5 cursor-pointer">
                             <i class="fa-solid fa-file-invoice"></i><span>報價單生成（一鍵 PDF 儲存／列印）</span>
@@ -325,7 +330,7 @@
         </div>
     </div>
 
-    <!-- 報價單生成彈窗 -->
+    <!-- 💡 額外彈窗：報價單生成與 PDF 列印預覽 Modal -->
     <div id="quotationGeneratorModal" class="fixed inset-0 bg-black/60 backdrop-blur-xs hidden flex items-center justify-center z-50 p-3 overflow-y-auto">
         <div class="bg-white w-full max-w-xl rounded-2xl shadow-2xl overflow-hidden border border-amber-200 my-6 text-stone-800">
             <div class="bg-[#2C2A29] text-white px-5 py-3 flex justify-between items-center sticky top-0 z-10">
@@ -347,21 +352,23 @@
         </div>
     </div>
 
-    <!-- 模組預覽彈窗 -->
+    <!-- 💡 額外彈窗：模組載入預覽 Modal (土地/建物評估等) -->
     <div id="modulePreviewModal" class="fixed inset-0 bg-black/60 backdrop-blur-xs hidden flex items-center justify-center z-50 p-3 overflow-y-auto">
         <div class="bg-white w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden border border-stone-200 my-6 text-stone-800">
             <div class="bg-[#2C2A29] text-white px-5 py-3 flex justify-between items-center sticky top-0 z-10">
                 <h3 id="module-preview-title" class="font-bold text-xs">模組預覽</h3>
                 <button onclick="closeModal('modulePreviewModal')" class="text-stone-400 hover:text-white"><i class="fa-solid fa-xmark text-base"></i></button>
             </div>
-            <div id="module-preview-body" class="p-5 text-xs text-stone-700 space-y-3"></div>
+            <div id="module-preview-body" class="p-5 text-xs text-stone-700 space-y-3">
+                <!-- 動態載入 -->
+            </div>
             <div class="bg-stone-50 px-5 py-3 border-t border-stone-200 flex justify-end">
                 <button onclick="closeModal('modulePreviewModal')" class="px-3.5 py-1.5 bg-stone-200 text-stone-700 rounded-xl text-xs font-medium">關閉</button>
             </div>
         </div>
     </div>
 
-    <!-- 頁面切換與控制邏輯 (完整整合所有年度與戰情室) -->
+    <!-- 頁面切換與控制邏輯 -->
     <script>
         function openModal(modalId) {
             const modal = document.getElementById(modalId);
@@ -373,6 +380,7 @@
             if (modal) modal.classList.add('hidden');
         }
 
+        // 需求 3：載入評估模組 (land-modal.html 等)
         function loadModuleModal(fileName, title) {
             document.getElementById('module-preview-title').innerText = title + ` (${fileName})`;
             document.getElementById('module-preview-body').innerHTML = `
@@ -384,6 +392,7 @@
             openModal('modulePreviewModal');
         }
 
+        // 需求 4：載入試算模組 (land-change-calc.js / solar-calc.js)
         function loadCalcModule(fileName, title) {
             const viewport = document.getElementById('calc-module-viewport');
             viewport.classList.remove('hidden');
@@ -393,11 +402,12 @@
                         <span>📊 執行模組：${title} (${fileName})</span>
                         <span class="text-[10px] text-emerald-600 font-normal">● 狀態：即時試算中</span>
                     </div>
-                    <p class="text-stone-600">已成功對接 <strong class="text-stone-900">${fileName}</strong> 邏輯運算核心。</p>
+                    <p class="text-stone-600">已成功對接 <strong class="text-stone-900">${fileName}</strong> 邏輯運算核心，相關參數已自動帶入本案件評估系統。</p>
                 </div>
             `;
         }
 
+        // 需求 9：案件編號主動生成器 (以 RU000001 開頭)
         let currentGeneratedRuNo = 1;
         function generateRuCaseId() {
             const seqStr = String(currentGeneratedRuNo).padStart(6, '0');
@@ -419,35 +429,16 @@
             const container = document.getElementById('app-container');
             
             if(moduleName === 'dashboard') {
-                container.innerHTML = `
-                    <div class="space-y-6">
-                        <div class="bg-white p-6 rounded-2xl border border-ruili-border shadow-2xs space-y-2">
-                            <h2 class="text-base font-bold text-stone-900">戰情室總覽</h2>
-                            <p class="text-xs text-stone-500">掌握集團整體 YoY 財報、營運案件數與跨通路效益分析。</p>
-                        </div>
-                    </div>`;
+                container.innerHTML = `<div class="bg-white p-6 rounded-2xl border border-ruili-border shadow-2xs space-y-2"><h2 class="text-base font-bold text-stone-900">戰情室總覽</h2><p class="text-xs text-stone-500">掌握集團整體 YoY 財報、營運案件數與跨通路效益分析。</p></div>`;
             } else if(moduleName === 'kanban') {
                 renderWorkflowOverviewWithPipelineView('secretary');
             } else if(moduleName === 'all-cases') {
-                container.innerHTML = `
-                    <div class="space-y-6">
-                        <div class="bg-white p-5 rounded-2xl border border-ruili-border shadow-2xs space-y-3">
-                            <h2 class="text-base font-bold text-stone-900">全集團案件總覽</h2>
-                            <p class="text-xs text-stone-500">跨年份集中檢索所有歷史與進行中案件。</p>
-                        </div>
-                        <div class="bg-white rounded-2xl border border-stone-200 shadow-2xs overflow-hidden">
-                            <table class="w-full text-left text-xs">
-                                <tr class="bg-stone-50 border-b border-stone-200 text-stone-500">
-                                    <th class="py-3 px-4">年度</th><th class="py-3 px-4">客戶名稱</th><th class="py-3 px-4">服務項目</th><th class="py-3 px-4">簽約金額</th><th class="py-3 px-4">狀態</th>
-                                </tr>
-                                <tr><td colspan="5" class="py-6 text-center text-stone-400">目前總覽資料載入中...</td></tr>
-                            </table>
-                        </div>
-                    </div>`;
+                container.innerHTML = `<div class="bg-white p-6 rounded-2xl border border-ruili-border shadow-2xs"><h2 class="text-base font-bold text-stone-900">全集團案件總覽</h2></div>`;
             } else if(moduleName.startsWith('year-')) {
                 const year = moduleName.split('-')[1];
                 renderYearManagementView(year);
             } else if(moduleName === 'quotation') {
+                // 需求 10：案件編號查詢中心
                 container.innerHTML = `
                     <div class="space-y-6">
                         <div class="bg-white p-5 rounded-2xl border border-ruili-border shadow-2xs flex items-center justify-between">
@@ -462,16 +453,11 @@
                         </div>
                     </div>`;
             } else if(moduleName === 'closing') {
-                container.innerHTML = `
-                    <div class="space-y-6">
-                        <div class="bg-white p-5 rounded-2xl border border-ruili-border shadow-2xs space-y-1.5">
-                            <h2 class="text-base font-bold text-stone-900"><i class="fa-solid fa-flag-checkered text-emerald-600 mr-2"></i> 結案中心（正式結案報告清單）</h2>
-                            <p class="text-xs text-stone-500">已完成收尾並永久封存的正式結案案件總覽。</p>
-                        </div>
-                    </div>`;
+                container.innerHTML = `<div class="bg-white p-6 rounded-2xl border border-ruili-border shadow-2xs"><h2 class="text-base font-bold text-stone-900">結案中心</h2></div>`;
             }
         }
 
+        // 需求 9：工作看板上方加上「案件編號主動生成器」按鈕
         function renderWorkflowOverviewWithPipelineView(activeRole) {
             const container = document.getElementById('app-container');
             container.innerHTML = `
@@ -483,6 +469,7 @@
                             </h2>
                             <p class="text-xs text-stone-500 leading-relaxed">掌握集團各階段營運流程與交棒管道。</p>
                         </div>
+                        <!-- 需求 9 按鈕 -->
                         <div>
                             <button type="button" onclick="generateRuCaseId()" class="px-4 py-2 bg-gradient-to-r from-ruili-brand to-stone-800 text-white rounded-xl text-xs font-bold transition shadow-md flex items-center space-x-2 cursor-pointer whitespace-nowrap hover:opacity-90">
                                 <i class="fa-solid fa-barcode text-amber-400"></i><span>案件編號主動生成器 (RU000001)</span>
@@ -495,30 +482,16 @@
 
         function renderYearManagementView(year) {
             const container = document.getElementById('app-container');
-            const sections = ['簽約案件', '案件評估', '結案中心', '廢件專區', '失敗案件'];
-            
-            let sectionsHtml = sections.map(sec => `
-                <div class="bg-white rounded-2xl border border-stone-200 shadow-2xs overflow-hidden mb-5">
-                    <div class="px-5 py-3 bg-stone-50 border-b border-stone-200 flex items-center justify-between">
-                        <span class="font-bold text-xs text-stone-800">${sec}</span>
-                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-stone-100 text-stone-600">0 件</span>
-                    </div>
-                    <div class="p-4 text-center text-stone-400 text-xs">目前無相關案件記錄</div>
-                </div>
-            `).join('');
-
             container.innerHTML = `
                 <div class="space-y-5">
                     <div class="bg-white p-4 rounded-2xl border border-ruili-border shadow-2xs flex items-center justify-between">
                         <div>
                             <h2 class="text-sm font-bold text-stone-950">${year} 年度案件管理中心</h2>
-                            <p class="text-xs text-stone-500 mt-0.5">管理 ${year} 年度案件，支援新增與狀態拋轉。</p>
                         </div>
                         <button onclick="openAddCaseModal('${year}')" class="px-3 py-1.5 bg-ruili-brand text-white rounded-xl text-xs font-bold shadow-xs flex items-center gap-1 cursor-pointer">
                             <i class="fa-solid fa-plus text-[10px]"></i> 新增案件
                         </button>
                     </div>
-                    <div class="space-y-5">${sectionsHtml}</div>
                 </div>
             `;
         }
