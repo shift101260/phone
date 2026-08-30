@@ -1,13 +1,7 @@
-/**
- * 睿立集團系統｜土地變更與回饋金試算模組 (land-change-calc.js)
- */
-function calculateLandChangeFee(landAreaPing,公告現值PerPing) {
-    const totalValue = landAreaPing * 公告現值PerPing;
-    // 依通常法規比例試算回饋金 (例如 5%)
-    const feedbackFee = totalValue * 0.05;
+window.openLandChangeModal = () => document.getElementById('land-change-modal').classList.remove('hidden');
+window.closeLandChangeModal = () => document.getElementById('land-change-modal').classList.add('hidden');
 
-    return {
-        totalValue: totalValue.toLocaleString(),
-        feedbackFee: feedbackFee.toLocaleString()
-    };
-}
+window.calcPing = function(inputEl, outputId) {
+    const val = parseFloat(inputEl.value || 0);
+    document.getElementById(outputId).value = `${(val * 0.3025).toFixed(2)} 坪`;
+};
