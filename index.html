@@ -340,9 +340,10 @@
 
             <div class="bg-stone-50 px-6 py-4 border-t border-amber-200 flex justify-between items-center sticky bottom-0 z-10">
                 <button onclick="closeModal('pdfModal')" class="px-5 py-2.5 bg-stone-200 hover:bg-stone-300 text-stone-700 rounded-xl font-medium transition">關閉預覽</button>
-                <button onclick="alert('📥 正在下載白底金字尊榮版正式結案報告 PDF 檔案...')" class="px-6 py-2.5 bg-gradient-to-r from-amber-700 to-amber-600 hover:from-amber-600 hover:to-amber-500 text-white rounded-xl font-bold transition shadow-md flex items-center space-x-2">
-                    <i class="fa-solid fa-download"></i>
-                    <span>下載白底金字版 PDF 報告</span>
+                <!-- 修改為一鍵匯出 PDF 按鈕 -->
+                <button onclick="exportPdf()" class="px-6 py-2.5 bg-gradient-to-r from-amber-700 to-amber-600 hover:from-amber-600 hover:to-amber-500 text-white rounded-xl font-bold transition shadow-md flex items-center space-x-2">
+                    <i class="fa-solid fa-file-arrow-down"></i>
+                    <span>一鍵匯出 PDF</span>
                 </button>
             </div>
         </div>
@@ -377,6 +378,12 @@
 
         function openPdfReport(id, client, service, amount) {
             openModal('pdfModal');
+        }
+
+        // 一鍵匯出 PDF 互動觸發函數
+        function exportPdf() {
+            alert('📥 正在執行一鍵匯出 PDF，白底金字正式結案報告已成功下載並歸檔！');
+            closeModal('pdfModal');
         }
 
         function submitStageAction(msg) {
