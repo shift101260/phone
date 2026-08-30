@@ -11,6 +11,9 @@
     <link rel="stylesheet" href="./css/variables.css">
     <link rel="stylesheet" href="./css/layout.css">
 
+    <!-- 引入資料同步與持久化模組 -->
+    <script src="./js/api/data-sync.js"></script>
+
     <!-- 讓 Tailwind 能夠抓取我們的 CSS 變數 -->
     <script>
         tailwind.config = {
@@ -107,7 +110,7 @@
     </main>
 
     <!-- ========================================== -->
-    <!-- 互動彈窗模板區塊                           -->
+    <!-- 互動彈窗模板區塊                          -->
     <!-- ========================================== -->
 
     <!-- 1-1. 秘書待簽核案件列表彈窗 -->
@@ -625,56 +628,6 @@
 
     <!-- 頁面切換與控制邏輯 -->
     <script>
-        function generateMockCases() {
-            const services = ['土地變更', '特定工廠專用區', '綠能申設', '資產顧問', '土地重劃'];
-            const clients = ['張董事長', '黃總經理', '林董', '陳小姐', '何董'];
-            let data = {
-                '2027': [
-                    { id: '2027-01', name: '烏日區未來產業專區', client: '何董事長', service: '土地變更', progress: '評估中', amount: 'NT$ 3,000,000', note: '審查準備中', status: '案件評估' }
-                ],
-                '2026': [
-                    { id: '2026-01', name: '大雅區農地變更專案', client: '張先生', service: '農地變更', progress: '簽約中', amount: 'NT$ 2,500,000', note: '預計118通檢', status: '簽約案件' },
-                    { id: '2026-02', name: '烏日區工廠合法化', client: '黃董事長', service: '特定工廠專用區', progress: '評估中', amount: 'NT$ 2,070,000', note: '廠房打掉重蓋，太陽能自建', status: '案件評估' },
-                    { id: '2026-03', name: '潭子區綠能用地申設', client: '林總經理', service: '綠能申設', progress: '結案歸檔', amount: 'NT$ 1,500,000', note: '已完成全數審查', status: '結案中心' },
-                    { id: '2026-04', name: '西屯區資產配置顧問', client: '陳小姐', service: '資產顧問', progress: '失敗', amount: 'NT$ 0', note: '客戶端暫緩投資', status: '失敗案件' },
-                    { id: '2026-05', name: '北屯區土地重劃案', client: '王董', service: '土地重劃', progress: '廢件', amount: 'NT$ 0', note: '條件不符撤案', status: '廢件專區' }
-                ],
-                '2025': [
-                    { id: '2025-01', name: '潭子綠能廠房申設', client: '林總經理', service: '綠能申設', progress: '已結案', amount: 'NT$ 1,800,000', note: '完美結案', status: '結案中心' }
-                ],
-                '2024': [],
-                '2023': [],
-                '2022': [],
-                '2021': []
-            };
-
-            for (let i = 6; i <= 40; i++) {
-                let idStr = `2026-${String(i).padStart(3, '0')}`;
-                let client = clients[i % clients.length];
-                let srv = services[i % services.length];
-                data['2026'].push({
-                    id: idStr,
-                    name: `${client}(${srv}專案)`,
-                    client: client,
-                    service: srv,
-                    days: (i * 3) % 20,
-                    amount: `NT$ ${(((i % 10) + 1) * 300000).toLocaleString()}`,
-                    intro: '陳經理 / 10% / 匯款退佣',
-                    schedule: '第一期 30% / 第二期 30% / 第三期 40%',
-                    desc: `依客戶需求全力推進${srv}相關法規審查，確保時效與合規性。`,
-                    signDate: '2026-06-15',
-                    payDate: '2026-06-18',
-                    remark: '依客戶要求優先辦理初審與法規對接。',
-                    progress: '執行中',
-                    status: (i % 3 === 0) ? '結案中心' : '簽約案件',
-                    note: `依客戶要求全力推進${srv}相關法規審查。`
-                });
-            }
-            return data;
-        }
-
-        let globalCasesData = generateMockCases();
-
         function openModal(modalId) {
             const modal = document.getElementById(modalId);
             if (modal) modal.classList.remove('hidden');
@@ -687,7 +640,7 @@
 
         function openActiveCasesModal() {
             const container = document.getElementById('active-cases-modal-content');
-            let allCases = globalCasesData['2026'];
+            let allCases = globalCasesData['2026'] || [];
             
             let html = `<p class="text-stone-500 mb-2">以下為工作看板：跨角色交棒專屬列表中的所有執行中案件 (共 ${allCases.length} 件)：</p>`;
             
@@ -961,7 +914,7 @@
                 { key: 'cbo', name: '品牌長', desc: '高階資源協調' }
             ];
 
-            let allCases = globalCasesData['2026'];
+            let allCases = globalCasesData['2026'] || [];
             let totalActiveCasesCount = allCases.length;
 
             let casesList = allCases.filter((_, idx) => idx % 5 === (activeRole === 'secretary' ? 0 : activeRole === 'assistant' ? 1 : activeRole === 'surveyor' ? 2 : activeRole === 'accountant' ? 3 : 4));
@@ -1252,6 +1205,7 @@
                     globalCasesData[yr] = globalCasesData[yr].filter(c => c.id !== id);
                 }
             });
+            saveCasesData(globalCasesData); // 持久化儲存
             alert('已成功刪除勾選案件！');
             renderYearManagementView(currentYear);
         }
@@ -1270,6 +1224,7 @@
                     });
                 }
             });
+            saveCasesData(globalCasesData); // 持久化儲存
             alert('已成功將勾選案件恢復至「案件評估」！');
             renderYearManagementView(currentYear);
         }
@@ -1299,6 +1254,7 @@
                 }
             });
 
+            saveCasesData(globalCasesData); // 持久化儲存
             alert(`成功將案件拋轉至「${targetStatus}」！`);
             renderYearManagementView(currentYear);
         }
