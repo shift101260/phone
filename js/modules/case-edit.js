@@ -9,7 +9,7 @@ export function openAddCaseModal(year = '2026') {
     if (yearInput) yearInput.value = year;
     if (idInput) idInput.value = ''; // 留空代表新增模式
 
-    // 自動產生並顯示當下建檔時間
+    // 需求 2：自動產生並顯示當下建檔時間
     const now = new Date();
     const timeStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
     if (timeDisplay) timeDisplay.innerText = timeStr;
@@ -36,7 +36,7 @@ export function openAddCaseModal(year = '2026') {
 }
 
 /**
- * 動態新增供應商報價欄位列
+ * 需求 5：動態新增供應商報價欄位列
  */
 window.addQuoteSupplierRow = function() {
     const container = document.getElementById('suppliers-rows-container');
@@ -72,7 +72,7 @@ window.addQuoteSupplierRow = function() {
 };
 
 /**
- * 試算報價總結算
+ * 需求 6：總結算試算（自動計算總報價金額、稅後總金額、案件總利潤）
  */
 window.calculateQuoteTotals = function() {
     const rows = document.querySelectorAll('#suppliers-rows-container > div');
