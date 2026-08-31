@@ -1,9 +1,8 @@
-// js/modules/unregistered-building.js
 window.openUnregisteredBuildingModal = function() {
-    const modal = document.getElementById('editCaseModal');
+    const modal = document.getElementById('unregistered-building-modal');
     if (modal) modal.classList.remove('hidden');
 };
 window.closeUnregisteredBuildingModal = function() {
-    const modal = document.getElementById('editCaseModal');
+    const modal = document.getElementById('unregistered-building-modal');
     if (modal) modal.classList.add('hidden');
 };
