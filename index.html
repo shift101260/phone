@@ -194,7 +194,7 @@
         </div> 
     </div> 
 
-    <!-- 1-3. 案件簽核詳細表單彈窗 (工作看板：秘書待簽核案件表格檢視／簽核) --> 
+    <!-- 1-3. 案件簽核詳細表單彈窗 (工作看板：秘書待簽核案件表格檢視／簽核) [依需求 2, 3, 4, 5 調整欄位順序與收款期程橫向顯示] --> 
     <div id="approvalModal" class="fixed inset-0 bg-black/50 backdrop-blur-xs hidden flex items-center justify-center z-50 p-3 overflow-y-auto"> 
         <div class="bg-white w-full max-w-xl rounded-2xl shadow-xl overflow-hidden border border-stone-200 my-6"> 
             <div class="bg-[#2C2A29] text-white px-5 py-3 flex justify-between items-center sticky top-0 z-10"> 
@@ -211,20 +211,27 @@
                     <div class="grid grid-cols-2 gap-y-2.5 gap-x-4"> 
                         <div><span class="text-stone-400 block text-[9px] mb-0.5">案件名稱</span><strong id="modal-case-name" class="text-stone-800 text-xs">-</strong></div> 
                         <div><span class="text-stone-400 block text-[9px] mb-0.5">服務項目</span><strong id="modal-case-service" class="text-stone-800">-</strong></div> 
+                        
+                        <!-- 修改需求 3：簽約金額是否含稅幫我放在簽約條件上面 --> 
+                        <div><span class="text-stone-400 block text-[9px] mb-0.5">簽約金額是否含稅</span><strong id="modal-case-tax" class="text-stone-800">含稅 (5%)</strong></div> 
+                        <div><span class="text-stone-400 block text-[9px] mb-0.5">簽約條件</span><strong id="modal-case-schedule" class="text-stone-800">-</strong></div> 
+                        
+                        <div class="col-span-2"><span class="text-stone-400 block text-[9px] mb-0.5">業務合約備註</span><strong id="modal-case-biz-remark" class="text-stone-800 font-medium">-</strong></div> 
+                        
+                        <!-- 修改需求 4：佣金請幫我放在介紹人姓名下面 --> 
+                        <div><span class="text-stone-400 block text-[9px] mb-0.5">介紹人姓名</span><strong id="modal-case-intro-name" class="text-stone-800">-</strong></div> 
+                        <div><span class="text-stone-400 block text-[9px] mb-0.5">佣金</span><strong id="modal-case-commission" class="text-stone-800">-</strong></div> 
+                        
+                        <!-- 修改需求 2：請幫我把案件說明放在退佣機制下面 --> 
+                        <div class="col-span-2"><span class="text-stone-400 block text-[9px] mb-0.5">退佣機制</span><strong id="modal-case-intro" class="text-stone-800">-</strong></div> 
                         <div class="col-span-2 bg-amber-50/70 p-2.5 rounded-lg border border-amber-200/80"> 
                             <span class="text-amber-900 block text-[9px] font-bold mb-0.5"><i class="fa-solid fa-note-sticky mr-1"></i> 案件說明</span> 
                             <strong id="modal-case-desc" class="text-stone-800 font-medium leading-relaxed block text-[11px]">-</strong> 
                         </div> 
-                        <div><span class="text-stone-400 block text-[9px] mb-0.5">簽約條件</span><strong id="modal-case-schedule" class="text-stone-800">-</strong></div> 
-                        <div><span class="text-stone-400 block text-[9px] mb-0.5">簽約金額是否含稅</span><strong id="modal-case-tax" class="text-stone-800">含稅 (5%)</strong></div> 
-                        <div class="col-span-2"><span class="text-stone-400 block text-[9px] mb-0.5">業務合約備註</span><strong id="modal-case-biz-remark" class="text-stone-800 font-medium">-</strong></div> 
-                        <div><span class="text-stone-400 block text-[9px] mb-0.5">介紹人姓名</span><strong id="modal-case-intro-name" class="text-stone-800">-</strong></div> 
-                        <div><span class="text-stone-400 block text-[9px] mb-0.5">佣金</span><strong id="modal-case-commission" class="text-stone-800">-</strong></div> 
-                        <div class="col-span-2"><span class="text-stone-400 block text-[9px] mb-0.5">退佣機制</span><strong id="modal-case-intro" class="text-stone-800">-</strong></div> 
                     </div> 
                 </div> 
 
-                <!-- 秘書自填欄位區塊 --> 
+                <!-- 秘書自填欄位區塊 [依需求 5：收款期程一到四期橫的欄位顯示] --> 
                 <div class="bg-sky-50/40 p-3.5 rounded-xl border border-sky-100 space-y-3"> 
                     <div class="flex items-center space-x-1.5 mb-1"> 
                         <i class="fa-solid fa-pen-nib text-sky-600 text-[10px]"></i> 
@@ -244,8 +251,25 @@
                             <input type="text" id="modal-input-amount" value="NT$ 3,800,000" class="w-full bg-white border border-stone-300 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-ruili-brand font-mono font-bold text-rose-600 shadow-2xs"> 
                         </div> 
                         <div class="col-span-2"> 
-                            <label class="font-bold block mb-1 text-stone-900">收款期程 <span class="text-rose-500">*</span></label> 
-                            <input type="text" value="第一期 30% (訂金) / 第二期 30% (初審) / 第三期 40% (尾款)" class="w-full bg-white border border-stone-300 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-ruili-brand font-medium shadow-2xs"> 
+                            <label class="font-bold block mb-1 text-stone-900">收款期程 (一到四期橫向顯示) <span class="text-rose-500">*</span></label> 
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+                                <div class="bg-white p-2 rounded-lg border border-stone-200">
+                                    <span class="text-[9px] text-stone-400 block mb-0.5">第一期款 (填入%)</span>
+                                    <input type="text" value="30% (訂金)" class="w-full text-xs font-medium border border-stone-200 rounded px-2 py-1">
+                                </div>
+                                <div class="bg-white p-2 rounded-lg border border-stone-200">
+                                    <span class="text-[9px] text-stone-400 block mb-0.5">第二期款 (填入%)</span>
+                                    <input type="text" value="30% (初審)" class="w-full text-xs font-medium border border-stone-200 rounded px-2 py-1">
+                                </div>
+                                <div class="bg-white p-2 rounded-lg border border-stone-200">
+                                    <span class="text-[9px] text-stone-400 block mb-0.5">第三期款 (填入%)</span>
+                                    <input type="text" value="40% (尾款)" class="w-full text-xs font-medium border border-stone-200 rounded px-2 py-1">
+                                </div>
+                                <div class="bg-white p-2 rounded-lg border border-stone-200">
+                                    <span class="text-[9px] text-stone-400 block mb-0.5">第四期款 (填入%)</span>
+                                    <input type="text" value="0% (自填)" class="w-full text-xs font-medium border border-stone-200 rounded px-2 py-1">
+                                </div>
+                            </div>
                         </div> 
                         <div class="col-span-2"> 
                             <label class="font-bold block mb-1 text-stone-900">特別約定事項</label> 
@@ -675,27 +699,23 @@
                         <h4 class="font-bold text-stone-900 flex items-center text-xs"> 
                             <i class="fa-solid fa-info-circle text-ruili-brand mr-1.5"></i> 一、基本資訊區域 
                         </h4> 
-                        <!-- 修改需求 2：確保顯示建檔時間與日期 --> 
                         <div class="text-[11px] text-stone-500 bg-stone-100 px-2.5 py-1 rounded-lg border border-stone-200"> 
                             📅 建檔時間與日期：<strong id="edit-case-time-display" class="text-stone-800 font-mono">-</strong> 
                         </div> 
                     </div> 
-                    
-                    <!-- 修改需求 3：服務細項放在案件名稱右邊，工作進度與服務項目放在案件名稱下面並排 -->
+                     
+                    <!-- 服務細項放在案件名稱右邊，工作進度與服務項目放在案件名稱下面並排 --> 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4"> 
-                        <!-- 左欄：案件名稱 -->
                         <div> 
                             <label class="font-bold block mb-1 text-stone-900">案件名稱 <span class="text-rose-500">*</span></label> 
                             <input type="text" id="edit-case-name" class="w-full bg-white border border-stone-300 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-ruili-brand font-bold shadow-2xs" placeholder="例：農地變更專案"> 
                         </div> 
-                        <!-- 右欄：服務細項 (放在案件名稱右邊) -->
                         <div> 
                             <label class="font-bold block mb-1 text-stone-900">服務細項 <span class="text-rose-500">*</span></label> 
                             <input type="text" id="edit-case-service-detail" class="w-full bg-white border border-stone-300 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-ruili-brand font-medium shadow-2xs" placeholder="例：特定工廠用地變更細項"> 
                         </div> 
                     </div> 
 
-                    <!-- 放置於案件名稱下方並排：工作進度狀態與服務項目 -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4"> 
                         <div> 
                             <label class="font-bold block mb-1 text-stone-900">工作進度狀態</label> 
@@ -785,7 +805,7 @@
                     <div id="calc-module-viewport" class="mt-2 p-3 bg-stone-50 rounded-xl border border-stone-200 text-stone-500 text-xs hidden"></div> 
                 </div> 
 
-                <!-- 區塊六：報價工具與利潤計算 --> 
+                <!-- 區塊六：報價工具與利潤計算 [依需求 1：報價總金額報價加入收款期程欄位橫向] --> 
                 <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-2xs space-y-4"> 
                     <div class="flex justify-between items-center border-b border-stone-100 pb-2"> 
                         <h4 class="font-bold text-stone-900 flex items-center text-xs"> 
@@ -820,7 +840,41 @@
                         </div> 
                     </div> 
 
-                    <!-- 修改需求 1：案件總利潤 = 簽約總金額 - 未稅總價格 -->
+                    <!-- 報價總金額報價加入收款期程欄位（橫向） -->
+                    <div class="bg-amber-50/50 p-3 rounded-xl border border-amber-200/60 space-y-2">
+                        <span class="font-bold text-amber-900 block text-[11px]"><i class="fa-solid fa-calendar-days mr-1"></i> 收款期程欄位配置 (自動換算簽約總金額數字)</span>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+                            <div class="bg-white p-2 rounded-lg border border-amber-200">
+                                <span class="text-[9px] text-stone-500 block mb-0.5">第一期款 (%)</span>
+                                <div class="flex items-center space-x-1">
+                                    <input type="number" value="30" class="w-12 text-xs border rounded p-1 font-mono text-center" placeholder="%">
+                                    <span class="text-[10px] text-rose-600 font-bold font-mono">NT$ 0</span>
+                                </div>
+                            </div>
+                            <div class="bg-white p-2 rounded-lg border border-amber-200">
+                                <span class="text-[9px] text-stone-500 block mb-0.5">第二期款 (%)</span>
+                                <div class="flex items-center space-x-1">
+                                    <input type="number" value="30" class="w-12 text-xs border rounded p-1 font-mono text-center" placeholder="%">
+                                    <span class="text-[10px] text-rose-600 font-bold font-mono">NT$ 0</span>
+                                </div>
+                            </div>
+                            <div class="bg-white p-2 rounded-lg border border-amber-200">
+                                <span class="text-[9px] text-stone-500 block mb-0.5">第三期款 (%)</span>
+                                <div class="flex items-center space-x-1">
+                                    <input type="number" value="40" class="w-12 text-xs border rounded p-1 font-mono text-center" placeholder="%">
+                                    <span class="text-[10px] text-rose-600 font-bold font-mono">NT$ 0</span>
+                                </div>
+                            </div>
+                            <div class="bg-white p-2 rounded-lg border border-amber-200">
+                                <span class="text-[9px] text-stone-500 block mb-0.5">第四期款 (%)</span>
+                                <div class="flex items-center space-x-1">
+                                    <input type="number" value="0" class="w-12 text-xs border rounded p-1 font-mono text-center" placeholder="%">
+                                    <span class="text-[10px] text-rose-600 font-bold font-mono">NT$ 0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-4 pt-3 border-t border-stone-100"> 
                         <div> 
                             <label class="font-bold block mb-1 text-stone-900">總報價金額 (自動)</label> 
@@ -862,11 +916,31 @@
                     </div> 
                 </div> 
 
-                <!-- 區塊八：簽約程序與合約備註 --> 
+                <!-- 區塊八：簽約程序與合約備註 [依需求 6：簽約金額是否含稅上方增加選項：無] --> 
                 <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-2xs space-y-3"> 
                     <h4 class="font-bold text-stone-900 border-b border-stone-100 pb-2 flex items-center text-xs"> 
                         <i class="fa-solid fa-file-contract text-ruili-brand mr-1.5"></i> 八、簽約程序與合約備註 
                     </h4> 
+                     
+                    <!-- 簽約金額是否含稅上方增加一個選項：無 -->
+                    <div class="space-y-2 py-1 border-b border-stone-100 pb-3">
+                        <label class="font-bold text-stone-900 block text-xs">簽約金額是否含稅選項：</label>
+                        <div class="flex items-center space-x-4">
+                            <label class="flex items-center space-x-1.5 cursor-pointer text-xs">
+                                <input type="radio" name="tax-option" value="none" class="text-ruili-brand focus:ring-ruili-brand">
+                                <span class="font-bold text-stone-700">無</span>
+                            </label>
+                            <label class="flex items-center space-x-1.5 cursor-pointer text-xs">
+                                <input type="radio" name="tax-option" value="included" checked class="text-ruili-brand focus:ring-ruili-brand">
+                                <span class="font-bold text-stone-700">含稅 (5%)</span>
+                            </label>
+                            <label class="flex items-center space-x-1.5 cursor-pointer text-xs">
+                                <input type="radio" name="tax-option" value="excluded" class="text-ruili-brand focus:ring-ruili-brand">
+                                <span class="font-bold text-stone-700">未稅</span>
+                            </label>
+                        </div>
+                    </div>
+
                     <div class="flex items-center space-x-2 py-1"> 
                         <input type="checkbox" id="contract-tax-included" class="w-4 h-4 text-ruili-brand border-stone-300 rounded cursor-pointer"> 
                         <label for="contract-tax-included" class="font-bold text-stone-900 cursor-pointer">簽約金額是否含稅（勾選後將連動至工作看板說明）</label> 
