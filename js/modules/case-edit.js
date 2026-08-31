@@ -4,7 +4,7 @@
 export function openAddCaseModal(year = '2026') { 
     const yearInput = document.getElementById('edit-case-year'); 
     const idInput = document.getElementById('edit-case-id'); 
-     
+
     if (yearInput) yearInput.value = year; 
     if (idInput) idInput.value = ''; // 留空代表新增模式 
 
@@ -13,6 +13,7 @@ export function openAddCaseModal(year = '2026') {
     const nameInput = document.getElementById('edit-case-name'); 
     const detailInput = document.getElementById('edit-case-service-detail'); 
     const addressInput = document.getElementById('edit-case-address'); 
+    const landNoInput = document.getElementById('edit-case-land-no'); // 新增地段地號
     const descInput = document.getElementById('edit-case-desc'); 
     const noteInput = document.getElementById('edit-case-note'); 
     const amountInput = document.getElementById('edit-case-amount'); 
@@ -21,6 +22,7 @@ export function openAddCaseModal(year = '2026') {
     if (nameInput) nameInput.value = ''; 
     if (detailInput) detailInput.value = ''; 
     if (addressInput) addressInput.value = ''; 
+    if (landNoInput) landNoInput.value = ''; 
     if (descInput) descInput.value = ''; 
     if (noteInput) noteInput.value = ''; 
     if (amountInput) amountInput.value = ''; 
@@ -30,12 +32,12 @@ export function openAddCaseModal(year = '2026') {
 } 
 
 /** 
- * 儲存新增或編輯後的案件資料（保留您原本完整的編輯與新增邏輯） 
+ * 儲存新增或編輯後的案件資料 
  */ 
 export function saveEditedCaseData() { 
     const year = document.getElementById('edit-case-year')?.value || '2026'; 
     const caseId = document.getElementById('edit-case-id')?.value; 
-     
+
     const client = document.getElementById('edit-case-client')?.value.trim(); 
     const name = document.getElementById('edit-case-name')?.value.trim(); 
     const service = document.getElementById('edit-case-service')?.value; 
@@ -106,8 +108,8 @@ export function saveEditedCaseData() {
     } 
 } 
 
-// 綁定到 window 物件以確保 HTML 中的 onclick 能夠直接呼叫 
+// 綁定到 window 物件以確保 onclick 能夠直接呼叫 
 window.openAddCaseModal = openAddCaseModal; 
 window.saveEditedCaseData = saveEditedCaseData; 
 
-console.log('Ruili 案件新增／編輯模組 (case-edit.js) 已成功載入！'); 
+console.log('Ruili 案件新增／編輯模組 (case-edit.js) 已成功載入！');
