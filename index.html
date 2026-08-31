@@ -205,7 +205,7 @@
         </div> 
     </div> 
 
-    <!-- 1-3. 案件簽核詳細表單彈窗 [依需求 2、3：四期款改為 2欄並排，且 % 欄位移除上下箭頭] --> 
+    <!-- 1-3. 案件簽核詳細表單彈窗 --> 
     <div id="approvalModal" class="fixed inset-0 bg-black/50 backdrop-blur-xs hidden flex items-center justify-center z-50 p-3 overflow-y-auto"> 
         <div class="bg-white w-full max-w-xl rounded-2xl shadow-xl overflow-hidden border border-stone-200 my-6"> 
             <div class="bg-[#2C2A29] text-white px-5 py-3 flex justify-between items-center sticky top-0 z-10"> 
@@ -239,7 +239,7 @@
                     </div> 
                 </div> 
 
-                <!-- 秘書自填欄位區塊：收款期程 1~4 期改為 2欄並排，且 % 欄位移除上下箭頭 --> 
+                <!-- 秘書自填欄位區塊：收款期程卡片排版（依照提供圖片樣式） --> 
                 <div class="bg-sky-50/40 p-3.5 rounded-xl border border-sky-100 space-y-3"> 
                     <div class="flex items-center space-x-1.5 mb-1"> 
                         <i class="fa-solid fa-pen-nib text-sky-600 text-[10px]"></i> 
@@ -259,46 +259,78 @@
                             <input type="text" id="modal-input-amount" value="3800000" oninput="calculateApprovalInstallments()" class="w-full bg-white border border-stone-300 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-ruili-brand font-mono font-bold text-rose-600 shadow-2xs"> 
                         </div> 
                         <div class="col-span-2"> 
-                            <label class="font-bold block mb-1 text-stone-900">收款期程 (一到四期 2欄並排，含百分比與自填欄位) <span class="text-rose-500">*</span></label> 
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
-                                <div class="bg-white p-2.5 rounded-lg border border-stone-200 flex items-center justify-between">
-                                    <div class="flex items-center space-x-1.5">
-                                        <span class="text-[10px] text-stone-500 font-bold">第一期款 (%)</span>
-                                        <input type="number" id="approval-inst-1-pct" value="30" oninput="calculateApprovalInstallments()" class="w-12 text-xs font-medium border border-stone-200 rounded px-1.5 py-1 text-center font-mono" placeholder="%">
+                            <label class="font-bold block mb-1.5 text-stone-900">收款期程 (依簽約金額按%自動計算)</label> 
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                                <!-- 第一期款 -->
+                                <div class="bg-white p-3 rounded-xl border border-stone-200 space-y-2.5 shadow-2xs">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-[11px] text-stone-700 font-bold">第一期款 (%)</span>
+                                        <input type="number" id="approval-inst-1-pct" value="30" oninput="calculateApprovalInstallments()" class="w-16 text-xs border border-stone-200 rounded-lg px-2 py-1 text-center font-mono focus:outline-none focus:border-ruili-brand" placeholder="例如：30">
                                     </div>
-                                    <div class="flex items-center space-x-1.5">
-                                        <input type="text" class="w-20 text-xs border border-stone-200 rounded px-1.5 py-1" placeholder="備註/自填">
-                                        <span id="approval-inst-1-val" class="text-[10px] text-rose-600 font-bold font-mono">NT$ 1,140,000</span>
+                                    <div class="flex items-center justify-between pt-1 border-t border-stone-100">
+                                        <span id="approval-inst-1-val" class="text-xs text-emerald-700 font-bold font-mono">NT$ 1,140,000</span>
                                     </div>
-                                </div>
-                                <div class="bg-white p-2.5 rounded-lg border border-stone-200 flex items-center justify-between">
-                                    <div class="flex items-center space-x-1.5">
-                                        <span class="text-[10px] text-stone-500 font-bold">第二期款 (%)</span>
-                                        <input type="number" id="approval-inst-2-pct" value="30" oninput="calculateApprovalInstallments()" class="w-12 text-xs font-medium border border-stone-200 rounded px-1.5 py-1 text-center font-mono" placeholder="%">
+                                    <div>
+                                        <span class="text-[10px] text-stone-400 block mb-0.5">日期</span>
+                                        <input type="date" value="2026-06-15" class="w-full text-xs border border-stone-200 rounded-lg px-2 py-1 font-mono text-stone-600 focus:outline-none focus:border-ruili-brand">
                                     </div>
-                                    <div class="flex items-center space-x-1.5">
-                                        <input type="text" class="w-20 text-xs border border-stone-200 rounded px-1.5 py-1" placeholder="備註/自填">
-                                        <span id="approval-inst-2-val" class="text-[10px] text-rose-600 font-bold font-mono">NT$ 1,140,000</span>
+                                    <div>
+                                        <span class="text-[10px] text-stone-400 block mb-0.5">備註 / 自填欄位</span>
+                                        <input type="text" class="w-full text-xs border border-stone-200 rounded-lg px-2 py-1 focus:outline-none focus:border-ruili-brand" placeholder="請輸入期程備註...">
                                     </div>
                                 </div>
-                                <div class="bg-white p-2.5 rounded-lg border border-stone-200 flex items-center justify-between">
-                                    <div class="flex items-center space-x-1.5">
-                                        <span class="text-[10px] text-stone-500 font-bold">第三期款 (%)</span>
-                                        <input type="number" id="approval-inst-3-pct" value="40" oninput="calculateApprovalInstallments()" class="w-12 text-xs font-medium border border-stone-200 rounded px-1.5 py-1 text-center font-mono" placeholder="%">
+                                <!-- 第二期款 -->
+                                <div class="bg-white p-3 rounded-xl border border-stone-200 space-y-2.5 shadow-2xs">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-[11px] text-stone-700 font-bold">第二期款 (%)</span>
+                                        <input type="number" id="approval-inst-2-pct" value="30" oninput="calculateApprovalInstallments()" class="w-16 text-xs border border-stone-200 rounded-lg px-2 py-1 text-center font-mono focus:outline-none focus:border-ruili-brand" placeholder="例如：30">
                                     </div>
-                                    <div class="flex items-center space-x-1.5">
-                                        <input type="text" class="w-20 text-xs border border-stone-200 rounded px-1.5 py-1" placeholder="備註/自填">
-                                        <span id="approval-inst-3-val" class="text-[10px] text-rose-600 font-bold font-mono">NT$ 1,520,000</span>
+                                    <div class="flex items-center justify-between pt-1 border-t border-stone-100">
+                                        <span id="approval-inst-2-val" class="text-xs text-emerald-700 font-bold font-mono">NT$ 1,140,000</span>
+                                    </div>
+                                    <div>
+                                        <span class="text-[10px] text-stone-400 block mb-0.5">日期</span>
+                                        <input type="date" class="w-full text-xs border border-stone-200 rounded-lg px-2 py-1 font-mono text-stone-600 focus:outline-none focus:border-ruili-brand">
+                                    </div>
+                                    <div>
+                                        <span class="text-[10px] text-stone-400 block mb-0.5">備註 / 自填欄位</span>
+                                        <input type="text" class="w-full text-xs border border-stone-200 rounded-lg px-2 py-1 focus:outline-none focus:border-ruili-brand" placeholder="請輸入期程備註...">
                                     </div>
                                 </div>
-                                <div class="bg-white p-2.5 rounded-lg border border-stone-200 flex items-center justify-between">
-                                    <div class="flex items-center space-x-1.5">
-                                        <span class="text-[10px] text-stone-500 font-bold">第四期款 (%)</span>
-                                        <input type="number" id="approval-inst-4-pct" value="0" oninput="calculateApprovalInstallments()" class="w-12 text-xs font-medium border border-stone-200 rounded px-1.5 py-1 text-center font-mono" placeholder="%">
+                                <!-- 第三期款 -->
+                                <div class="bg-white p-3 rounded-xl border border-stone-200 space-y-2.5 shadow-2xs">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-[11px] text-stone-700 font-bold">第三期款 (%)</span>
+                                        <input type="number" id="approval-inst-3-pct" value="40" oninput="calculateApprovalInstallments()" class="w-16 text-xs border border-stone-200 rounded-lg px-2 py-1 text-center font-mono focus:outline-none focus:border-ruili-brand" placeholder="例如：20">
                                     </div>
-                                    <div class="flex items-center space-x-1.5">
-                                        <input type="text" class="w-20 text-xs border border-stone-200 rounded px-1.5 py-1" placeholder="備註/自填">
-                                        <span id="approval-inst-4-val" class="text-[10px] text-rose-600 font-bold font-mono">NT$ 0</span>
+                                    <div class="flex items-center justify-between pt-1 border-t border-stone-100">
+                                        <span id="approval-inst-3-val" class="text-xs text-emerald-700 font-bold font-mono">NT$ 1,520,000</span>
+                                    </div>
+                                    <div>
+                                        <span class="text-[10px] text-stone-400 block mb-0.5">日期</span>
+                                        <input type="date" class="w-full text-xs border border-stone-200 rounded-lg px-2 py-1 font-mono text-stone-600 focus:outline-none focus:border-ruili-brand">
+                                    </div>
+                                    <div>
+                                        <span class="text-[10px] text-stone-400 block mb-0.5">備註 / 自填欄位</span>
+                                        <input type="text" class="w-full text-xs border border-stone-200 rounded-lg px-2 py-1 focus:outline-none focus:border-ruili-brand" placeholder="請輸入期程備註...">
+                                    </div>
+                                </div>
+                                <!-- 第四期款 -->
+                                <div class="bg-white p-3 rounded-xl border border-stone-200 space-y-2.5 shadow-2xs">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-[11px] text-stone-700 font-bold">第四期款 (%)</span>
+                                        <input type="number" id="approval-inst-4-pct" value="0" oninput="calculateApprovalInstallments()" class="w-16 text-xs border border-stone-200 rounded-lg px-2 py-1 text-center font-mono focus:outline-none focus:border-ruili-brand" placeholder="例如：20">
+                                    </div>
+                                    <div class="flex items-center justify-between pt-1 border-t border-stone-100">
+                                        <span id="approval-inst-4-val" class="text-xs text-emerald-700 font-bold font-mono">NT$ 0</span>
+                                    </div>
+                                    <div>
+                                        <span class="text-[10px] text-stone-400 block mb-0.5">日期</span>
+                                        <input type="date" class="w-full text-xs border border-stone-200 rounded-lg px-2 py-1 font-mono text-stone-600 focus:outline-none focus:border-ruili-brand">
+                                    </div>
+                                    <div>
+                                        <span class="text-[10px] text-stone-400 block mb-0.5">備註 / 自填欄位</span>
+                                        <input type="text" class="w-full text-xs border border-stone-200 rounded-lg px-2 py-1 focus:outline-none focus:border-ruili-brand" placeholder="請輸入期程備註...">
                                     </div>
                                 </div>
                             </div>
@@ -836,7 +868,7 @@
                     <div id="calc-module-viewport" class="mt-2 p-3 bg-stone-50 rounded-xl border border-stone-200 text-stone-500 text-xs hidden"></div> 
                 </div> 
 
-                <!-- 區塊六：報價工具與利潤計算 [依需求 1, 2、3：收款期程 1~4 期改為 2欄並排，且 % 欄位移除上下箭頭] --> 
+                <!-- 區塊六：報價工具與利潤計算 --> 
                 <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-2xs space-y-4"> 
                     <div class="flex justify-between items-center border-b border-stone-100 pb-2"> 
                         <h4 class="font-bold text-stone-900 flex items-center text-xs"> 
@@ -871,48 +903,80 @@
                         </div> 
                     </div> 
 
-                    <!-- 報價總金額報價加入收款期程欄位（2欄並排，無上下箭頭） -->
-                    <div class="bg-amber-50/50 p-3.5 rounded-xl border border-amber-200/60 space-y-2">
-                        <span class="font-bold text-amber-900 block text-[11px]"><i class="fa-solid fa-calendar-days mr-1"></i> 收款期程欄位配置 (填入%後自動計算總簽約金額％價格)</span>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
-                            <div class="bg-white p-2.5 rounded-lg border border-amber-200 flex items-center justify-between">
-                                <div class="flex items-center space-x-1.5">
-                                    <span class="text-[10px] text-stone-500 font-bold">第一期款 (%)</span>
-                                    <input type="number" id="quote-inst-1-pct" value="30" oninput="calculateQuoteTotals()" class="w-12 text-xs border rounded p-1 font-mono text-center" placeholder="%">
+                    <!-- 報價總金額報價加入收款期程欄位（期程卡片排版） -->
+                    <div class="bg-amber-50/50 p-4 rounded-xl border border-amber-200/60 space-y-3">
+                        <span class="font-bold text-amber-900 block text-[11px]"><i class="fa-solid fa-calendar-days mr-1"></i> 收款期程欄位配置 (依簽約金額按%自動計算)</span>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                            <!-- 第一期款 -->
+                            <div class="bg-white p-3 rounded-xl border border-amber-200 space-y-2.5 shadow-2xs">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-[11px] text-stone-700 font-bold">第一期款 (%)</span>
+                                    <input type="number" id="quote-inst-1-pct" value="30" oninput="calculateQuoteTotals()" class="w-16 text-xs border border-stone-200 rounded-lg px-2 py-1 text-center font-mono focus:outline-none focus:border-amber-600" placeholder="例如：30">
                                 </div>
-                                <div class="flex items-center space-x-1.5">
-                                    <input type="text" class="w-20 text-xs border border-stone-200 rounded px-1.5 py-1" placeholder="備註/自填">
-                                    <span id="quote-inst-1-val" class="text-[10px] text-rose-600 font-bold font-mono">NT$ 0</span>
+                                <div class="flex items-center justify-between pt-1 border-t border-stone-100">
+                                    <span id="quote-inst-1-val" class="text-xs text-emerald-700 font-bold font-mono">NT$ 0</span>
                                 </div>
-                            </div>
-                            <div class="bg-white p-2.5 rounded-lg border border-amber-200 flex items-center justify-between">
-                                <div class="flex items-center space-x-1.5">
-                                    <span class="text-[10px] text-stone-500 font-bold">第二期款 (%)</span>
-                                    <input type="number" id="quote-inst-2-pct" value="30" oninput="calculateQuoteTotals()" class="w-12 text-xs border rounded p-1 font-mono text-center" placeholder="%">
+                                <div>
+                                    <span class="text-[10px] text-stone-400 block mb-0.5">日期</span>
+                                    <input type="date" class="w-full text-xs border border-stone-200 rounded-lg px-2 py-1 font-mono text-stone-600 focus:outline-none focus:border-amber-600">
                                 </div>
-                                <div class="flex items-center space-x-1.5">
-                                    <input type="text" class="w-20 text-xs border border-stone-200 rounded px-1.5 py-1" placeholder="備註/自填">
-                                    <span id="quote-inst-2-val" class="text-[10px] text-rose-600 font-bold font-mono">NT$ 0</span>
+                                <div>
+                                    <span class="text-[10px] text-stone-400 block mb-0.5">備註 / 自填欄位</span>
+                                    <input type="text" class="w-full text-xs border border-stone-200 rounded-lg px-2 py-1 focus:outline-none focus:border-amber-600" placeholder="請輸入期程備註...">
                                 </div>
                             </div>
-                            <div class="bg-white p-2.5 rounded-lg border border-amber-200 flex items-center justify-between">
-                                <div class="flex items-center space-x-1.5">
-                                    <span class="text-[10px] text-stone-500 font-bold">第三期款 (%)</span>
-                                    <input type="number" id="quote-inst-3-pct" value="40" oninput="calculateQuoteTotals()" class="w-12 text-xs border rounded p-1 font-mono text-center" placeholder="%">
+                            <!-- 第二期款 -->
+                            <div class="bg-white p-3 rounded-xl border border-amber-200 space-y-2.5 shadow-2xs">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-[11px] text-stone-700 font-bold">第二期款 (%)</span>
+                                    <input type="number" id="quote-inst-2-pct" value="30" oninput="calculateQuoteTotals()" class="w-16 text-xs border border-stone-200 rounded-lg px-2 py-1 text-center font-mono focus:outline-none focus:border-amber-600" placeholder="例如：30">
                                 </div>
-                                <div class="flex items-center space-x-1.5">
-                                    <input type="text" class="w-20 text-xs border border-stone-200 rounded px-1.5 py-1" placeholder="備註/自填">
-                                    <span id="quote-inst-3-val" class="text-[10px] text-rose-600 font-bold font-mono">NT$ 0</span>
+                                <div class="flex items-center justify-between pt-1 border-t border-stone-100">
+                                    <span id="quote-inst-2-val" class="text-xs text-emerald-700 font-bold font-mono">NT$ 0</span>
+                                </div>
+                                <div>
+                                    <span class="text-[10px] text-stone-400 block mb-0.5">日期</span>
+                                    <input type="date" class="w-full text-xs border border-stone-200 rounded-lg px-2 py-1 font-mono text-stone-600 focus:outline-none focus:border-amber-600">
+                                </div>
+                                <div>
+                                    <span class="text-[10px] text-stone-400 block mb-0.5">備註 / 自填欄位</span>
+                                    <input type="text" class="w-full text-xs border border-stone-200 rounded-lg px-2 py-1 focus:outline-none focus:border-amber-600" placeholder="請輸入期程備註...">
                                 </div>
                             </div>
-                            <div class="bg-white p-2.5 rounded-lg border border-amber-200 flex items-center justify-between">
-                                <div class="flex items-center space-x-1.5">
-                                    <span class="text-[10px] text-stone-500 font-bold">第四期款 (%)</span>
-                                    <input type="number" id="quote-inst-4-pct" value="0" oninput="calculateQuoteTotals()" class="w-12 text-xs border rounded p-1 font-mono text-center" placeholder="%">
+                            <!-- 第三期款 -->
+                            <div class="bg-white p-3 rounded-xl border border-amber-200 space-y-2.5 shadow-2xs">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-[11px] text-stone-700 font-bold">第三期款 (%)</span>
+                                    <input type="number" id="quote-inst-3-pct" value="40" oninput="calculateQuoteTotals()" class="w-16 text-xs border border-stone-200 rounded-lg px-2 py-1 text-center font-mono focus:outline-none focus:border-amber-600" placeholder="例如：20">
                                 </div>
-                                <div class="flex items-center space-x-1.5">
-                                    <input type="text" class="w-20 text-xs border border-stone-200 rounded px-1.5 py-1" placeholder="備註/自填">
-                                    <span id="quote-inst-4-val" class="text-[10px] text-rose-600 font-bold font-mono">NT$ 0</span>
+                                <div class="flex items-center justify-between pt-1 border-t border-stone-100">
+                                    <span id="quote-inst-3-val" class="text-xs text-emerald-700 font-bold font-mono">NT$ 0</span>
+                                </div>
+                                <div>
+                                    <span class="text-[10px] text-stone-400 block mb-0.5">日期</span>
+                                    <input type="date" class="w-full text-xs border border-stone-200 rounded-lg px-2 py-1 font-mono text-stone-600 focus:outline-none focus:border-amber-600">
+                                </div>
+                                <div>
+                                    <span class="text-[10px] text-stone-400 block mb-0.5">備註 / 自填欄位</span>
+                                    <input type="text" class="w-full text-xs border border-stone-200 rounded-lg px-2 py-1 focus:outline-none focus:border-amber-600" placeholder="請輸入期程備註...">
+                                </div>
+                            </div>
+                            <!-- 第四期款 -->
+                            <div class="bg-white p-3 rounded-xl border border-amber-200 space-y-2.5 shadow-2xs">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-[11px] text-stone-700 font-bold">第四期款 (%)</span>
+                                    <input type="number" id="quote-inst-4-pct" value="0" oninput="calculateQuoteTotals()" class="w-16 text-xs border border-stone-200 rounded-lg px-2 py-1 text-center font-mono focus:outline-none focus:border-amber-600" placeholder="例如：20">
+                                </div>
+                                <div class="flex items-center justify-between pt-1 border-t border-stone-100">
+                                    <span id="quote-inst-4-val" class="text-xs text-emerald-700 font-bold font-mono">NT$ 0</span>
+                                </div>
+                                <div>
+                                    <span class="text-[10px] text-stone-400 block mb-0.5">日期</span>
+                                    <input type="date" class="w-full text-xs border border-stone-200 rounded-lg px-2 py-1 font-mono text-stone-600 focus:outline-none focus:border-amber-600">
+                                </div>
+                                <div>
+                                    <span class="text-[10px] text-stone-400 block mb-0.5">備註 / 自填欄位</span>
+                                    <input type="text" class="w-full text-xs border border-stone-200 rounded-lg px-2 py-1 focus:outline-none focus:border-amber-600" placeholder="請輸入期程備註...">
                                 </div>
                             </div>
                         </div>
