@@ -33,7 +33,18 @@
                 } 
             } 
         } 
-    </script> 
+    </script>
+    <style>
+        /* 移除數字輸入框的上下箭頭 (Spinner) */
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        }
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+    </style>
 </head> 
 <body class="bg-ruili-bg text-ruili-dark flex h-screen overflow-hidden font-sans"> 
 
@@ -194,7 +205,7 @@
         </div> 
     </div> 
 
-    <!-- 1-3. 案件簽核詳細表單彈窗 [依需求 4：收款期程一到四期橫向顯示與自動換算每期金額，並帶有自填欄位] --> 
+    <!-- 1-3. 案件簽核詳細表單彈窗 [依需求 2、3：四期款改為 2欄並排，且 % 欄位移除上下箭頭] --> 
     <div id="approvalModal" class="fixed inset-0 bg-black/50 backdrop-blur-xs hidden flex items-center justify-center z-50 p-3 overflow-y-auto"> 
         <div class="bg-white w-full max-w-xl rounded-2xl shadow-xl overflow-hidden border border-stone-200 my-6"> 
             <div class="bg-[#2C2A29] text-white px-5 py-3 flex justify-between items-center sticky top-0 z-10"> 
@@ -228,7 +239,7 @@
                     </div> 
                 </div> 
 
-                <!-- 秘書自填欄位區塊：收款期程一到四期橫向顯示與動態計算 (對應需求 4：期數 % 右邊加一個自填欄位) --> 
+                <!-- 秘書自填欄位區塊：收款期程 1~4 期改為 2欄並排，且 % 欄位移除上下箭頭 --> 
                 <div class="bg-sky-50/40 p-3.5 rounded-xl border border-sky-100 space-y-3"> 
                     <div class="flex items-center space-x-1.5 mb-1"> 
                         <i class="fa-solid fa-pen-nib text-sky-600 text-[10px]"></i> 
@@ -248,12 +259,12 @@
                             <input type="text" id="modal-input-amount" value="3800000" oninput="calculateApprovalInstallments()" class="w-full bg-white border border-stone-300 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-ruili-brand font-mono font-bold text-rose-600 shadow-2xs"> 
                         </div> 
                         <div class="col-span-2"> 
-                            <label class="font-bold block mb-1 text-stone-900">收款期程 (一到四期橫向顯示，含百分比與自填欄位) <span class="text-rose-500">*</span></label> 
+                            <label class="font-bold block mb-1 text-stone-900">收款期程 (一到四期 2欄並排，含百分比與自填欄位) <span class="text-rose-500">*</span></label> 
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
                                 <div class="bg-white p-2.5 rounded-lg border border-stone-200 flex items-center justify-between">
                                     <div class="flex items-center space-x-1.5">
                                         <span class="text-[10px] text-stone-500 font-bold">第一期款 (%)</span>
-                                        <input type="number" id="approval-inst-1-pct" value="30" oninput="calculateApprovalInstallments()" class="w-12 text-xs font-medium border border-stone-200 rounded px-1.5 py-1 text-center font-mono appearance-none" placeholder="%">
+                                        <input type="number" id="approval-inst-1-pct" value="30" oninput="calculateApprovalInstallments()" class="w-12 text-xs font-medium border border-stone-200 rounded px-1.5 py-1 text-center font-mono" placeholder="%">
                                     </div>
                                     <div class="flex items-center space-x-1.5">
                                         <input type="text" class="w-20 text-xs border border-stone-200 rounded px-1.5 py-1" placeholder="備註/自填">
@@ -263,7 +274,7 @@
                                 <div class="bg-white p-2.5 rounded-lg border border-stone-200 flex items-center justify-between">
                                     <div class="flex items-center space-x-1.5">
                                         <span class="text-[10px] text-stone-500 font-bold">第二期款 (%)</span>
-                                        <input type="number" id="approval-inst-2-pct" value="30" oninput="calculateApprovalInstallments()" class="w-12 text-xs font-medium border border-stone-200 rounded px-1.5 py-1 text-center font-mono appearance-none" placeholder="%">
+                                        <input type="number" id="approval-inst-2-pct" value="30" oninput="calculateApprovalInstallments()" class="w-12 text-xs font-medium border border-stone-200 rounded px-1.5 py-1 text-center font-mono" placeholder="%">
                                     </div>
                                     <div class="flex items-center space-x-1.5">
                                         <input type="text" class="w-20 text-xs border border-stone-200 rounded px-1.5 py-1" placeholder="備註/自填">
@@ -273,7 +284,7 @@
                                 <div class="bg-white p-2.5 rounded-lg border border-stone-200 flex items-center justify-between">
                                     <div class="flex items-center space-x-1.5">
                                         <span class="text-[10px] text-stone-500 font-bold">第三期款 (%)</span>
-                                        <input type="number" id="approval-inst-3-pct" value="40" oninput="calculateApprovalInstallments()" class="w-12 text-xs font-medium border border-stone-200 rounded px-1.5 py-1 text-center font-mono appearance-none" placeholder="%">
+                                        <input type="number" id="approval-inst-3-pct" value="40" oninput="calculateApprovalInstallments()" class="w-12 text-xs font-medium border border-stone-200 rounded px-1.5 py-1 text-center font-mono" placeholder="%">
                                     </div>
                                     <div class="flex items-center space-x-1.5">
                                         <input type="text" class="w-20 text-xs border border-stone-200 rounded px-1.5 py-1" placeholder="備註/自填">
@@ -283,7 +294,7 @@
                                 <div class="bg-white p-2.5 rounded-lg border border-stone-200 flex items-center justify-between">
                                     <div class="flex items-center space-x-1.5">
                                         <span class="text-[10px] text-stone-500 font-bold">第四期款 (%)</span>
-                                        <input type="number" id="approval-inst-4-pct" value="0" oninput="calculateApprovalInstallments()" class="w-12 text-xs font-medium border border-stone-200 rounded px-1.5 py-1 text-center font-mono appearance-none" placeholder="%">
+                                        <input type="number" id="approval-inst-4-pct" value="0" oninput="calculateApprovalInstallments()" class="w-12 text-xs font-medium border border-stone-200 rounded px-1.5 py-1 text-center font-mono" placeholder="%">
                                     </div>
                                     <div class="flex items-center space-x-1.5">
                                         <input type="text" class="w-20 text-xs border border-stone-200 rounded px-1.5 py-1" placeholder="備註/自填">
@@ -825,7 +836,7 @@
                     <div id="calc-module-viewport" class="mt-2 p-3 bg-stone-50 rounded-xl border border-stone-200 text-stone-500 text-xs hidden"></div> 
                 </div> 
 
-                <!-- 區塊六：報價工具與利潤計算 [依需求 3：收款期程欄位第一期至第四期右邊給一個自填空格] --> 
+                <!-- 區塊六：報價工具與利潤計算 [依需求 1, 2、3：收款期程 1~4 期改為 2欄並排，且 % 欄位移除上下箭頭] --> 
                 <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-2xs space-y-4"> 
                     <div class="flex justify-between items-center border-b border-stone-100 pb-2"> 
                         <h4 class="font-bold text-stone-900 flex items-center text-xs"> 
@@ -860,14 +871,14 @@
                         </div> 
                     </div> 
 
-                    <!-- 報價總金額報價加入收款期程欄位（橫向，包含自填空格） -->
+                    <!-- 報價總金額報價加入收款期程欄位（2欄並排，無上下箭頭） -->
                     <div class="bg-amber-50/50 p-3.5 rounded-xl border border-amber-200/60 space-y-2">
                         <span class="font-bold text-amber-900 block text-[11px]"><i class="fa-solid fa-calendar-days mr-1"></i> 收款期程欄位配置 (填入%後自動計算總簽約金額％價格)</span>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
                             <div class="bg-white p-2.5 rounded-lg border border-amber-200 flex items-center justify-between">
                                 <div class="flex items-center space-x-1.5">
                                     <span class="text-[10px] text-stone-500 font-bold">第一期款 (%)</span>
-                                    <input type="text" id="quote-inst-1-pct" value="30" oninput="calculateQuoteTotals()" class="w-12 text-xs border rounded p-1 font-mono text-center appearance-none" placeholder="%">
+                                    <input type="number" id="quote-inst-1-pct" value="30" oninput="calculateQuoteTotals()" class="w-12 text-xs border rounded p-1 font-mono text-center" placeholder="%">
                                 </div>
                                 <div class="flex items-center space-x-1.5">
                                     <input type="text" class="w-20 text-xs border border-stone-200 rounded px-1.5 py-1" placeholder="備註/自填">
@@ -877,7 +888,7 @@
                             <div class="bg-white p-2.5 rounded-lg border border-amber-200 flex items-center justify-between">
                                 <div class="flex items-center space-x-1.5">
                                     <span class="text-[10px] text-stone-500 font-bold">第二期款 (%)</span>
-                                    <input type="text" id="quote-inst-2-pct" value="30" oninput="calculateQuoteTotals()" class="w-12 text-xs border rounded p-1 font-mono text-center appearance-none" placeholder="%">
+                                    <input type="number" id="quote-inst-2-pct" value="30" oninput="calculateQuoteTotals()" class="w-12 text-xs border rounded p-1 font-mono text-center" placeholder="%">
                                 </div>
                                 <div class="flex items-center space-x-1.5">
                                     <input type="text" class="w-20 text-xs border border-stone-200 rounded px-1.5 py-1" placeholder="備註/自填">
@@ -887,7 +898,7 @@
                             <div class="bg-white p-2.5 rounded-lg border border-amber-200 flex items-center justify-between">
                                 <div class="flex items-center space-x-1.5">
                                     <span class="text-[10px] text-stone-500 font-bold">第三期款 (%)</span>
-                                    <input type="text" id="quote-inst-3-pct" value="40" oninput="calculateQuoteTotals()" class="w-12 text-xs border rounded p-1 font-mono text-center appearance-none" placeholder="%">
+                                    <input type="number" id="quote-inst-3-pct" value="40" oninput="calculateQuoteTotals()" class="w-12 text-xs border rounded p-1 font-mono text-center" placeholder="%">
                                 </div>
                                 <div class="flex items-center space-x-1.5">
                                     <input type="text" class="w-20 text-xs border border-stone-200 rounded px-1.5 py-1" placeholder="備註/自填">
@@ -897,7 +908,7 @@
                             <div class="bg-white p-2.5 rounded-lg border border-amber-200 flex items-center justify-between">
                                 <div class="flex items-center space-x-1.5">
                                     <span class="text-[10px] text-stone-500 font-bold">第四期款 (%)</span>
-                                    <input type="text" id="quote-inst-4-pct" value="0" oninput="calculateQuoteTotals()" class="w-12 text-xs border rounded p-1 font-mono text-center appearance-none" placeholder="%">
+                                    <input type="number" id="quote-inst-4-pct" value="0" oninput="calculateQuoteTotals()" class="w-12 text-xs border rounded p-1 font-mono text-center" placeholder="%">
                                 </div>
                                 <div class="flex items-center space-x-1.5">
                                     <input type="text" class="w-20 text-xs border border-stone-200 rounded px-1.5 py-1" placeholder="備註/自填">
@@ -948,13 +959,12 @@
                     </div> 
                 </div> 
 
-                <!-- 區塊八：簽約程序與合約備註 [依需求 1, 2：拿掉簽約金額含稅連動說明選項，含稅 (5%) 改為含稅] --> 
+                <!-- 區塊八：簽約程序與合約備註 --> 
                 <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-2xs space-y-3"> 
                     <h4 class="font-bold text-stone-900 border-b border-stone-100 pb-2 flex items-center text-xs"> 
                         <i class="fa-solid fa-file-contract text-ruili-brand mr-1.5"></i> 八、簽約程序與合約備註 
                     </h4> 
                      
-                    <!-- 簽約金額是否含稅選項（已拿掉連動說明與未稅選項，文字改為含稅） -->
                     <div class="space-y-2 py-1 border-b border-stone-100 pb-3">
                         <label class="font-bold text-stone-900 block text-xs">簽約金額是否含稅選項：</label>
                         <div class="flex items-center space-x-4">
@@ -1136,7 +1146,6 @@
             if (elContractTotal) elContractTotal.value = `NT$ ${totalContract.toLocaleString()}`;
             if (elProfit) elProfit.value = `NT$ ${totalProfit.toLocaleString()}`;
 
-            // 自動計算報價工具中橫向期程各期金額 (簽約總金額 * %)
             for (let i = 1; i <= 4; i++) {
                 const pctInput = document.getElementById(`quote-inst-${i}-pct`);
                 const valSpan = document.getElementById(`quote-inst-${i}-val`);
@@ -1148,7 +1157,6 @@
             }
         };
 
-        // 秘書待簽核頁面收款期程自動計算
         window.calculateApprovalInstallments = function() {
             const amountInput = document.getElementById('modal-input-amount');
             const baseAmount = parseFloat(amountInput?.value.replace(/[^0-9.]/g, '')) || 0;
