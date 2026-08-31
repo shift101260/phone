@@ -38,3 +38,5 @@ export function openAddCaseModal(year = '2026') {
     const modal = document.getElementById('editCaseModal'); 
     if (modal) modal.classList.remove('hidden'); 
 }
+// 在 case-edit.js 的最下方加上這行：
+window.openAddCaseModal = openAddCaseModal;
