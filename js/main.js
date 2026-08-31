@@ -7,4 +7,32 @@ import './modules/payment-calc.js';
 import './modules/solar-calc.js';
 import './modules/case-edit.js';
 
+// 💡 確保這三個彈窗的開關 100% 能夠被 HTML 的 onclick 呼叫
+window.openLandModal = function() {
+    const modal = document.getElementById('land-modal');
+    if (modal) modal.classList.remove('hidden');
+};
+window.closeLandModal = function() {
+    const modal = document.getElementById('land-modal');
+    if (modal) modal.classList.add('hidden');
+};
+
+window.openRegisteredBuildingModal = function() {
+    const modal = document.getElementById('registered-building-modal');
+    if (modal) modal.classList.remove('hidden');
+};
+window.closeRegisteredBuildingModal = function() {
+    const modal = document.getElementById('registered-building-modal');
+    if (modal) modal.classList.add('hidden');
+};
+
+window.openUnregisteredBuildingModal = function() {
+    const modal = document.getElementById('unregistered-building-modal');
+    if (modal) modal.classList.remove('hidden');
+};
+window.closeUnregisteredBuildingModal = function() {
+    const modal = document.getElementById('unregistered-building-modal');
+    if (modal) modal.classList.add('hidden');
+};
+
 console.log('Ruili 系統主程式 (main.js) 與所有模組已成功載入！');
