@@ -7,70 +7,27 @@ import './modules/payment-calc.js';
 import './modules/solar-calc.js';
 import './modules/case-edit.js';
 
-// 💡 確保這三個彈窗的開關 100% 能夠被 HTML 的 onclick 呼叫
-window.openLandModal = function() {
-    const modal = document.getElementById('land-modal');
-    if (modal) {
-        modal.classList.remove('hidden');
-        modal.style.display = 'flex';
-    }
-};
-window.closeLandModal = function() {
-    const modal = document.getElementById('land-modal');
-    if (modal) {
-        modal.classList.add('hidden');
-        modal.style.display = 'none';
-    }
-};
+// 💡 確保所有彈窗開關 100% 能夠被 HTML 的 onclick 呼叫
+window.openLandModal = () => toggleModal('land-modal', true);
+window.closeLandModal = () => toggleModal('land-modal', false);
 
-window.openRegisteredBuildingModal = function() {
-    const modal = document.getElementById('registered-building-modal');
-    if (modal) {
-        modal.classList.remove('hidden');
-        modal.style.display = 'flex';
-    }
-};
-window.closeRegisteredBuildingModal = function() {
-    const modal = document.getElementById('registered-building-modal');
-    if (modal) {
-        modal.classList.add('hidden');
-        modal.style.display = 'none';
-    }
-};
+window.openRegisteredBuildingModal = () => toggleModal('registered-building-modal', true);
+window.closeRegisteredBuildingModal = () => toggleModal('registered-building-modal', false);
 
-window.openUnregisteredBuildingModal = function() {
-    const modal = document.getElementById('unregistered-building-modal');
-    if (modal) {
-        modal.classList.remove('hidden');
-        modal.style.display = 'flex';
-    }
-};
-window.closeUnregisteredBuildingModal = function() {
-    const modal = document.getElementById('unregistered-building-modal');
-    if (modal) {
-        modal.classList.add('hidden');
-        modal.style.display = 'none';
-    }
-};
-// 4. 太陽能試算 Modal 控制
-window.openSolarModal = function() {
-    const modal = document.getElementById('solar-modal');
-    if (modal) {
-        modal.classList.remove('hidden');
-        modal.style.display = 'flex';
-    }
-};
-window.closeSolarModal = function() {
-    const modal = document.getElementById('solar-modal');
-    if (modal) {
-        modal.classList.add('hidden');
-        modal.style.display = 'none';
-    }
-};
+window.openUnregisteredBuildingModal = () => toggleModal('unregistered-building-modal', true);
+window.closeUnregisteredBuildingModal = () => toggleModal('unregistered-building-modal', false);
 
-// 製造業每日用電參考表格切換
-window.toggleSolarRefModal = function(show) {
-    const modal = document.getElementById('solar-ref-modal');
+window.openSolarModal = () => toggleModal('solar-modal', true);
+window.closeSolarModal = () => toggleModal('solar-modal', false);
+
+window.toggleSolarRefModal = (show) => toggleModal('solar-ref-modal', show);
+
+window.openLandChangeModal = () => toggleModal('land-change-modal', true);
+window.closeLandChangeModal = () => toggleModal('land-change-modal', false);
+
+// 共用切換顯示函式
+function toggleModal(modalId, show) {
+    const modal = document.getElementById(modalId);
     if (modal) {
         if (show) {
             modal.classList.remove('hidden');
@@ -80,21 +37,6 @@ window.toggleSolarRefModal = function(show) {
             modal.style.display = 'none';
         }
     }
-};
+}
 
-// 5. 土地變更評估 Modal 控制
-window.openLandChangeModal = function() {
-    const modal = document.getElementById('land-change-modal');
-    if (modal) {
-        modal.classList.remove('hidden');
-        modal.style.display = 'flex';
-    }
-};
-window.closeLandChangeModal = function() {
-    const modal = document.getElementById('land-change-modal');
-    if (modal) {
-        modal.classList.add('hidden');
-        modal.style.display = 'none';
-    }
-};
 console.log('Ruili 系統主程式 (main.js) 與所有模組已成功載入！');
