@@ -2146,6 +2146,107 @@
 </div>
 
 <!-- ========================================================== -->
+<!-- 2. 土地變更評估與試算 Modal -->
+<!-- ========================================================== -->
+<div id="land-change-modal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-md z-[60] hidden flex items-center justify-center p-2 sm:p-4">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] sm:max-h-[95vh] flex flex-col overflow-hidden border border-sky-100 relative">
+        <div class="p-4 md:p-5 border-b border-slate-800 flex justify-between items-center bg-gradient-to-r from-slate-900 via-sky-950 to-slate-900 text-white shadow-md shrink-0">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-sky-500/20 border border-sky-400/30 flex items-center justify-center text-sky-400 text-lg shadow-inner shrink-0">
+                    <i class="fa-solid fa-layer-group"></i>
+                </div>
+                <div>
+                    <h3 class="font-bold text-base tracking-wide text-white">土地變更專屬評估與回饋金試算</h3>
+                    <p class="text-[11px] text-sky-300/80 font-normal">Ruili Land Alteration & Feedback Fee Evaluation Tool</p>
+                </div>
+            </div>
+            <button onclick="closeLandChangeModal()" class="text-slate-400 hover:text-white hover:bg-white/10 w-8 h-8 rounded-lg flex items-center justify-center transition cursor-pointer">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+        </div>
+        <div class="p-4 md:p-6 space-y-6 overflow-y-auto flex-1 text-xs bg-slate-50/50">
+            <div class="bg-white p-4 md:p-5 rounded-2xl border border-slate-200/80 shadow-sm space-y-4">
+                <div class="flex items-center gap-2 border-b border-slate-100 pb-3">
+                    <span class="w-2.5 h-2.5 rounded-full bg-sky-500"></span>
+                    <h4 class="font-bold text-slate-800 text-sm">一、基本條件評估</h4>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block font-semibold text-slate-700 mb-1.5">組織型態</label>
+                        <select id="lc-org-type" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:border-sky-500 bg-white font-medium text-slate-700 shadow-sm">
+                            <option value="企業社">企業社</option>
+                            <option value="有限公司">有限公司</option>
+                            <option value="股份有限公司">股份有限公司</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-700 mb-1.5">鄰路幾米</label>
+                        <input type="text" id="lc-road-width" placeholder="例：8米或12米" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:border-sky-500 bg-white font-medium shadow-sm">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="p-4 border-t border-slate-200 bg-slate-50 flex items-center justify-end gap-3 shrink-0 sticky bottom-0 z-10 shadow-lg">
+            <button type="button" onclick="closeLandChangeModal()" class="px-4 py-2 border border-slate-300 text-slate-600 rounded-lg font-medium hover:bg-white transition text-xs cursor-pointer">取消</button>
+            <button type="button" onclick="closeLandChangeModal()" class="px-5 py-2 bg-gradient-to-r from-sky-600 to-indigo-600 hover:from-sky-700 hover:to-indigo-700 text-white rounded-lg font-bold transition shadow-md text-xs cursor-pointer">儲存</button>
+        </div>
+    </div>
+</div>
+
+<!-- ========================================================== -->
+<!-- 3. 土地基本資料 Modal (完整對應 land-basic.js) -->
+<!-- ========================================================== -->
+<div id="land-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[60] hidden flex items-center justify-center p-2 sm:p-4">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-6xl max-h-[95vh] flex flex-col overflow-hidden">
+        <div class="p-4 md:p-5 border-b border-slate-100 flex justify-between items-center bg-slate-800 text-white shrink-0">
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-map-location-dot text-sky-400 text-lg"></i>
+                <h3 class="font-bold text-base">土地基本資料</h3>
+            </div>
+            <button onclick="closeLandModal()" class="text-slate-400 hover:text-white p-1 transition cursor-pointer">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+        </div>
+        <div class="p-4 md:p-6 space-y-4 overflow-y-auto flex-1 text-xs bg-slate-50">
+            <div class="flex justify-between items-center bg-white p-3 rounded-xl border border-slate-200 shadow-sm">
+                <span class="font-bold text-slate-700">地號詳細列表</span>
+                <button type="button" onclick="window.addLandRow()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-medium transition flex items-center gap-1 shadow-sm cursor-pointer">
+                    <i class="fa-solid fa-plus"></i> ＋新增地號
+                </button>
+            </div>
+            <div class="border border-slate-200 rounded-xl bg-white p-4 shadow-sm space-y-3">
+                <!-- 欄位標題與 JS 模組完美對應 -->
+                <div class="grid grid-cols-[1fr_1fr_1.2fr_0.9fr_0.9fr_1.2fr_0.9fr_0.9fr_1fr_32px] gap-2 font-bold text-slate-600 border-b pb-2 text-center text-[11px]">
+                    <div>地號</div>
+                    <div>登記日期</div>
+                    <div>使用分區/類別</div>
+                    <div>地目</div>
+                    <div>面積 (㎡)</div>
+                    <div>持分 (分子/分母)</div>
+                    <div>持分面積(㎡)</div>
+                    <div>持分面積(坪)</div>
+                    <div>他項權利</div>
+                    <div>刪除</div>
+                </div>
+                <div id="land-rows-container" class="space-y-2">
+                    <!-- 動態生成的行數會自動放入此處 -->
+                </div>
+                <!-- 總計列 -->
+                <div class="flex justify-end gap-6 pt-3 border-t font-bold text-slate-700 text-xs px-2">
+                    <div>總面積：<span id="sum-area" class="font-mono text-ruili-brand">0.00 ㎡</span></div>
+                    <div>持分總平方公尺：<span id="sum-sqm" class="font-mono text-ruili-brand">0.00 ㎡</span></div>
+                    <div>持分總坪數：<span id="sum-ping" class="font-mono text-emerald-600">0.00 坪</span></div>
+                </div>
+            </div>
+        </div>
+        <div class="p-4 border-t border-slate-200 bg-slate-50 flex justify-end gap-3 shrink-0 sticky bottom-0 z-10 shadow-lg">
+            <button type="button" onclick="closeLandModal()" class="px-4 py-2 border border-slate-300 text-slate-600 rounded-lg font-medium hover:bg-white transition cursor-pointer">取消</button>
+            <button type="button" onclick="closeLandModal()" class="px-5 py-2 bg-sky-600 hover:bg-sky-700 text-white rounded-lg font-medium transition shadow-sm cursor-pointer">確認儲存土地資料</button>
+        </div>
+    </div>
+</div>
+
+<!-- ========================================================== -->
 <!-- 4. 保存登記建物 Modal -->
 <!-- ========================================================== -->
 <div id="registered-building-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[60] hidden flex items-center justify-center p-2 sm:p-4">
@@ -2215,6 +2316,7 @@
             <button type="button" onclick="closeUnregisteredBuildingModal()" class="px-5 py-2 bg-sky-600 hover:bg-sky-700 text-white rounded-lg font-medium transition shadow-sm cursor-pointer">確認儲存建物資料</button>
         </div>
     </div>
+</div>
 </div>
 </body> 
 </html> 
