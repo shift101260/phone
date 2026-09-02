@@ -2152,53 +2152,54 @@
                 </div>
             </div>
 
-            <!-- 三、回饋金試算 (固定橫向表格，支援左右捲軸) -->
+            <!-- 三、回饋金試算 (動態新增與依分區自動計算) -->
             <div class="bg-white p-4 md:p-5 rounded-2xl border border-slate-200/80 shadow-sm space-y-4">
                 <div class="flex justify-between items-center border-b border-slate-100 pb-3">
                     <div class="flex items-center gap-2">
                         <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
                         <h4 class="font-bold text-slate-800 text-sm">三、回饋金試算</h4>
                     </div>
-                    <button type="button" onclick="window.addFeedbackRow()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-medium transition flex items-center gap-1 shadow-sm cursor-pointer text-xs shrink-0">
+                    <button type="button" onclick="window.addFeedbackRow()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-medium transition flex items-center gap-1 shadow-sm cursor-pointer">
                         <i class="fa-solid fa-plus"></i> ＋新增地號
                     </button>
                 </div>
-
-                <!-- 外層包覆 overflow-x-auto 與 min-w 確保所有尺寸皆可左右橫向滑動 -->
-                <div class="border border-slate-200 rounded-xl p-3 bg-slate-50 overflow-x-auto">
-                    <div class="min-w-[750px] space-y-3">
-                        <!-- 表頭 -->
-                        <div class="grid grid-cols-[1.5fr_1fr_1fr_1.2fr_1.2fr_40px] gap-2 font-bold text-slate-600 border-b pb-2 text-center text-[11px]">
-                            <div>地號</div>
-                            <div>面積 (㎡)</div>
-                            <div>公告現值 (NT$)</div>
-                            <div>分區</div>
-                            <div>回饋金試算 (NT$)</div>
-                            <div>刪除</div>
-                        </div>
-
-                        <div id="feedback-rows-container" class="space-y-2">
-                            <!-- 預設第一列 -->
-                            <div class="feedback-row grid grid-cols-[1.5fr_1fr_1fr_1.2fr_1.2fr_40px] gap-2 items-center bg-white p-2 rounded-lg border shadow-sm">
-                                <input type="text" placeholder="例：頂番段123地號" class="px-2 py-1.5 border rounded-lg text-xs w-full bg-white">
-                                <input type="number" step="0.01" placeholder="面積(㎡)" oninput="window.calcFeedbackTotal()" class="fb-area px-2 py-1.5 border rounded-lg text-xs font-mono w-full bg-white">
-                                <input type="number" step="0.01" placeholder="公告現值" oninput="window.calcFeedbackTotal()" class="fb-price px-2 py-1.5 border rounded-lg text-xs font-mono w-full bg-white">
-                                <select onchange="window.calcFeedbackTotal()" class="fb-zone px-2 py-1.5 border rounded-lg text-xs bg-white font-medium w-full">
-                                    <option value="都內">都內 (×0.1)</option>
-                                    <option value="非都">非都 (×0.5)</option>
-                                </select>
-                                <span class="fb-result font-bold text-emerald-700 text-xs font-mono text-center">NT$ 0</span>
-                                <button type="button" onclick="this.closest('.feedback-row').remove(); window.calcFeedbackTotal();" class="text-slate-400 hover:text-rose-600 cursor-pointer flex justify-center text-sm"><i class="fa-solid fa-trash-can"></i></button>
-                            </div>
+                <div class="border border-slate-200 rounded-xl p-3 bg-slate-50 space-y-3">
+                    <div class="grid grid-cols-[1.5fr_1fr_1fr_1.2fr_1.2fr_32px] gap-2 font-bold text-slate-600 border-b pb-2 text-center text-[11px]">
+                        <div>地號</div>
+                        <div>面積 (㎡)</div>
+                        <div>公告現值 (NT$)</div>
+                        <div>分區</div>
+                        <div>回饋金試算 (NT$)</div>
+                        <div>刪除</div>
+                    </div>
+                    <div id="feedback-rows-container" class="space-y-2">
+                        <!-- 預設第一列 -->
+                        <div class="feedback-row grid grid-cols-[1.5fr_1fr_1fr_1.2fr_1.2fr_32px] gap-2 items-center bg-white p-2 rounded-lg border shadow-sm">
+                            <input type="text" placeholder="例：頂番段123地號" class="px-2 py-1 border rounded-lg text-xs">
+                            <input type="number" step="0.01" placeholder="面積(㎡)" oninput="window.calcFeedbackTotal()" class="fb-area px-2 py-1 border rounded-lg text-xs font-mono">
+                            <input type="number" step="0.01" placeholder="公告現值" oninput="window.calcFeedbackTotal()" class="fb-price px-2 py-1 border rounded-lg text-xs font-mono">
+                            <select onchange="window.calcFeedbackTotal()" class="fb-zone px-2 py-1 border rounded-lg text-xs bg-white font-medium">
+                                <option value="都內">都內 (×0.1)</option>
+                                <option value="非都">非都 (×0.5)</option>
+                            </select>
+                            <span class="fb-result font-bold text-emerald-700 text-xs font-mono text-center">NT$ 0</span>
+                            <button type="button" onclick="this.closest('.feedback-row').remove(); window.calcFeedbackTotal();" class="text-slate-400 hover:text-rose-600 cursor-pointer flex justify-center"><i class="fa-solid fa-trash-can"></i></button>
                         </div>
                     </div>
                 </div>
-
                 <div class="bg-emerald-50/80 p-3.5 rounded-xl border border-emerald-200 flex justify-between items-center shadow-inner">
                     <span class="font-bold text-emerald-900 text-xs">回饋金估算總額</span>
                     <span id="feedback-grand-total" class="text-sm font-bold text-emerald-800 font-mono">NT$ 0</span>
                 </div>
             </div>
+        </div>
+
+        <div class="p-4 border-t border-slate-200 bg-slate-50 flex items-center justify-end gap-3 shrink-0 sticky bottom-0 z-10 shadow-lg">
+            <button type="button" onclick="closeLandChangeModal()" class="px-4 py-2 border border-slate-300 text-slate-600 rounded-lg font-medium hover:bg-white transition text-xs cursor-pointer">取消</button>
+            <button type="button" onclick="closeLandChangeModal()" class="px-5 py-2 bg-gradient-to-r from-sky-600 to-indigo-600 hover:from-sky-700 hover:to-indigo-700 text-white rounded-lg font-bold transition shadow-md text-xs cursor-pointer">儲存</button>
+        </div>
+    </div>
+</div>
 
 <script>
 // 土地變更評估互動與計算邏輯
