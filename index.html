@@ -2222,24 +2222,24 @@ window.calcFactoryArea = function(input) {
     }
 };
 
+// 三、回饋金動態新增列
 window.addFeedbackRow = function() {
     const container = document.getElementById('feedback-rows-container');
     if (!container) return;
-
-    const rowHtml = `
-        <div class="feedback-row grid grid-cols-[1.5fr_1fr_1fr_1.2fr_1.2fr_40px] gap-2 items-center bg-white p-2 rounded-lg border shadow-sm">
-            <input type="text" placeholder="例：頂番段123地號" class="px-2 py-1.5 border rounded-lg text-xs w-full bg-white">
-            <input type="number" step="0.01" placeholder="面積(㎡)" oninput="window.calcFeedbackTotal()" class="fb-area px-2 py-1.5 border rounded-lg text-xs font-mono w-full bg-white">
-            <input type="number" step="0.01" placeholder="公告現值" oninput="window.calcFeedbackTotal()" class="fb-price px-2 py-1.5 border rounded-lg text-xs font-mono w-full bg-white">
-            <select onchange="window.calcFeedbackTotal()" class="fb-zone px-2 py-1.5 border rounded-lg text-xs bg-white font-medium w-full">
-                <option value="都内">都內 (×0.1)</option>
+    const html = `
+        <div class="feedback-row grid grid-cols-[1.5fr_1fr_1fr_1.2fr_1.2fr_32px] gap-2 items-center bg-white p-2 rounded-lg border shadow-sm">
+            <input type="text" placeholder="例：頂番段123地號" class="px-2 py-1 border rounded-lg text-xs">
+            <input type="number" step="0.01" placeholder="面積(㎡)" oninput="window.calcFeedbackTotal()" class="fb-area px-2 py-1 border rounded-lg text-xs font-mono">
+            <input type="number" step="0.01" placeholder="公告現值" oninput="window.calcFeedbackTotal()" class="fb-price px-2 py-1 border rounded-lg text-xs font-mono">
+            <select onchange="window.calcFeedbackTotal()" class="fb-zone px-2 py-1 border rounded-lg text-xs bg-white font-medium">
+                <option value="都內">都內 (×0.1)</option>
                 <option value="非都">非都 (×0.5)</option>
             </select>
             <span class="fb-result font-bold text-emerald-700 text-xs font-mono text-center">NT$ 0</span>
-            <button type="button" onclick="this.closest('.feedback-row').remove(); window.calcFeedbackTotal();" class="text-slate-400 hover:text-rose-600 cursor-pointer flex justify-center text-sm"><i class="fa-solid fa-trash-can"></i></button>
+            <button type="button" onclick="this.closest('.feedback-row').remove(); window.calcFeedbackTotal();" class="text-slate-400 hover:text-rose-600 cursor-pointer flex justify-center"><i class="fa-solid fa-trash-can"></i></button>
         </div>
     `;
-    container.insertAdjacentHTML('beforeend', rowHtml);
+    container.insertAdjacentHTML('beforeend', html);
 };
 
 // 三、回饋金試算公式計算（都內 *0.1，非都 *0.5）
