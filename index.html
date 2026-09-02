@@ -223,9 +223,6 @@
                         <div><span class="text-stone-400 block text-[9px] mb-0.5">案件名稱</span><strong id="modal-case-name" class="text-stone-800 text-xs">-</strong></div> 
                         <div><span class="text-stone-400 block text-[9px] mb-0.5">服務項目</span><strong id="modal-case-service" class="text-stone-800">-</strong></div> 
                          
-                        <div><span class="text-stone-400 block text-[9px] mb-0.5">介紹人姓名</span><strong id="modal-case-intro-name" class="text-stone-800">-</strong></div> 
-                        <div><span class="text-stone-400 block text-[9px] mb-0.5">佣金</span><strong id="modal-case-commission" class="text-stone-800">-</strong></div> 
-                         
                         <div class="col-span-2"><span class="text-stone-400 block text-[9px] mb-0.5">簽約金額是否含稅</span><strong id="modal-case-tax" class="text-stone-800">含稅</strong></div> 
                          
                         <div class="col-span-2"><span class="text-stone-400 block text-[9px] mb-0.5">退佣機制</span><strong id="modal-case-intro" class="text-stone-800">-</strong></div> 
@@ -596,7 +593,9 @@
                         <div><span class="text-stone-400 block text-[9px] mb-0.5">服務項目</span><strong id="pipeline-modal-service" class="text-stone-800">-</strong></div> 
                         <div><span class="text-stone-400 block text-[9px] mb-0.5">簽約金額</span><strong id="pipeline-modal-amount" class="text-emerald-600 text-xs font-bold">-</strong></div> 
                         <div><span class="text-stone-400 block text-[9px] mb-0.5">簽約日期</span><strong id="pipeline-modal-sign-date" class="text-stone-800">-</strong></div> 
-                        <div class="col-span-2"><span class="text-stone-400 block text-[9px] mb-0.5">介紹人 / 佣金 / 退佣機制</span><strong id="pipeline-modal-intro" class="text-stone-800">-</strong></div> 
+                        <!-- 新增：簽約金額是否含稅欄位 -->
+                        <div><span class="text-stone-400 block text-[9px] mb-0.5">簽約金額是否含稅</span><strong class="text-stone-800">含稅 (5%)</strong></div> 
+                        <div class="col-span-2"><span class="text-stone-400 block text-[9px] mb-0.5">退佣機制</span><strong id="pipeline-modal-intro" class="text-stone-800">-</strong></div> 
                         <div class="col-span-2"><span class="text-stone-400 block text-[9px] mb-0.5">收款期程</span><strong id="pipeline-modal-schedule" class="text-stone-800">-</strong></div> 
                         <div class="col-span-2"><span class="text-stone-400 block text-[9px] mb-0.5">特別約定事項</span><strong id="pipeline-modal-remark" class="text-stone-800 font-medium">-</strong></div> 
                     </div> 
@@ -821,6 +820,7 @@
                             <label class="font-bold block mb-1 text-stone-900">地段地號</label> 
                             <div class="flex items-center space-x-2">
                                 <input type="text" id="edit-case-land-number" class="flex-1 bg-white border border-stone-300 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-ruili-brand font-medium shadow-2xs" placeholder="例：仁武段 123-4地號"> 
+                                <!-- 調整：點擊地籍圖按鈕改為在新分頁開啟，不影響原表格輸入 -->
                                 <a href="https://maps.nlsc.gov.tw" target="_blank" rel="noopener noreferrer" class="px-3 py-2 bg-stone-100 hover:bg-ruili-brand hover:text-white text-stone-700 border border-stone-300 rounded-xl text-xs font-bold transition shadow-2xs whitespace-nowrap flex items-center space-x-1" title="國土測繪圖資服務雲">
                                     <i class="fa-solid fa-map-location-dot"></i><span>地籍圖</span>
                                 </a>
@@ -1024,7 +1024,7 @@
                         </div> 
                         <div> 
                             <label class="font-bold block mb-1 text-stone-900">退佣機制說明</label> 
-                            <input type="text" id="referral-mechanism" class="w-full bg-white border border-stone-300 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-ruili-brand shadow-2xs" placeholder="例：次月結算退佣 10%"> 
+                            <input type="text" id="referral-mechanism" class="w-full bg-white border border-stone-300 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-ruili-brand shadow-2xs" placeholder="例：陳經理 / 10% / 匯款退佣"> 
                         </div> 
                     </div> 
                 </div> 
@@ -1698,7 +1698,6 @@
             const container = document.getElementById('app-container'); 
             let cases = globalCasesData[year] || []; 
 
-            // 修正順序：將「簽約案件」與「案件評估」交換位置
             const sections = [ 
                 { key: '案件評估', title: '案件評估', dotColor: 'bg-amber-500', badge: 'bg-amber-50 text-amber-700 border border-amber-200' }, 
                 { key: '簽約案件', title: '簽約案件', dotColor: 'bg-blue-500', badge: 'bg-blue-50 text-blue-700 border border-blue-200' }, 
@@ -1757,7 +1756,6 @@
                 `; 
             }).join(''); 
 
-            // 調整按鈕順序由左而右：搜尋案件、拋轉至、刪除、恢復、新增
             container.innerHTML = ` 
                 <div class="space-y-5"> 
                     <div class="bg-white p-4 rounded-2xl border border-ruili-border shadow-2xs flex flex-col md:flex-row md:items-center justify-between gap-3"> 
@@ -1919,7 +1917,7 @@
                         <i class="fa-solid fa-industry"></i> 製造業每日用電參考表格
                     </button>
                 </div>
-                
+                 
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                     <div>
                         <label class="block font-semibold text-slate-700 mb-1">屋頂坪數 (坪)</label>
@@ -1986,7 +1984,7 @@
                 <h4 class="font-bold text-emerald-900 text-sm border-b border-emerald-200 pb-2 flex items-center gap-1.5">
                     <i class="fa-solid fa-chart-pie text-emerald-600"></i> 三、精算試算
                 </h4>
-                
+                 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label class="block font-semibold text-slate-700 mb-1">模組數量 (片)</label>
@@ -2253,14 +2251,14 @@ window.calcFeedbackTotal = function() {
         const area = parseFloat(row.querySelector('.fb-area')?.value) || 0;
         const price = parseFloat(row.querySelector('.fb-price')?.value) || 0;
         const zone = row.querySelector('.fb-zone')?.value;
-        
+         
         let subtotal = 0;
         if (zone === '都內') {
             subtotal = area * price * 0.1;
         } else if (zone === '非都') {
             subtotal = area * price * 0.5;
         }
-        
+         
         const resultSpan = row.querySelector('.fb-result');
         if (resultSpan) {
             resultSpan.textContent = `NT$ ${Math.round(subtotal).toLocaleString()}`;
@@ -2422,7 +2420,7 @@ window.calcFeedbackTotal = function() {
         </div>
     </div>
 </div>
-    
+     
 <!-- ========================================================== -->
 <!-- 5. 未保存登記建物 Modal (完整對齊與自動加總版) -->
 <!-- ========================================================== -->
