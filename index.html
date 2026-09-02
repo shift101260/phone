@@ -85,7 +85,7 @@
 
                 <div class="pt-1"></div> 
                 <button onclick="switchModule('quotation', this)" class="nav-btn w-full flex items-center space-x-2.5 px-3 py-2 rounded-xl hover:bg-stone-800 text-stone-300 transition"> 
-                    <i class="fa-solid fa-barcode w-4"></i><span>案件編號查詢</span> 
+                    <i class="fa-solid fa-barcode w-4"></i><span>案件編號</span> 
                 </button> 
                  
                 <button onclick="switchModule('closing', this)" class="nav-btn w-full flex items-center space-x-2.5 px-3 py-2 rounded-xl hover:bg-stone-800 text-stone-300 transition"> 
@@ -223,15 +223,15 @@
                         <div><span class="text-stone-400 block text-[9px] mb-0.5">案件名稱</span><strong id="modal-case-name" class="text-stone-800 text-xs">-</strong></div> 
                         <div><span class="text-stone-400 block text-[9px] mb-0.5">服務項目</span><strong id="modal-case-service" class="text-stone-800">-</strong></div> 
                          
-                        <div><span class="text-stone-400 block text-[9px] mb-0.5">簽約金額是否含稅</span><strong id="modal-case-tax" class="text-stone-800">含稅</strong></div> 
-                        <div><span class="text-stone-400 block text-[9px] mb-0.5">簽約條件</span><strong id="modal-case-schedule" class="text-stone-800">-</strong></div> 
-                         
-                        <div class="col-span-2"><span class="text-stone-400 block text-[9px] mb-0.5">業務合約備註</span><strong id="modal-case-biz-remark" class="text-stone-800 font-medium">-</strong></div> 
-                         
                         <div><span class="text-stone-400 block text-[9px] mb-0.5">介紹人姓名</span><strong id="modal-case-intro-name" class="text-stone-800">-</strong></div> 
                         <div><span class="text-stone-400 block text-[9px] mb-0.5">佣金</span><strong id="modal-case-commission" class="text-stone-800">-</strong></div> 
                          
+                        <div class="col-span-2"><span class="text-stone-400 block text-[9px] mb-0.5">簽約金額是否含稅</span><strong id="modal-case-tax" class="text-stone-800">含稅</strong></div> 
+                         
                         <div class="col-span-2"><span class="text-stone-400 block text-[9px] mb-0.5">退佣機制</span><strong id="modal-case-intro" class="text-stone-800">-</strong></div> 
+                         
+                        <div class="col-span-2"><span class="text-stone-400 block text-[9px] mb-0.5">簽約條件</span><strong id="modal-case-schedule" class="text-stone-800">-</strong></div> 
+
                         <div class="col-span-2 bg-amber-50/70 p-2.5 rounded-lg border border-amber-200/80"> 
                             <span class="text-amber-900 block text-[9px] font-bold mb-0.5"><i class="fa-solid fa-note-sticky mr-1"></i> 案件說明</span> 
                             <strong id="modal-case-desc" class="text-stone-800 font-medium leading-relaxed block text-[11px]">-</strong> 
@@ -364,13 +364,7 @@
                         </div> 
                          
                         <div id="notes-container" class="space-y-1.5 bg-stone-50 p-2.5 rounded-xl border border-stone-200 max-h-28 overflow-y-auto"> 
-                            <div class="bg-white p-2 rounded-lg border border-stone-200 shadow-2xs space-y-0.5"> 
-                                <div class="flex justify-between items-center text-[9px] text-stone-400"> 
-                                    <strong class="text-stone-700">👤 品牌長 (最高管理者)</strong> 
-                                    <span>2026-06-15 09:30</span> 
-                                </div> 
-                                <p class="text-stone-800 text-[10px]">請秘書確認合約退佣機制與收款期程無誤後再行拋轉。</p> 
-                            </div> 
+                            <!-- 秘書為第一個交辦人，此處預設空白或無前手歷程 --> 
                         </div> 
 
                         <div class="flex space-x-2 pt-1"> 
@@ -383,9 +377,12 @@
                 </div> 
             </div> 
              
-            <div class="bg-stone-50 px-5 py-3 border-t border-stone-200 flex justify-end space-x-2.5 sticky bottom-0 z-10"> 
+            <div class="bg-stone-50 px-5 py-3 border-t border-stone-200 flex justify-between items-center sticky bottom-0 z-10"> 
                 <button onclick="closeModal('approvalModal'); openModal('pendingListModal');" class="px-3.5 py-1.5 bg-stone-200 text-stone-700 rounded-xl text-xs font-medium transition hover:bg-stone-300">返回列表</button> 
-                <button onclick="submitStageAction('案件已成功拋轉至指定作業人員！')" class="px-4 py-1.5 bg-ruili-brand text-white rounded-xl text-xs font-bold shadow-xs transition hover:opacity-90">案件拋轉</button> 
+                <div class="flex space-x-2">
+                    <button onclick="submitStageAction('案件已成功儲存！')" class="px-3.5 py-1.5 bg-stone-200 hover:bg-stone-300 text-stone-700 rounded-xl text-xs font-bold transition">儲存</button>
+                    <button onclick="submitStageAction('案件已成功拋轉至指定作業人員！')" class="px-4 py-1.5 bg-ruili-brand text-white rounded-xl text-xs font-bold shadow-xs transition hover:opacity-90">案件拋轉</button>
+                </div>
             </div> 
         </div> 
     </div> 
@@ -643,7 +640,10 @@
 
             <div class="bg-stone-50 px-4 py-3 border-t border-stone-200 flex justify-between items-center sticky bottom-0 z-10"> 
                 <button onclick="closeModal('closingPipelineModal'); openModal('closingPipelineListModal');" class="px-3.5 py-1.5 bg-stone-200 text-stone-700 rounded-xl text-xs font-medium">返回列表</button> 
-                <button onclick="validateAndSubmitClosing()" class="px-4 py-1.5 bg-ruili-brand hover:opacity-90 text-white rounded-xl text-xs font-bold shadow-xs transition">確認完成並完美結案</button> 
+                <div class="flex space-x-2">
+                    <button onclick="alert('💾 結案資料已成功儲存！')" class="px-3.5 py-1.5 bg-stone-200 hover:bg-stone-300 text-stone-700 rounded-xl text-xs font-bold transition">儲存</button>
+                    <button onclick="validateAndSubmitClosing()" class="px-4 py-1.5 bg-ruili-brand hover:opacity-90 text-white rounded-xl text-xs font-bold shadow-xs transition">確認完成並完美結案</button>
+                </div>
             </div> 
         </div> 
     </div> 
@@ -819,7 +819,12 @@
                     <div class="grid grid-cols-1 md:grid-cols-1 gap-4"> 
                         <div> 
                             <label class="font-bold block mb-1 text-stone-900">地段地號</label> 
-                            <input type="text" id="edit-case-land-number" class="w-full bg-white border border-stone-300 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-ruili-brand font-medium shadow-2xs" placeholder="例：仁武段 123-4地號"> 
+                            <div class="flex items-center space-x-2">
+                                <input type="text" id="edit-case-land-number" class="flex-1 bg-white border border-stone-300 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-ruili-brand font-medium shadow-2xs" placeholder="例：仁武段 123-4地號"> 
+                                <a href="https://maps.nlsc.gov.tw" target="_blank" rel="noopener noreferrer" class="px-3 py-2 bg-stone-100 hover:bg-ruili-brand hover:text-white text-stone-700 border border-stone-300 rounded-xl text-xs font-bold transition shadow-2xs whitespace-nowrap flex items-center space-x-1" title="國土測繪圖資服務雲">
+                                    <i class="fa-solid fa-map-location-dot"></i><span>地籍圖</span>
+                                </a>
+                            </div>
                         </div> 
                     </div> 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4"> 
@@ -846,7 +851,7 @@
                         <button type="button" onclick="openRegisteredBuildingModal()" class="px-4 py-2 bg-stone-100 hover:bg-ruili-brand hover:text-white text-stone-800 rounded-xl text-xs font-bold border border-stone-200 transition shadow-2xs flex items-center space-x-2 cursor-pointer"> 
                             <i class="fa-solid fa-building text-sky-600"></i><span>保存登記建物</span> 
                         </button> 
-                        <button type="button" onclick="openUnregisteredBuildingModal()"" class="px-4 py-2 bg-stone-100 hover:bg-ruili-brand hover:text-white text-stone-800 rounded-xl text-xs font-bold border border-stone-200 transition shadow-2xs flex items-center space-x-2 cursor-pointer"> 
+                        <button type="button" onclick="openUnregisteredBuildingModal()" class="px-4 py-2 bg-stone-100 hover:bg-ruili-brand hover:text-white text-stone-800 rounded-xl text-xs font-bold border border-stone-200 transition shadow-2xs flex items-center space-x-2 cursor-pointer"> 
                             <i class="fa-solid fa-house-chimney text-emerald-600"></i><span>未保存登記建物</span> 
                         </button> 
                     </div> 
@@ -858,12 +863,12 @@
                         <i class="fa-solid fa-chart-line text-ruili-brand mr-1.5"></i> 四、服務項目試算 
                     </h4> 
                     <div class="flex flex-wrap gap-2.5 py-1"> 
-                        <button type="button" onclick="openLandChangeModal()" class="px-4 py-2 ...">
-    <i class="fa-solid fa-earth-asia"></i><span>土地變更評估</span>
-</button> 
-                        <button type="button" onclick="openSolarModal()" class="px-4 py-2 ...">
-    <i class="fa-solid fa-solar-panel"></i><span>太陽能試算</span>
-</button>
+                        <button type="button" onclick="openLandChangeModal()" class="px-4 py-2 bg-stone-100 hover:bg-ruili-brand hover:text-white text-stone-800 rounded-xl text-xs font-bold border border-stone-200 transition shadow-2xs flex items-center space-x-2 cursor-pointer">
+                            <i class="fa-solid fa-earth-asia text-sky-600"></i><span>土地變更評估</span>
+                        </button> 
+                        <button type="button" onclick="openSolarModal()" class="px-4 py-2 bg-stone-100 hover:bg-ruili-brand hover:text-white text-stone-800 rounded-xl text-xs font-bold border border-stone-200 transition shadow-2xs flex items-center space-x-2 cursor-pointer">
+                            <i class="fa-solid fa-solar-panel text-amber-600"></i><span>太陽能試算</span>
+                        </button>
                     </div> 
                     <div id="calc-module-viewport" class="mt-2 p-3 bg-stone-50 rounded-xl border border-stone-200 text-stone-500 text-xs hidden"></div> 
                 </div> 
@@ -902,6 +907,26 @@
                             </div> 
                         </div> 
                     </div> 
+
+                    <!-- 移至收款期程上面的四個自動總計欄位 -->
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 pt-3 border-t border-stone-100"> 
+                        <div> 
+                            <label class="font-bold block mb-1 text-stone-900">總報價金額 (自動)</label> 
+                            <input type="text" id="calc-total-quote" class="w-full bg-stone-100 border border-stone-300 rounded-xl px-3 py-2 text-xs font-mono font-bold text-stone-800" readonly value="NT$ 0"> 
+                        </div> 
+                        <div> 
+                            <label class="font-bold block mb-1 text-stone-900">稅後總金額 (自動)</label> 
+                            <input type="text" id="calc-tax-after" class="w-full bg-stone-100 border border-stone-300 rounded-xl px-3 py-2 text-xs font-mono font-bold text-stone-800" readonly value="NT$ 0"> 
+                        </div> 
+                        <div> 
+                            <label class="font-bold block mb-1 text-stone-900">簽約總金額 (自動)</label> 
+                            <input type="text" id="calc-total-contract" class="w-full bg-rose-50 border border-rose-300 rounded-xl px-3 py-2 text-xs font-mono font-bold text-rose-700" readonly value="NT$ 0"> 
+                        </div> 
+                        <div> 
+                            <label class="font-bold block mb-1 text-stone-900">案件總利潤 (自動)</label> 
+                            <input type="text" id="calc-total-profit" class="w-full bg-emerald-50 border border-emerald-300 rounded-xl px-3 py-2 text-xs font-mono font-bold text-emerald-700" readonly value="NT$ 0"> 
+                        </div> 
+                    </div>
 
                     <!-- 報價總金額報價加入收款期程欄位（期程卡片排版） -->
                     <div class="bg-amber-50/50 p-4 rounded-xl border border-amber-200/60 space-y-3">
@@ -980,25 +1005,6 @@
                                 </div>
                             </div>
                         </div>
-                    </div> 
-
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 pt-3 border-t border-stone-100"> 
-                        <div> 
-                            <label class="font-bold block mb-1 text-stone-900">總報價金額 (自動)</label> 
-                            <input type="text" id="calc-total-quote" class="w-full bg-stone-100 border border-stone-300 rounded-xl px-3 py-2 text-xs font-mono font-bold text-stone-800" readonly value="NT$ 0"> 
-                        </div> 
-                        <div> 
-                            <label class="font-bold block mb-1 text-stone-900">稅後總金額 (自動)</label> 
-                            <input type="text" id="calc-tax-after" class="w-full bg-stone-100 border border-stone-300 rounded-xl px-3 py-2 text-xs font-mono font-bold text-stone-800" readonly value="NT$ 0"> 
-                        </div> 
-                        <div> 
-                            <label class="font-bold block mb-1 text-stone-900">簽約總金額 (自動)</label> 
-                            <input type="text" id="calc-total-contract" class="w-full bg-rose-50 border border-rose-300 rounded-xl px-3 py-2 text-xs font-mono font-bold text-rose-700" readonly value="NT$ 0"> 
-                        </div> 
-                        <div> 
-                            <label class="font-bold block mb-1 text-stone-900">案件總利潤 (自動)</label> 
-                            <input type="text" id="calc-total-profit" class="w-full bg-emerald-50 border border-emerald-300 rounded-xl px-3 py-2 text-xs font-mono font-bold text-emerald-700" readonly value="NT$ 0"> 
-                        </div> 
                     </div> 
                 </div> 
 
@@ -1692,9 +1698,10 @@
             const container = document.getElementById('app-container'); 
             let cases = globalCasesData[year] || []; 
 
+            // 修正順序：將「簽約案件」與「案件評估」交換位置
             const sections = [ 
-                { key: '簽約案件', title: '簽約案件', dotColor: 'bg-blue-500', badge: 'bg-blue-50 text-blue-700 border border-blue-200' }, 
                 { key: '案件評估', title: '案件評估', dotColor: 'bg-amber-500', badge: 'bg-amber-50 text-amber-700 border border-amber-200' }, 
+                { key: '簽約案件', title: '簽約案件', dotColor: 'bg-blue-500', badge: 'bg-blue-50 text-blue-700 border border-blue-200' }, 
                 { key: '結案中心', title: '結案中心', dotColor: 'bg-emerald-500', badge: 'bg-emerald-50 text-emerald-700 border border-emerald-200' }, 
                 { key: '廢件專區', title: '廢件專區', dotColor: 'bg-stone-400', badge: 'bg-stone-100 text-stone-600 border border-stone-200' }, 
                 { key: '失敗案件', title: '失敗案件', dotColor: 'bg-rose-500', badge: 'bg-rose-50 text-rose-700 border border-rose-200' } 
@@ -1750,6 +1757,7 @@
                 `; 
             }).join(''); 
 
+            // 調整按鈕順序由左而右：搜尋案件、拋轉至、刪除、恢復、新增
             container.innerHTML = ` 
                 <div class="space-y-5"> 
                     <div class="bg-white p-4 rounded-2xl border border-ruili-border shadow-2xs flex flex-col md:flex-row md:items-center justify-between gap-3"> 
@@ -1758,19 +1766,10 @@
                             <p class="text-xs text-stone-500 mt-0.5">管理 ${year} 年度案件，支援關鍵字搜尋、勾選、刪除、恢復與狀態拋轉。</p> 
                         </div> 
                         <div class="flex flex-wrap items-center gap-2"> 
-                            <button onclick="openAddCaseModal('${year}')" class="px-2.5 py-1.5 bg-ruili-brand hover:opacity-90 text-white rounded-xl text-xs font-bold transition flex items-center gap-1 shadow-xs cursor-pointer"> 
-                                <i class="fa-solid fa-plus text-[10px]"></i> 新增 
-                            </button> 
                             <div class="relative"> 
                                 <input type="text" id="year-search-input" oninput="filterCurrentYearManagement()" placeholder="搜尋案件..." class="px-3 py-1.5 pl-7 text-xs border border-stone-200 rounded-xl focus:outline-none focus:border-stone-400 w-40"> 
                                 <i class="fa-solid fa-magnifying-glass absolute left-2.5 top-2.5 text-stone-400 text-[10px]"></i> 
                             </div> 
-                            <button onclick="handleDeleteSelected('${year}')" class="px-2.5 py-1.5 bg-stone-100 hover:bg-rose-50 text-stone-700 hover:text-rose-600 border border-stone-200 rounded-xl text-xs font-bold transition flex items-center gap-1"> 
-                                <i class="fa-solid fa-trash-can text-[10px]"></i> 刪除 
-                            </button> 
-                            <button onclick="handleRestoreSelected('${year}')" class="px-2.5 py-1.5 bg-stone-100 hover:bg-emerald-50 text-stone-700 hover:text-emerald-600 border border-stone-200 rounded-xl text-xs font-bold transition flex items-center gap-1"> 
-                                <i class="fa-solid fa-rotate-left text-[10px]"></i> 恢復 
-                            </button> 
                             <select id="transfer-target-select" onchange="handleTransferSelected(this, '${year}')" class="px-2.5 py-1.5 text-xs border border-stone-300 rounded-xl bg-slate-50 font-bold text-stone-700 focus:outline-none focus:border-sky-500 shadow-xs"> 
                                 <option value="">-- 拋轉至 --</option> 
                                 <option value="簽約案件">簽約案件</option> 
@@ -1779,6 +1778,15 @@
                                 <option value="廢件專區">廢件專區</option> 
                                 <option value="失敗案件">失敗案件</option> 
                             </select> 
+                            <button onclick="handleDeleteSelected('${year}')" class="px-2.5 py-1.5 bg-stone-100 hover:bg-rose-50 text-stone-700 hover:text-rose-600 border border-stone-200 rounded-xl text-xs font-bold transition flex items-center gap-1"> 
+                                <i class="fa-solid fa-trash-can text-[10px]"></i> 刪除 
+                            </button> 
+                            <button onclick="handleRestoreSelected('${year}')" class="px-2.5 py-1.5 bg-stone-100 hover:bg-emerald-50 text-stone-700 hover:text-emerald-600 border border-stone-200 rounded-xl text-xs font-bold transition flex items-center gap-1"> 
+                                <i class="fa-solid fa-rotate-left text-[10px]"></i> 恢復 
+                            </button> 
+                            <button onclick="openAddCaseModal('${year}')" class="px-2.5 py-1.5 bg-ruili-brand hover:opacity-90 text-white rounded-xl text-xs font-bold transition flex items-center gap-1 shadow-xs cursor-pointer"> 
+                                <i class="fa-solid fa-plus text-[10px]"></i> 新增 
+                            </button> 
                         </div> 
                     </div> 
 
@@ -2340,107 +2348,6 @@ window.calcFeedbackTotal = function() {
 </div>
 
 <!-- ========================================================== -->
-<!-- 2. 土地變更評估與試算 Modal -->
-<!-- ========================================================== -->
-<div id="land-change-modal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-md z-[60] hidden flex items-center justify-center p-2 sm:p-4">
-    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] sm:max-h-[95vh] flex flex-col overflow-hidden border border-sky-100 relative">
-        <div class="p-4 md:p-5 border-b border-slate-800 flex justify-between items-center bg-gradient-to-r from-slate-900 via-sky-950 to-slate-900 text-white shadow-md shrink-0">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-sky-500/20 border border-sky-400/30 flex items-center justify-center text-sky-400 text-lg shadow-inner shrink-0">
-                    <i class="fa-solid fa-layer-group"></i>
-                </div>
-                <div>
-                    <h3 class="font-bold text-base tracking-wide text-white">土地變更專屬評估與回饋金試算</h3>
-                    <p class="text-[11px] text-sky-300/80 font-normal">Ruili Land Alteration & Feedback Fee Evaluation Tool</p>
-                </div>
-            </div>
-            <button onclick="closeLandChangeModal()" class="text-slate-400 hover:text-white hover:bg-white/10 w-8 h-8 rounded-lg flex items-center justify-center transition cursor-pointer">
-                <i class="fa-solid fa-xmark text-lg"></i>
-            </button>
-        </div>
-        <div class="p-4 md:p-6 space-y-6 overflow-y-auto flex-1 text-xs bg-slate-50/50">
-            <div class="bg-white p-4 md:p-5 rounded-2xl border border-slate-200/80 shadow-sm space-y-4">
-                <div class="flex items-center gap-2 border-b border-slate-100 pb-3">
-                    <span class="w-2.5 h-2.5 rounded-full bg-sky-500"></span>
-                    <h4 class="font-bold text-slate-800 text-sm">一、基本條件評估</h4>
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block font-semibold text-slate-700 mb-1.5">組織型態</label>
-                        <select id="lc-org-type" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:border-sky-500 bg-white font-medium text-slate-700 shadow-sm">
-                            <option value="企業社">企業社</option>
-                            <option value="有限公司">有限公司</option>
-                            <option value="股份有限公司">股份有限公司</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block font-semibold text-slate-700 mb-1.5">鄰路幾米</label>
-                        <input type="text" id="lc-road-width" placeholder="例：8米或12米" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:border-sky-500 bg-white font-medium shadow-sm">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="p-4 border-t border-slate-200 bg-slate-50 flex items-center justify-end gap-3 shrink-0 sticky bottom-0 z-10 shadow-lg">
-            <button type="button" onclick="closeLandChangeModal()" class="px-4 py-2 border border-slate-300 text-slate-600 rounded-lg font-medium hover:bg-white transition text-xs cursor-pointer">取消</button>
-            <button type="button" onclick="closeLandChangeModal()" class="px-5 py-2 bg-gradient-to-r from-sky-600 to-indigo-600 hover:from-sky-700 hover:to-indigo-700 text-white rounded-lg font-bold transition shadow-md text-xs cursor-pointer">儲存</button>
-        </div>
-    </div>
-</div>
-
-<!-- ========================================================== -->
-<!-- 3. 土地基本資料 Modal (完整對應 land-basic.js) -->
-<!-- ========================================================== -->
-<div id="land-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[60] hidden flex items-center justify-center p-2 sm:p-4">
-    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-6xl max-h-[95vh] flex flex-col overflow-hidden">
-        <div class="p-4 md:p-5 border-b border-slate-100 flex justify-between items-center bg-slate-800 text-white shrink-0">
-            <div class="flex items-center gap-2">
-                <i class="fa-solid fa-map-location-dot text-sky-400 text-lg"></i>
-                <h3 class="font-bold text-base">土地基本資料</h3>
-            </div>
-            <button onclick="closeLandModal()" class="text-slate-400 hover:text-white p-1 transition cursor-pointer">
-                <i class="fa-solid fa-xmark text-lg"></i>
-            </button>
-        </div>
-        <div class="p-4 md:p-6 space-y-4 overflow-y-auto flex-1 text-xs bg-slate-50">
-            <div class="flex justify-between items-center bg-white p-3 rounded-xl border border-slate-200 shadow-sm">
-                <span class="font-bold text-slate-700">地號詳細列表</span>
-                <button type="button" onclick="window.addLandRow()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-medium transition flex items-center gap-1 shadow-sm cursor-pointer">
-                    <i class="fa-solid fa-plus"></i> ＋新增地號
-                </button>
-            </div>
-            <div class="border border-slate-200 rounded-xl bg-white p-4 shadow-sm space-y-3">
-                <!-- 欄位標題與 JS 模組完美對應 -->
-                <div class="grid grid-cols-[1fr_1fr_1.2fr_0.9fr_0.9fr_1.2fr_0.9fr_0.9fr_1fr_32px] gap-2 font-bold text-slate-600 border-b pb-2 text-center text-[11px]">
-                    <div>地號</div>
-                    <div>登記日期</div>
-                    <div>使用分區/類別</div>
-                    <div>地目</div>
-                    <div>面積 (㎡)</div>
-                    <div>持分 (分子/分母)</div>
-                    <div>持分面積(㎡)</div>
-                    <div>持分面積(坪)</div>
-                    <div>他項權利</div>
-                    <div>刪除</div>
-                </div>
-                <div id="land-rows-container" class="space-y-2">
-                    <!-- 動態生成的行數會自動放入此處 -->
-                </div>
-                <!-- 總計列 -->
-                <div class="flex justify-end gap-6 pt-3 border-t font-bold text-slate-700 text-xs px-2">
-                    <div>總面積：<span id="sum-area" class="font-mono text-ruili-brand">0.00 ㎡</span></div>
-                    <div>持分總平方公尺：<span id="sum-sqm" class="font-mono text-ruili-brand">0.00 ㎡</span></div>
-                    <div>持分總坪數：<span id="sum-ping" class="font-mono text-emerald-600">0.00 坪</span></div>
-                </div>
-            </div>
-        </div>
-        <div class="p-4 border-t border-slate-200 bg-slate-50 flex justify-end gap-3 shrink-0 sticky bottom-0 z-10 shadow-lg">
-            <button type="button" onclick="closeLandModal()" class="px-4 py-2 border border-slate-300 text-slate-600 rounded-lg font-medium hover:bg-white transition cursor-pointer">取消</button>
-            <button type="button" onclick="closeLandModal()" class="px-5 py-2 bg-sky-600 hover:bg-sky-700 text-white rounded-lg font-medium transition shadow-sm cursor-pointer">確認儲存土地資料</button>
-        </div>
-    </div>
-</div>
-
-<!-- ========================================================== -->
 <!-- 4. 保存登記建物 Modal (自動加總修復版) -->
 <!-- ========================================================== -->
 <div id="registered-building-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[60] hidden flex items-center justify-center p-2 sm:p-4">
@@ -2581,4 +2488,4 @@ window.calcFeedbackTotal = function() {
     </div>
 </div>
 </body> 
-</html> 
+</html>
