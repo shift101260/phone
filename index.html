@@ -1881,6 +1881,62 @@
         window.onload = function() { 
             switchModule('kanban', document.querySelector("button[onclick*='kanban']")); 
         }; 
+        <script>
+    // 💡 獨立直接執行的彈窗開關，確保按了絕對有反應！
+    window.openLandModal = function() {
+        const modal = document.getElementById('land-modal');
+        if (modal) { modal.classList.remove('hidden'); modal.style.display = 'flex'; }
+    };
+    window.closeLandModal = function() {
+        const modal = document.getElementById('land-modal');
+        if (modal) { modal.classList.add('hidden'); modal.style.display = 'none'; }
+    };
+
+    window.openRegisteredBuildingModal = function() {
+        const modal = document.getElementById('registered-building-modal');
+        if (modal) { modal.classList.remove('hidden'); modal.style.display = 'flex'; }
+    };
+    window.closeRegisteredBuildingModal = function() {
+        const modal = document.getElementById('registered-building-modal');
+        if (modal) { modal.classList.add('hidden'); modal.style.display = 'none'; }
+    };
+
+    window.openUnregisteredBuildingModal = function() {
+        const modal = document.getElementById('unregistered-building-modal');
+        if (modal) { modal.classList.remove('hidden'); modal.style.display = 'flex'; }
+    };
+    window.closeUnregisteredBuildingModal = function() {
+        const modal = document.getElementById('unregistered-building-modal');
+        if (modal) { modal.classList.add('hidden'); modal.style.display = 'none'; }
+    };
+
+    window.openSolarModal = function() {
+        const modal = document.getElementById('solar-modal');
+        if (modal) { modal.classList.remove('hidden'); modal.style.display = 'flex'; }
+    };
+    window.closeSolarModal = function() {
+        const modal = document.getElementById('solar-modal');
+        if (modal) { modal.classList.add('hidden'); modal.style.display = 'none'; }
+    };
+
+    window.toggleSolarRefModal = function(show) {
+        const modal = document.getElementById('solar-ref-modal');
+        if (modal) {
+            modal.style.display = show ? 'flex' : 'none';
+            if(show) modal.classList.remove('hidden');
+            else modal.classList.add('hidden');
+        }
+    };
+
+    window.openLandChangeModal = function() {
+        const modal = document.getElementById('land-change-modal');
+        if (modal) { modal.classList.remove('hidden'); modal.style.display = 'flex'; }
+    };
+    window.closeLandChangeModal = function() {
+        const modal = document.getElementById('land-change-modal');
+        if (modal) { modal.classList.add('hidden'); modal.style.display = 'none'; }
+    };
+</script>
     </script> 
 
     <!-- ========================================================== -->
