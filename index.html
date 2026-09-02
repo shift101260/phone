@@ -2350,7 +2350,7 @@
 <!-- 4. 保存登記建物 Modal -->
 <!-- ========================================================== -->
 <div id="registered-building-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[60] hidden flex items-center justify-center p-2 sm:p-4">
-    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[95vh] flex flex-col overflow-hidden">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-5xl max-h-[95vh] flex flex-col overflow-hidden">
         <div class="p-4 md:p-5 border-b border-slate-100 flex justify-between items-center bg-slate-800 text-white shrink-0">
             <div class="flex items-center gap-2">
                 <i class="fa-solid fa-house-chimney-crack text-sky-400 text-lg"></i>
@@ -2360,19 +2360,26 @@
                 <i class="fa-solid fa-xmark text-lg"></i>
             </button>
         </div>
-        <div class="p-4 md:p-6 space-y-6 overflow-y-auto flex-1 text-xs bg-slate-50">
-            <div class="space-y-3">
-                <div class="flex justify-between items-center bg-white p-3 rounded-xl border border-slate-200 shadow-sm">
-                    <span class="font-bold text-slate-700">建號詳細列表</span>
-                    <button type="button" onclick="if(window.addRegBuildingRow) window.addRegBuildingRow()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-medium transition flex items-center gap-1 shadow-sm cursor-pointer">
-                        <i class="fa-solid fa-plus"></i> ＋新增建號
-                    </button>
+        <div class="p-4 md:p-6 space-y-4 overflow-y-auto flex-1 text-xs bg-slate-50">
+            <div class="flex justify-between items-center bg-white p-3 rounded-xl border border-slate-200 shadow-sm">
+                <span class="font-bold text-slate-700">建號詳細列表</span>
+                <button type="button" onclick="window.addRegBuildingRow()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-medium transition flex items-center gap-1 shadow-sm cursor-pointer">
+                    <i class="fa-solid fa-plus"></i> ＋新增建號
+                </button>
+            </div>
+            <div class="border border-slate-200 rounded-xl bg-white p-4 shadow-sm space-y-3">
+                <div class="grid grid-cols-[1fr_1fr_1.2fr_0.9fr_0.9fr_1.2fr_1fr_32px] gap-2 font-bold text-slate-600 border-b pb-2 text-center text-[11px]">
+                    <div>建號</div>
+                    <div>基地坐落</div>
+                    <div>主要用途</div>
+                    <div>主要構造</div>
+                    <div>總面積 (㎡)</div>
+                    <div>所有權人</div>
+                    <div>權利範圍</div>
+                    <div>刪除</div>
                 </div>
-                <div class="overflow-x-auto border border-slate-200 rounded-xl bg-white p-3 shadow-sm">
-                    <div class="min-w-[900px] space-y-2">
-                        <div id="reg-building-rows-container" class="space-y-2"></div>
+                <div id="reg-building-rows-container" class="space-y-2">
                     </div>
-                </div>
             </div>
         </div>
         <div class="p-4 border-t border-slate-200 bg-slate-50 flex justify-end gap-3 shrink-0 sticky bottom-0 z-10 shadow-lg">
@@ -2396,19 +2403,23 @@
                 <i class="fa-solid fa-xmark text-lg"></i>
             </button>
         </div>
-        <div class="p-4 md:p-6 space-y-6 overflow-y-auto flex-1 text-xs bg-slate-50">
-            <div class="space-y-3">
-                <div class="flex justify-between items-center bg-white p-3 rounded-xl border border-slate-200 shadow-sm">
-                    <span class="font-bold text-slate-700">未保存登記建物列表</span>
-                    <button type="button" onclick="if(window.addUnregBuildingRow) window.addUnregBuildingRow()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-medium transition flex items-center gap-1 shadow-sm cursor-pointer">
-                        <i class="fa-solid fa-plus"></i> ＋新增筆數
-                    </button>
+        <div class="p-4 md:p-6 space-y-4 overflow-y-auto flex-1 text-xs bg-slate-50">
+            <div class="flex justify-between items-center bg-white p-3 rounded-xl border border-slate-200 shadow-sm">
+                <span class="font-bold text-slate-700">未保存登記建物列表</span>
+                <button type="button" onclick="window.addUnregBuildingRow()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-medium transition flex items-center gap-1 shadow-sm cursor-pointer">
+                    <i class="fa-solid fa-plus"></i> ＋新增筆數
+                </button>
+            </div>
+            <div class="border border-slate-200 rounded-xl bg-white p-4 shadow-sm space-y-3">
+                <div class="grid grid-cols-[1.2fr_1fr_1fr_1.2fr_32px] gap-2 font-bold text-slate-600 border-b pb-2 text-center text-[11px]">
+                    <div>建物門牌 / 位置</div>
+                    <div>構造</div>
+                    <div>面積 (坪/㎡)</div>
+                    <div>現況說明 / 評估</div>
+                    <div>刪除</div>
                 </div>
-                <div class="overflow-x-auto border border-slate-200 rounded-xl bg-white p-3 shadow-sm">
-                    <div class="min-w-[500px] space-y-2">
-                        <div id="unreg-building-rows-container" class="space-y-2"></div>
+                <div id="unreg-building-rows-container" class="space-y-2">
                     </div>
-                </div>
             </div>
         </div>
         <div class="p-4 border-t border-slate-200 bg-slate-50 flex justify-end gap-3 shrink-0 sticky bottom-0 z-10 shadow-lg">
@@ -2416,7 +2427,6 @@
             <button type="button" onclick="closeUnregisteredBuildingModal()" class="px-5 py-2 bg-sky-600 hover:bg-sky-700 text-white rounded-lg font-medium transition shadow-sm cursor-pointer">確認儲存建物資料</button>
         </div>
     </div>
-</div>
 </div>
 </body> 
 </html> 
