@@ -2441,7 +2441,7 @@ window.calcFeedbackTotal = function() {
 </div>
 
 <!-- ========================================================== -->
-<!-- 4. 保存登記建物 Modal (終極完整版) -->
+<!-- 4. 保存登記建物 Modal (自動加總修復版) -->
 <!-- ========================================================== -->
 <div id="registered-building-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[60] hidden flex items-center justify-center p-2 sm:p-4">
     <div class="bg-white rounded-2xl shadow-2xl w-full max-w-5xl max-h-[95vh] flex flex-col overflow-hidden">
@@ -2488,7 +2488,7 @@ window.calcFeedbackTotal = function() {
                 <div id="reg-building-rows-container" class="space-y-2"></div>
             </div>
 
-            <!-- 底部自動加總區塊 -->
+            <!-- 底部自動加總區塊 (已補上對應 ID) -->
             <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-2">
                 <div class="flex items-center gap-1.5 font-bold text-slate-700 text-xs border-b pb-2">
                     <i class="fa-solid fa-calculator text-sky-600"></i> 自動加總
@@ -2496,15 +2496,15 @@ window.calcFeedbackTotal = function() {
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-1">
                     <div class="bg-sky-50/50 p-3 rounded-xl border border-sky-100 text-center">
                         <span class="block text-slate-500 mb-1">總面積</span>
-                        <span class="text-base font-bold text-sky-900 font-mono">0.00 $m^2$</span>
+                        <span id="sum-reg-area" class="text-base font-bold text-sky-900 font-mono">0.00 ㎡</span>
                     </div>
                     <div class="bg-sky-50/50 p-3 rounded-xl border border-sky-100 text-center">
                         <span class="block text-slate-500 mb-1">總持有平方公尺</span>
-                        <span class="text-base font-bold text-sky-900 font-mono">0.00 $m^2$</span>
+                        <span id="sum-reg-sqm" class="text-base font-bold text-sky-900 font-mono">0.00 ㎡</span>
                     </div>
                     <div class="bg-emerald-50/50 p-3 rounded-xl border border-emerald-100 text-center">
                         <span class="block text-slate-500 mb-1">總持有坪數</span>
-                        <span class="text-base font-bold text-emerald-800 font-mono">0.00 坪</span>
+                        <span id="sum-reg-ping" class="text-base font-bold text-emerald-800 font-mono">0.00 坪</span>
                     </div>
                 </div>
             </div>
@@ -2515,7 +2515,7 @@ window.calcFeedbackTotal = function() {
         </div>
     </div>
 </div>
-
+    
 <!-- ========================================================== -->
 <!-- 5. 未保存登記建物 Modal (終極完整版) -->
 <!-- ========================================================== -->
