@@ -2045,10 +2045,10 @@
     </div>
 </div>
 <!-- ========================================================== -->
-<!-- 2. 土地變更評估與試算 Modal (完整原版) -->
+<!-- 2. 土地變更評估與試算 Modal (功能完整對齊版) -->
 <!-- ========================================================== -->
 <div id="land-change-modal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-md z-[60] hidden flex items-center justify-center p-2 sm:p-4">
-    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] sm:max-h-[95vh] flex flex-col overflow-hidden border border-sky-100 relative">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-5xl max-h-[90vh] sm:max-h-[95vh] flex flex-col overflow-hidden border border-sky-100 relative">
         <div class="p-4 md:p-5 border-b border-slate-800 flex justify-between items-center bg-gradient-to-r from-slate-900 via-sky-950 to-slate-900 text-white shadow-md shrink-0">
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 rounded-xl bg-sky-500/20 border border-sky-400/30 flex items-center justify-center text-sky-400 text-lg shadow-inner shrink-0">
@@ -2098,7 +2098,7 @@
                 </div>
             </div>
 
-            <!-- 二、工廠登記證面積計算 -->
+            <!-- 二、工廠登記證面積計算 (自動換算坪數) -->
             <div class="bg-white p-4 md:p-5 rounded-2xl border border-slate-200/80 shadow-sm space-y-4">
                 <div class="flex items-center gap-2 border-b border-slate-100 pb-3">
                     <span class="w-2.5 h-2.5 rounded-full bg-indigo-500"></span>
@@ -2108,29 +2108,29 @@
                     <div class="p-3 rounded-xl border border-slate-200 bg-slate-50/50 space-y-2">
                         <span class="block font-semibold text-slate-700">廠地面積</span>
                         <div class="grid grid-cols-2 gap-2">
-                            <input type="number" placeholder="面積 (㎡)" class="px-3 py-1.5 border rounded-lg bg-white font-mono">
-                            <input type="text" placeholder="坪數" readonly class="px-3 py-1.5 border rounded-lg bg-slate-100 font-mono">
+                            <input type="number" step="0.01" placeholder="面積 (㎡)" oninput="window.calcFactoryArea(this)" class="factory-sqm px-3 py-1.5 border rounded-lg bg-white font-mono">
+                            <input type="text" placeholder="坪數" readonly class="factory-ping px-3 py-1.5 border rounded-lg bg-slate-100 font-mono font-bold text-slate-700">
                         </div>
                     </div>
                     <div class="p-3 rounded-xl border border-slate-200 bg-slate-50/50 space-y-2">
                         <span class="block font-semibold text-slate-700">廠房面積</span>
                         <div class="grid grid-cols-2 gap-2">
-                            <input type="number" placeholder="面積 (㎡)" class="px-3 py-1.5 border rounded-lg bg-white font-mono">
-                            <input type="text" placeholder="坪數" readonly class="px-3 py-1.5 border rounded-lg bg-slate-100 font-mono">
+                            <input type="number" step="0.01" placeholder="面積 (㎡)" oninput="window.calcFactoryArea(this)" class="factory-sqm px-3 py-1.5 border rounded-lg bg-white font-mono">
+                            <input type="text" placeholder="坪數" readonly class="factory-ping px-3 py-1.5 border rounded-lg bg-slate-100 font-mono font-bold text-slate-700">
                         </div>
                     </div>
                     <div class="p-3 rounded-xl border border-slate-200 bg-slate-50/50 space-y-2">
                         <span class="block font-semibold text-slate-700">建物面積</span>
                         <div class="grid grid-cols-2 gap-2">
-                            <input type="number" placeholder="面積 (㎡)" class="px-3 py-1.5 border rounded-lg bg-white font-mono">
-                            <input type="text" placeholder="坪數" readonly class="px-3 py-1.5 border rounded-lg bg-slate-100 font-mono">
+                            <input type="number" step="0.01" placeholder="面積 (㎡)" oninput="window.calcFactoryArea(this)" class="factory-sqm px-3 py-1.5 border rounded-lg bg-white font-mono">
+                            <input type="text" placeholder="坪數" readonly class="factory-ping px-3 py-1.5 border rounded-lg bg-slate-100 font-mono font-bold text-slate-700">
                         </div>
                     </div>
                     <div class="p-3 rounded-xl border border-slate-200 bg-slate-50/50 space-y-2">
                         <span class="block font-semibold text-slate-700">建物及廠房面積合計</span>
                         <div class="grid grid-cols-2 gap-2">
-                            <input type="number" placeholder="面積 (㎡)" class="px-3 py-1.5 border rounded-lg bg-white font-mono">
-                            <input type="text" placeholder="坪數" readonly class="px-3 py-1.5 border rounded-lg bg-slate-100 font-mono">
+                            <input type="number" step="0.01" placeholder="面積 (㎡)" oninput="window.calcFactoryArea(this)" class="factory-sqm px-3 py-1.5 border rounded-lg bg-white font-mono">
+                            <input type="text" placeholder="坪數" readonly class="factory-ping px-3 py-1.5 border rounded-lg bg-slate-100 font-mono font-bold text-slate-700">
                         </div>
                     </div>
                 </div>
@@ -2146,19 +2146,19 @@
                 </div>
             </div>
 
-            <!-- 三、回饋金試算 -->
+            <!-- 三、回饋金試算 (動態新增與依分區自動計算) -->
             <div class="bg-white p-4 md:p-5 rounded-2xl border border-slate-200/80 shadow-sm space-y-4">
                 <div class="flex justify-between items-center border-b border-slate-100 pb-3">
                     <div class="flex items-center gap-2">
                         <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
                         <h4 class="font-bold text-slate-800 text-sm">三、回饋金試算</h4>
                     </div>
-                    <button type="button" class="px-3 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-medium transition flex items-center gap-1 shadow-sm cursor-pointer">
+                    <button type="button" onclick="window.addFeedbackRow()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-medium transition flex items-center gap-1 shadow-sm cursor-pointer">
                         <i class="fa-solid fa-plus"></i> ＋新增地號
                     </button>
                 </div>
                 <div class="border border-slate-200 rounded-xl p-3 bg-slate-50 space-y-3">
-                    <div class="grid grid-cols-[1.5fr_1fr_1fr_1.2fr_1fr_32px] gap-2 font-bold text-slate-600 border-b pb-2 text-center text-[11px]">
+                    <div class="grid grid-cols-[1.5fr_1fr_1fr_1.2fr_1.2fr_32px] gap-2 font-bold text-slate-600 border-b pb-2 text-center text-[11px]">
                         <div>地號</div>
                         <div>面積 (㎡)</div>
                         <div>公告現值 (NT$)</div>
@@ -2166,21 +2166,24 @@
                         <div>回饋金試算 (NT$)</div>
                         <div>刪除</div>
                     </div>
-                    <div class="grid grid-cols-[1.5fr_1fr_1fr_1.2fr_1fr_32px] gap-2 items-center bg-white p-2 rounded-lg border">
-                        <input type="text" placeholder="例：頂番段123地號" class="px-2 py-1 border rounded-lg text-xs">
-                        <input type="number" placeholder="面積(㎡)" class="px-2 py-1 border rounded-lg text-xs font-mono">
-                        <input type="number" placeholder="公告現值" class="px-2 py-1 border rounded-lg text-xs font-mono">
-                        <select class="px-2 py-1 border rounded-lg text-xs bg-white">
-                            <option value="都內 (0.1)">都內 (0.1)</option>
-                            <option value="非都">非都</option>
-                        </select>
-                        <span class="font-bold text-emerald-700 text-xs font-mono">NT$ 0</span>
-                        <button type="button" class="text-slate-400 hover:text-rose-600"><i class="fa-solid fa-trash-can"></i></button>
+                    <div id="feedback-rows-container" class="space-y-2">
+                        <!-- 預設第一列 -->
+                        <div class="feedback-row grid grid-cols-[1.5fr_1fr_1fr_1.2fr_1.2fr_32px] gap-2 items-center bg-white p-2 rounded-lg border shadow-sm">
+                            <input type="text" placeholder="例：頂番段123地號" class="px-2 py-1 border rounded-lg text-xs">
+                            <input type="number" step="0.01" placeholder="面積(㎡)" oninput="window.calcFeedbackTotal()" class="fb-area px-2 py-1 border rounded-lg text-xs font-mono">
+                            <input type="number" step="0.01" placeholder="公告現值" oninput="window.calcFeedbackTotal()" class="fb-price px-2 py-1 border rounded-lg text-xs font-mono">
+                            <select onchange="window.calcFeedbackTotal()" class="fb-zone px-2 py-1 border rounded-lg text-xs bg-white font-medium">
+                                <option value="都內">都內 (×0.1)</option>
+                                <option value="非都">非都 (×0.5)</option>
+                            </select>
+                            <span class="fb-result font-bold text-emerald-700 text-xs font-mono text-center">NT$ 0</span>
+                            <button type="button" onclick="this.closest('.feedback-row').remove(); window.calcFeedbackTotal();" class="text-slate-400 hover:text-rose-600 cursor-pointer flex justify-center"><i class="fa-solid fa-trash-can"></i></button>
+                        </div>
                     </div>
                 </div>
-                <div class="bg-emerald-50/80 p-3 rounded-xl border border-emerald-200 flex justify-between items-center">
+                <div class="bg-emerald-50/80 p-3.5 rounded-xl border border-emerald-200 flex justify-between items-center shadow-inner">
                     <span class="font-bold text-emerald-900 text-xs">回饋金估算總額</span>
-                    <span class="text-sm font-bold text-emerald-800 font-mono">NT$ 0</span>
+                    <span id="feedback-grand-total" class="text-sm font-bold text-emerald-800 font-mono">NT$ 0</span>
                 </div>
             </div>
         </div>
@@ -2191,6 +2194,78 @@
         </div>
     </div>
 </div>
+
+<script>
+// 土地變更評估互動與計算邏輯
+window.openLandChangeModal = function() {
+    const modal = document.getElementById('land-change-modal');
+    if (modal) { modal.classList.remove('hidden'); modal.style.display = 'flex'; }
+};
+window.closeLandChangeModal = function() {
+    const modal = document.getElementById('land-change-modal');
+    if (modal) { modal.classList.add('hidden'); modal.style.display = 'none'; }
+};
+
+// 二、工廠面積自動換算坪數 (*0.3025)
+window.calcFactoryArea = function(input) {
+    const parent = input.closest('div.p-3');
+    if (!parent) return;
+    const sqm = parseFloat(input.value) || 0;
+    const pingInput = parent.querySelector('.factory-ping');
+    if (pingInput) {
+        pingInput.value = sqm > 0 ? (sqm * 0.3025).toFixed(2) + ' 坪' : '';
+    }
+};
+
+// 三、回饋金動態新增列
+window.addFeedbackRow = function() {
+    const container = document.getElementById('feedback-rows-container');
+    if (!container) return;
+    const html = `
+        <div class="feedback-row grid grid-cols-[1.5fr_1fr_1fr_1.2fr_1.2fr_32px] gap-2 items-center bg-white p-2 rounded-lg border shadow-sm">
+            <input type="text" placeholder="例：頂番段123地號" class="px-2 py-1 border rounded-lg text-xs">
+            <input type="number" step="0.01" placeholder="面積(㎡)" oninput="window.calcFeedbackTotal()" class="fb-area px-2 py-1 border rounded-lg text-xs font-mono">
+            <input type="number" step="0.01" placeholder="公告現值" oninput="window.calcFeedbackTotal()" class="fb-price px-2 py-1 border rounded-lg text-xs font-mono">
+            <select onchange="window.calcFeedbackTotal()" class="fb-zone px-2 py-1 border rounded-lg text-xs bg-white font-medium">
+                <option value="都內">都內 (×0.1)</option>
+                <option value="非都">非都 (×0.5)</option>
+            </select>
+            <span class="fb-result font-bold text-emerald-700 text-xs font-mono text-center">NT$ 0</span>
+            <button type="button" onclick="this.closest('.feedback-row').remove(); window.calcFeedbackTotal();" class="text-slate-400 hover:text-rose-600 cursor-pointer flex justify-center"><i class="fa-solid fa-trash-can"></i></button>
+        </div>
+    `;
+    container.insertAdjacentHTML('beforeend', html);
+};
+
+// 三、回饋金試算公式計算（都內 *0.1，非都 *0.5）
+window.calcFeedbackTotal = function() {
+    let grandTotal = 0;
+    const rows = document.querySelectorAll('.feedback-row');
+    rows.forEach(row => {
+        const area = parseFloat(row.querySelector('.fb-area')?.value) || 0;
+        const price = parseFloat(row.querySelector('.fb-price')?.value) || 0;
+        const zone = row.querySelector('.fb-zone')?.value;
+        
+        let subtotal = 0;
+        if (zone === '都內') {
+            subtotal = area * price * 0.1;
+        } else if (zone === '非都') {
+            subtotal = area * price * 0.5;
+        }
+        
+        const resultSpan = row.querySelector('.fb-result');
+        if (resultSpan) {
+            resultSpan.textContent = `NT$ ${Math.round(subtotal).toLocaleString()}`;
+        }
+        grandTotal += subtotal;
+    });
+
+    const grandTotalSpan = document.getElementById('feedback-grand-total');
+    if (grandTotalSpan) {
+        grandTotalSpan.textContent = `NT$ ${Math.round(grandTotal).toLocaleString()}`;
+    }
+};
+</script>
 
 <!-- ========================================================== -->
 <!-- 3. 土地基本資料 Modal (完整精美對齊版) -->
