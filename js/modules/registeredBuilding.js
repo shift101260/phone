@@ -1,3 +1,5 @@
+// js/modules/registered-building.js
+
 window.openRegisteredBuildingModal = function() {
     const modal = document.getElementById('registered-building-modal');
     if (modal) { modal.classList.remove('hidden'); modal.style.display = 'flex'; }
@@ -12,6 +14,8 @@ export function addRegBuildingRow(data = {}) {
     const container = document.getElementById('reg-building-rows-container');
     if (!container) return;
     const rowId = 'reg-bld-' + Date.now() + Math.random().toString(36).substr(2, 5);
+    
+    // 這裡的格子數量與名稱完美對應您 HTML 裡的 10 個欄位
     const html = `
         <div id="${rowId}" class="grid grid-cols-[1fr_1fr_1.2fr_0.9fr_0.9fr_1.2fr_0.9fr_0.9fr_1fr_32px] gap-2 bg-white p-2 rounded-lg border border-slate-200 shadow-sm items-center text-xs">
             <input type="text" value="${data.bldNo || ''}" placeholder="例：1234建號" class="reg-bld-no w-full px-2 py-1 border border-slate-300 rounded-lg">
@@ -63,3 +67,5 @@ window.calculateRegBuildingTotals = function() {
 };
 
 window.addRegBuildingRow = addRegBuildingRow;
+
+console.log('保存登記建物模組載入成功！');
