@@ -2544,7 +2544,7 @@ window.calcFeedbackTotal = function() {
                 </button>
             </div>
             <div class="border border-slate-200 rounded-xl bg-white p-4 shadow-sm space-y-3">
-                <!-- 完美對齊的 6 欄網格結構 -->
+                <!-- 完美對齊的 6 欄網格表頭 -->
                 <div class="grid grid-cols-[1.5fr_1fr_1fr_1fr_1.5fr_32px] gap-2 font-bold text-slate-600 border-b pb-2 text-center text-[11px]">
                     <div>主要用途 / 說明</div>
                     <div>起造年份</div>
@@ -2553,10 +2553,11 @@ window.calcFeedbackTotal = function() {
                     <div>現況說明 / 評估</div>
                     <div>刪除</div>
                 </div>
+                <!-- 動態行數容器 -->
                 <div id="unreg-building-rows-container" class="space-y-2"></div>
             </div>
 
-            <!-- 底部自動加總區塊 (已補上 ID) -->
+            <!-- 底部自動加總區塊 -->
             <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-2">
                 <div class="flex items-center gap-1.5 font-bold text-slate-700 text-xs border-b pb-2">
                     <i class="fa-solid fa-calculator text-sky-600"></i> 自動加總
