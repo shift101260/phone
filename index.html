@@ -2195,56 +2195,95 @@
 <!-- ========================================================== -->
 <!-- 3. 土地基本資料 Modal (完整對應 land-basic.js) -->
 <!-- ========================================================== -->
-<div id="land-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[60] hidden flex items-center justify-center p-2 sm:p-4">
+<div id="registered-building-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[60] hidden flex items-center justify-center p-2 sm:p-4">
     <div class="bg-white rounded-2xl shadow-2xl w-full max-w-6xl max-h-[95vh] flex flex-col overflow-hidden">
         <div class="p-4 md:p-5 border-b border-slate-100 flex justify-between items-center bg-slate-800 text-white shrink-0">
             <div class="flex items-center gap-2">
-                <i class="fa-solid fa-map-location-dot text-sky-400 text-lg"></i>
-                <h3 class="font-bold text-base">土地基本資料</h3>
+                <i class="fa-solid fa-house-chimney-crack text-sky-400 text-lg"></i>
+                <h3 class="font-bold text-base">保存登記建物</h3>
             </div>
-            <button onclick="closeLandModal()" class="text-slate-400 hover:text-white p-1 transition cursor-pointer">
+            <button onclick="closeRegisteredBuildingModal()" class="text-slate-400 hover:text-white p-1 transition cursor-pointer">
                 <i class="fa-solid fa-xmark text-lg"></i>
             </button>
         </div>
         <div class="p-4 md:p-6 space-y-4 overflow-y-auto flex-1 text-xs bg-slate-50">
             <div class="flex justify-between items-center bg-white p-3 rounded-xl border border-slate-200 shadow-sm">
-                <span class="font-bold text-slate-700">地號詳細列表</span>
-                <button type="button" onclick="window.addLandRow()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-medium transition flex items-center gap-1 shadow-sm cursor-pointer">
-                    <i class="fa-solid fa-plus"></i> ＋新增地號
+                <span class="font-bold text-slate-700">建號詳細列表</span>
+                <button type="button" onclick="window.addRegBuildingRow()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-medium transition flex items-center gap-1 shadow-sm cursor-pointer">
+                    <i class="fa-solid fa-plus"></i> ＋新增建號
                 </button>
             </div>
             <div class="border border-slate-200 rounded-xl bg-white p-4 shadow-sm space-y-3">
-                <!-- 欄位標題與 JS 模組完美對應 -->
                 <div class="grid grid-cols-[1fr_1fr_1.2fr_0.9fr_0.9fr_1.2fr_0.9fr_0.9fr_1fr_32px] gap-2 font-bold text-slate-600 border-b pb-2 text-center text-[11px]">
-                    <div>地號</div>
+                    <div>建號</div>
                     <div>登記日期</div>
-                    <div>使用分區/類別</div>
-                    <div>地目</div>
+                    <div>基地坐落</div>
+                    <div>主要用途</div>
                     <div>面積 (㎡)</div>
                     <div>持分 (分子/分母)</div>
                     <div>持分面積(㎡)</div>
                     <div>持分面積(坪)</div>
-                    <div>他項權利</div>
+                    <div>所有權人</div>
                     <div>刪除</div>
                 </div>
-                <div id="land-rows-container" class="space-y-2">
-                    <!-- 動態生成的行數會自動放入此處 -->
-                </div>
-                <!-- 總計列 -->
+                <div id="reg-building-rows-container" class="space-y-2">
+                    </div>
                 <div class="flex justify-end gap-6 pt-3 border-t font-bold text-slate-700 text-xs px-2">
-                    <div>總面積：<span id="sum-area" class="font-mono text-ruili-brand">0.00 ㎡</span></div>
-                    <div>持分總平方公尺：<span id="sum-sqm" class="font-mono text-ruili-brand">0.00 ㎡</span></div>
-                    <div>持分總坪數：<span id="sum-ping" class="font-mono text-emerald-600">0.00 坪</span></div>
+                    <div>總面積：<span id="sum-reg-area" class="font-mono text-ruili-brand">0.00 ㎡</span></div>
+                    <div>持分總平方公尺：<span id="sum-reg-sqm" class="font-mono text-ruili-brand">0.00 ㎡</span></div>
+                    <div>持分總坪數：<span id="sum-reg-ping" class="font-mono text-emerald-600">0.00 坪</span></div>
                 </div>
             </div>
         </div>
         <div class="p-4 border-t border-slate-200 bg-slate-50 flex justify-end gap-3 shrink-0 sticky bottom-0 z-10 shadow-lg">
-            <button type="button" onclick="closeLandModal()" class="px-4 py-2 border border-slate-300 text-slate-600 rounded-lg font-medium hover:bg-white transition cursor-pointer">取消</button>
-            <button type="button" onclick="closeLandModal()" class="px-5 py-2 bg-sky-600 hover:bg-sky-700 text-white rounded-lg font-medium transition shadow-sm cursor-pointer">確認儲存土地資料</button>
+            <button type="button" onclick="closeRegisteredBuildingModal()" class="px-4 py-2 border border-slate-300 text-slate-600 rounded-lg font-medium hover:bg-white transition cursor-pointer">取消</button>
+            <button type="button" onclick="closeRegisteredBuildingModal()" class="px-5 py-2 bg-sky-600 hover:bg-sky-700 text-white rounded-lg font-medium transition shadow-sm cursor-pointer">確認儲存建物資料</button>
         </div>
     </div>
 </div>
 
+<div id="unregistered-building-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[60] hidden flex items-center justify-center p-2 sm:p-4">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-5xl max-h-[95vh] flex flex-col overflow-hidden">
+        <div class="p-4 md:p-5 border-b border-slate-100 flex justify-between items-center bg-slate-800 text-white shrink-0">
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-house-circle-exclamation text-amber-400 text-lg"></i>
+                <h3 class="font-bold text-base">未保存登記建物</h3>
+            </div>
+            <button onclick="closeUnregisteredBuildingModal()" class="text-slate-400 hover:text-white p-1 transition cursor-pointer">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+        </div>
+        <div class="p-4 md:p-6 space-y-4 overflow-y-auto flex-1 text-xs bg-slate-50">
+            <div class="flex justify-between items-center bg-white p-3 rounded-xl border border-slate-200 shadow-sm">
+                <span class="font-bold text-slate-700">未保存登記建物列表</span>
+                <button type="button" onclick="window.addUnregBuildingRow()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-medium transition flex items-center gap-1 shadow-sm cursor-pointer">
+                    <i class="fa-solid fa-plus"></i> ＋新增筆數
+                </button>
+            </div>
+            <div class="border border-slate-200 rounded-xl bg-white p-4 shadow-sm space-y-3">
+                <div class="grid grid-cols-[1.5fr_1.2fr_1fr_0.9fr_0.9fr_1.5fr_32px] gap-2 font-bold text-slate-600 border-b pb-2 text-center text-[11px]">
+                    <div>建物門牌 / 位置</div>
+                    <div>構造</div>
+                    <div>面積 (㎡)</div>
+                    <div>平方公尺</div>
+                    <div>坪數</div>
+                    <div>現況說明 / 評估</div>
+                    <div>刪除</div>
+                </div>
+                <div id="unreg-building-rows-container" class="space-y-2">
+                    </div>
+                <div class="flex justify-end gap-6 pt-3 border-t font-bold text-slate-700 text-xs px-2">
+                    <div>總平方公尺：<span id="sum-unreg-sqm" class="font-mono text-ruili-brand">0.00 ㎡</span></div>
+                    <div>總坪數：<span id="sum-unreg-ping" class="font-mono text-emerald-600">0.00 坪</span></div>
+                </div>
+            </div>
+        </div>
+        <div class="p-4 border-t border-slate-200 bg-slate-50 flex justify-end gap-3 shrink-0 sticky bottom-0 z-10 shadow-lg">
+            <button type="button" onclick="closeUnregisteredBuildingModal()" class="px-4 py-2 border border-slate-300 text-slate-600 rounded-lg font-medium hover:bg-white transition cursor-pointer">取消</button>
+            <button type="button" onclick="closeUnregisteredBuildingModal()" class="px-5 py-2 bg-sky-600 hover:bg-sky-700 text-white rounded-lg font-medium transition shadow-sm cursor-pointer">確認儲存建物資料</button>
+        </div>
+    </div>
+</div>
 <!-- ========================================================== -->
 <!-- 2. 土地變更評估與試算 Modal -->
 <!-- ========================================================== -->
