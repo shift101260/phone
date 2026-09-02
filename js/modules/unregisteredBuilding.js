@@ -15,6 +15,7 @@ window.addUnregBuildingRow = function(data = {}) {
     if (!container) return;
     const rowId = 'unreg-bld-' + Date.now() + Math.random().toString(36).substr(2, 5);
     
+    // 與 HTML 完全對應的 6 欄網格結構
     const html = `
         <div id="${rowId}" class="grid grid-cols-[1.5fr_1fr_1fr_1fr_1.5fr_32px] gap-2 bg-white p-2 rounded-lg border border-slate-200 shadow-sm items-center text-xs">
             <input type="text" value="${data.purpose || ''}" placeholder="例：廠房後方鐵皮增建" class="unreg-purpose w-full px-2 py-1 border rounded-lg">
