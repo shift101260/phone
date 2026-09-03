@@ -2549,5 +2549,84 @@ window.calcFeedbackTotal = function() {
         </div>
     </div>
 </div>
+    <!-- ========================================================== -->
+<!-- 製造業每日用電參考表格 Modal -->
+<!-- ========================================================== -->
+<div id="solar-ref-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[80] hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[85vh] flex flex-col overflow-hidden">
+        <!-- 頂部標題列 -->
+        <div class="p-4 bg-slate-800 text-white flex justify-between items-center shrink-0">
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-industry text-amber-400"></i>
+                <h3 class="font-bold text-sm">製造業每日用電度數參考對照表</h3>
+            </div>
+            <button onclick="toggleSolarRefModal(false)" class="text-slate-400 hover:text-white cursor-pointer p-1">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+        </div>
+
+        <!-- 表格內容捲動區 -->
+        <div class="p-4 overflow-y-auto flex-1 text-xs">
+            <table class="w-full border-collapse text-left">
+                <thead>
+                    <tr class="bg-slate-100 text-slate-700 border-b border-slate-200">
+                        <th class="p-3 font-bold">企業名稱</th>
+                        <th class="p-3 font-bold">用電量</th>
+                        <th class="p-3 font-bold">備註說明</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 text-slate-600">
+                    <tr class="hover:bg-slate-50">
+                        <td class="p-3 font-medium text-slate-800">龍盟</td>
+                        <td class="p-3 font-bold text-amber-600 font-mono">30 度/日</td>
+                        <td class="p-3">設備組裝業</td>
+                    </tr>
+                    <tr class="hover:bg-slate-50">
+                        <td class="p-3 font-medium text-slate-800">詮盛</td>
+                        <td class="p-3 font-bold text-amber-600 font-mono">60 度/日</td>
+                        <td class="p-3">銑床</td>
+                    </tr>
+                    <tr class="hover:bg-slate-50">
+                        <td class="p-3 font-medium text-slate-800">浩銘</td>
+                        <td class="p-3 font-bold text-amber-600 font-mono">80 度/日</td>
+                        <td class="p-3">CNC*2、鑽床*1</td>
+                    </tr>
+                    <tr class="hover:bg-slate-50">
+                        <td class="p-3 font-medium text-slate-800">環境</td>
+                        <td class="p-3 font-bold text-amber-600 font-mono">130 度/日</td>
+                        <td class="p-3">遠紅外線安防</td>
+                    </tr>
+                    <tr class="hover:bg-slate-50">
+                        <td class="p-3 font-medium text-slate-800">河洛</td>
+                        <td class="p-3 font-bold text-amber-600 font-mono">230 度/日</td>
+                        <td class="p-3">印刷業</td>
+                    </tr>
+                    <tr class="hover:bg-slate-50">
+                        <td class="p-3 font-medium text-slate-800">阜大</td>
+                        <td class="p-3 font-bold text-amber-600 font-mono">230 度/日</td>
+                        <td class="p-3">機電測試</td>
+                    </tr>
+                    <tr class="hover:bg-slate-50">
+                        <td class="p-3 font-medium text-slate-800">呈福</td>
+                        <td class="p-3 font-bold text-amber-600 font-mono">600 度/日</td>
+                        <td class="p-3">工廠600坪</td>
+                    </tr>
+                    <tr class="hover:bg-slate-50">
+                        <td class="p-3 font-medium text-slate-800">精進</td>
+                        <td class="p-3 font-bold text-amber-600 font-mono">6萬/月</td>
+                        <td class="p-3">農電木模業CNC*1</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 底部關閉按鈕列 -->
+        <div class="p-3 bg-slate-50 border-t border-slate-200 flex justify-end shrink-0">
+            <button onclick="toggleSolarRefModal(false)" class="px-5 py-2 bg-slate-700 hover:bg-slate-800 text-white rounded-lg text-xs font-medium cursor-pointer transition">
+                關閉
+            </button>
+        </div>
+    </div>
+</div>
 </body> 
 </html>
