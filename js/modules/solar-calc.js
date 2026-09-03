@@ -25,7 +25,6 @@ window.calculateSolarAll = function() {
     // ==========================================
     const roofPing = parseFloat(document.getElementById('solar-roof-ping')?.value || 0);
     const taipowerPrice = parseFloat(document.getElementById('solar-taipower-price')?.value || 4.5);
-    const factoryElecPrice = parseFloat(document.getElementById('solar-factory-elec-price')?.value || 0);
     
     // 每日發電度數 = (屋頂坪數 / 1.5) * (590 / 1000) * 4
     const dailyGen = (roofPing / 1.5) * (590 / 1000) * 4;
@@ -47,8 +46,7 @@ window.calculateSolarAll = function() {
     const estGreenPrice = parseFloat(document.getElementById('solar-est-green-price')?.value || 0);
     const estD = annualGen * estGreenPrice;
 
-    // 4. 估算預估總收益：基本一定要有「每年發電收益 + 6%回饋」
-    // 如果有填寫廠房租金 (estC > 0) 或綠電收益 (estD > 0)，才把它們動態加進總收益中
+    // 4. 預估總收益：預設為 每年發電收益 + 6%回饋，若有填寫廠房租金或綠電才動態累加
     let estTotalRev = annualRev + estB;
     if (estC > 0) estTotalRev += estC;
     if (estD > 0) estTotalRev += estD;
@@ -83,7 +81,6 @@ window.calculateSolarAll = function() {
     const greenPrice = parseFloat(document.getElementById('solar-green-price')?.value || 0);
     const calcD = calcAnnualGen * greenPrice; // 精算綠電收益
 
-    // 精算總收益：基本為 A + B，若 C 或 D 大於 0 則動態累加
     let totalRev = calcAnnualRev + calcB;
     if (calcC > 0) totalRev += calcC;
     if (calcD > 0) totalRev += calcD;
@@ -101,4 +98,4 @@ function setSolarText(elementId, text) {
     if (el) el.textContent = text;
 }
 
-console.log('太陽能試算模組 (solar-calc.js) 條件加總版本載入成功！');
+console.log('太陽能試算模組 (solar-calc.js) 完整連動修正版載入成功！');
