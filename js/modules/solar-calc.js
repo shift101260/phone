@@ -101,16 +101,3 @@ function setSolarText(elementId, text) {
 }
 
 console.log('太陽能試算模組 (solar-calc.js) 包含建置成本與回收年限版本載入成功！');
-// 控制製造業每日用電參考表格 Modal 的開關
-window.toggleSolarRefModal = function(isOpen) {
-    const modal = document.getElementById('solar-ref-modal');
-    if (modal) {
-        if (isOpen) {
-            modal.classList.remove('hidden');
-            modal.style.display = 'flex';
-        } else {
-            modal.classList.add('hidden');
-            modal.style.display = 'none';
-        }
-    }
-};
