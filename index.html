@@ -2098,6 +2098,89 @@
         </div>
     </div>
 </div>
+    <!-- ========================================================== -->
+<!-- 製造業每日用電參考表格 Modal -->
+<!-- ========================================================== -->
+<div id="solar-ref-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[80] hidden flex items-center justify-center p-2 sm:p-4">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl flex flex-col overflow-hidden relative">
+        <!-- 頂部標題列 -->
+        <div class="p-4 md:p-5 border-b border-slate-100 flex justify-between items-center bg-slate-800 text-white shrink-0">
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-industry text-amber-400 text-lg"></i>
+                <h3 class="font-bold text-base">製造業每日用電參考表格</h3>
+            </div>
+            <button type="button" onclick="toggleSolarRefModal(false)" class="text-slate-400 hover:text-white p-1 transition cursor-pointer">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+        </div>
+
+        <!-- 內容清單區 -->
+        <div class="p-4 md:p-6 space-y-3 overflow-y-auto max-h-[70vh] text-xs bg-slate-50">
+            <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-sm space-y-2">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 font-bold text-slate-700 border-b pb-2">
+                    <div>客戶名稱</div>
+                    <div>平均用電量</div>
+                    <div>備註 / 產業型態</div>
+                </div>
+                
+                <!-- 項目 1 -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 py-1.5 border-b border-slate-100 items-center">
+                    <div class="font-bold text-slate-800">龍盟</div>
+                    <div class="text-emerald-700 font-mono font-semibold">30 度 / 日</div>
+                    <div class="text-slate-600">設備組裝業</div>
+                </div>
+                <!-- 項目 2 -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 py-1.5 border-b border-slate-100 items-center">
+                    <div class="font-bold text-slate-800">詮盛</div>
+                    <div class="text-emerald-700 font-mono font-semibold">60 度 / 日</div>
+                    <div class="text-slate-600">銑床</div>
+                </div>
+                <!-- 項目 3 -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 py-1.5 border-b border-slate-100 items-center">
+                    <div class="font-bold text-slate-800">浩銘</div>
+                    <div class="text-emerald-700 font-mono font-semibold">80 度 / 日</div>
+                    <div class="text-slate-600">CNC * 2、鑽床 * 1</div>
+                </div>
+                <!-- 項目 4 -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 py-1.5 border-b border-slate-100 items-center">
+                    <div class="font-bold text-slate-800">環境</div>
+                    <div class="text-emerald-700 font-mono font-semibold">130 度 / 日</div>
+                    <div class="text-slate-600">遠紅外線安防</div>
+                </div>
+                <!-- 項目 5 -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 py-1.5 border-b border-slate-100 items-center">
+                    <div class="font-bold text-slate-800">河洛</div>
+                    <div class="text-emerald-700 font-mono font-semibold">230 度 / 日</div>
+                    <div class="text-slate-600">印刷業</div>
+                </div>
+                <!-- 項目 6 -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 py-1.5 border-b border-slate-100 items-center">
+                    <div class="font-bold text-slate-800">阜大</div>
+                    <div class="text-emerald-700 font-mono font-semibold">230 度 / 日</div>
+                    <div class="text-slate-600">機電測試</div>
+                </div>
+                <!-- 項目 7 -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 py-1.5 border-b border-slate-100 items-center">
+                    <div class="font-bold text-slate-800">呈福</div>
+                    <div class="text-emerald-700 font-mono font-semibold">600 度 / 日</div>
+                    <div class="text-slate-600">工廠 600 坪</div>
+                </div>
+                <!-- 項目 8 -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 py-1.5 items-center">
+                    <div class="font-bold text-slate-800">精進</div>
+                    <div class="text-emerald-700 font-mono font-semibold">6萬 / 月</div>
+                    <div class="text-slate-600">農電木模業 CNC * 1</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 底部關閉按鈕 -->
+        <div class="p-3 border-t border-slate-200 bg-slate-50 flex justify-end shrink-0">
+            <button type="button" onclick="toggleSolarRefModal(false)" class="px-4 py-2 bg-slate-800 hover:bg-slate-900 text-white rounded-lg font-medium transition cursor-pointer">關閉</button>
+        </div>
+    </div>
+</div>
+    
 <!-- ========================================================== -->
 <!-- 2. 土地變更評估與試算 Modal (功能完整對齊版) -->
 <!-- ========================================================== -->
