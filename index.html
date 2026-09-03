@@ -1903,8 +1903,8 @@
 
     <!-- 引入模組化主程式 (main.js) --> 
     <script type="module" src="./js/main.js"></script> 
-   <!-- ========================================================== -->
-<!-- 1. 太陽能發電效益試算與精算工具 Modal (完整整合版) -->
+  <!-- ========================================================== -->
+<!-- 1. 太陽能發電效益試算與精算工具 Modal (精算保留、估算擴充版) -->
 <!-- ========================================================== -->
 <div id="solar-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[70] hidden flex items-center justify-center p-2 sm:p-4">
     <div class="bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] sm:max-h-[95vh] flex flex-col overflow-hidden relative">
@@ -1948,10 +1948,10 @@
                 </div>
             </div>
 
-            <!-- 二、發電與多元收益估算 -->
+            <!-- 二、估算（保留您原本的每日/每月/每年發電與收益與 15% 屋頂出租） -->
             <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-4">
                 <h4 class="font-bold text-slate-800 text-sm border-b border-slate-100 pb-2 flex items-center gap-1.5">
-                    <i class="fa-solid fa-calculator text-sky-600"></i> 二、發電與多元收益估算
+                    <i class="fa-solid fa-calculator text-sky-600"></i> 二、估算（依據坪數與售電價自動計算）
                 </h4>
                 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -1968,21 +1968,54 @@
                         <span id="res-solar-annual-gen" class="text-base font-bold text-slate-800 font-mono">0 度</span>
                     </div>
                     <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 shadow-sm">
-                        <span class="block text-slate-500 mb-1">每年發電收益 (A)</span>
+                        <span class="block text-slate-500 mb-1">每月發電收益</span>
+                        <span id="res-solar-monthly-rev" class="text-base font-bold text-emerald-700 font-mono">NT$ 0</span>
+                    </div>
+                    <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 shadow-sm">
+                        <span class="block text-slate-500 mb-1">每年發電收益</span>
                         <span id="res-solar-annual-rev" class="text-base font-bold text-emerald-700 font-mono">NT$ 0</span>
                     </div>
                     <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 shadow-sm">
-                        <span class="block text-slate-500 mb-1">台製模組 6% 每年回饋 (B)</span>
+                        <span class="block text-slate-500 mb-1">屋頂出租收益 (15%)</span>
+                        <span id="res-solar-rent-rev" class="text-base font-bold text-indigo-700 font-mono">NT$ 0</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 三、精算試算（完全保留您原本獨立的精算 ABCD 結構與邏輯） -->
+            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-4">
+                <h4 class="font-bold text-slate-800 text-sm border-b border-slate-100 pb-2 flex items-center gap-1.5">
+                    <i class="fa-solid fa-chart-pie text-slate-600"></i> 三、精算試算
+                </h4>
+                 
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block font-semibold text-slate-700 mb-1">模組數量 (片)</label>
+                        <input type="number" id="solar-panel-count" placeholder="0" oninput="calculateSolarAll()" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:border-slate-500 bg-white font-mono">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-700 mb-1">每片瓦數 (W)</label>
+                        <input type="number" id="solar-panel-watt" value="590" oninput="calculateSolarAll()" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:border-slate-500 bg-white font-mono">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 shadow-sm">
+                        <span class="block text-slate-500 mb-1">A. 每年發電收益</span>
+                        <span id="res-solar-calc-a" class="text-base font-bold text-emerald-700 font-mono">NT$ 0</span>
+                    </div>
+                    <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 shadow-sm">
+                        <span class="block text-slate-500 mb-1">B. 台製模組 6% 每年回饋 (A * 0.06)</span>
                         <span id="res-solar-calc-b" class="text-base font-bold text-emerald-700 font-mono">NT$ 0</span>
                     </div>
                 </div>
 
                 <!-- C. 廠房租金收益 -->
                 <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 space-y-3">
-                    <span class="font-bold text-slate-800 block">C. 廠房租金收益 (C)</span>
+                    <span class="font-bold text-slate-800 block">C. 廠房租金收益</span>
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                         <div>
-                            <label class="block text-slate-500 mb-1">廠房坪數 (手動自填)</label>
+                            <label class="block text-slate-500 mb-1">坪數 (手動自填)</label>
                             <input type="number" id="solar-rent-ping" placeholder="0" oninput="calculateSolarAll()" class="w-full px-3 py-1.5 border border-slate-300 rounded-lg text-xs font-mono bg-white">
                         </div>
                         <div>
@@ -1996,46 +2029,25 @@
                     </div>
                 </div>
 
-                <!-- D. 綠電園區收益 -->
+                <!-- D. 綠電園區 -->
                 <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 flex flex-col sm:flex-row justify-between items-center gap-2">
                     <div class="flex items-center gap-2">
                         <span class="font-bold text-slate-800">D. 綠電園區每年售電收益 (每度</span>
-                        <input type="number" id="solar-green-price" value="5" step="0.1" oninput="calculateSolarAll()" class="w-16 px-2 py-1 border border-slate-300 rounded-lg text-center font-mono text-xs bg-white">
-                        <span class="font-bold text-slate-800">元) (D)</span>
+                        <input type="number" id="solar-green-price" value="5" oninput="calculateSolarAll()" class="w-16 px-2 py-1 border border-slate-300 rounded-lg text-center font-mono text-xs bg-white">
+                        <span class="font-bold text-slate-800">元)</span>
                     </div>
                     <span id="res-solar-calc-d" class="text-base font-bold text-emerald-700 font-mono">NT$ 0</span>
                 </div>
-            </div>
 
-            <!-- 三、精算試算 -->
-            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-4">
-                <h4 class="font-bold text-slate-800 text-sm border-b border-slate-100 pb-2 flex items-center gap-1.5">
-                    <i class="fa-solid fa-chart-pie text-slate-600"></i> 三、精算試算
-                </h4>
-                
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block font-semibold text-slate-700 mb-1">模組數量 (片)</label>
-                        <input type="number" id="solar-panel-count" placeholder="0" oninput="calculateSolarAll()" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:border-slate-500 bg-white font-mono">
-                    </div>
-                    <div>
-                        <label class="block font-semibold text-slate-700 mb-1">每片瓦數 (W)</label>
-                        <input type="number" id="solar-panel-watt" value="590" oninput="calculateSolarAll()" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:border-slate-500 bg-white font-mono">
-                    </div>
+                <!-- 精算總收益 (A + B + C + D) -->
+                <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-200 flex justify-between items-center shadow-sm">
+                    <span class="font-bold text-emerald-900 text-sm">總收益 (A + B + C + D)</span>
+                    <span id="res-solar-total-rev" class="text-lg font-bold text-emerald-800 font-mono">NT$ 0</span>
                 </div>
-            </div>
-
-            <!-- 最終總收益結算區塊 -->
-            <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-200 flex justify-between items-center shadow-sm">
-                <div>
-                    <span class="font-bold text-emerald-900 text-sm block">預估總收益 (A + B + C + D)</span>
-                    <span class="text-[11px] text-slate-500">包含每年發電、6%回饋、廠房租金與綠電收益總和</span>
-                </div>
-                <span id="res-solar-total-rev" class="text-lg font-bold text-emerald-800 font-mono">NT$ 0</span>
             </div>
         </div>
 
-        <!-- 底部按鈕列：固定在底部 -->
+        <!-- 底部按鈕列 -->
         <div class="p-4 border-t border-slate-200 bg-slate-50 flex justify-end gap-3 shrink-0 sticky bottom-0 z-10 shadow-lg">
             <button type="button" onclick="closeSolarModal()" class="px-4 py-2 border border-slate-300 text-slate-600 rounded-lg font-medium hover:bg-white transition cursor-pointer">取消</button>
             <button type="button" onclick="closeSolarModal()" class="px-5 py-2 bg-slate-800 hover:bg-slate-900 text-white rounded-lg font-medium transition shadow-sm cursor-pointer">確認儲存太陽能試算</button>
