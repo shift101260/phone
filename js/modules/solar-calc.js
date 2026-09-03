@@ -34,13 +34,13 @@ window.calculateSolarAll = function() {
     const monthlyRev = annualRev / 12;
     const rentRev = annualRev * 0.15; // 屋頂出租收益 (15%)
 
-    // 填入估算結果
-    setにText('res-solar-daily-gen', `${dailyGen.toFixed(1)} 度`);
-    setにText('res-solar-monthly-gen', `${Math.round(monthlyGen).toLocaleString()} 度`);
-    setにText('res-solar-annual-gen', `${Math.round(annualGen).toLocaleString()} 度`);
-    setにText('res-solar-monthly-rev', `NT$ ${Math.round(monthlyRev).toLocaleString()}`);
-    setにText('res-solar-annual-rev', `NT$ ${Math.round(annualRev).toLocaleString()}`);
-    setにText('res-solar-rent-rev', `NT$ ${Math.round(rentRev).toLocaleString()}`);
+    // 填入估算結果 (修正原先隱含的異常字元，改回標準英文)
+    setSolarText('res-solar-daily-gen', `${dailyGen.toFixed(1)} 度`);
+    setSolarText('res-solar-monthly-gen', `${Math.round(monthlyGen).toLocaleString()} 度`);
+    setSolarText('res-solar-annual-gen', `${Math.round(annualGen).toLocaleString()} 度`);
+    setSolarText('res-solar-monthly-rev', `NT$ ${Math.round(monthlyRev).toLocaleString()}`);
+    setSolarText('res-solar-annual-rev', `NT$ ${Math.round(annualRev).toLocaleString()}`);
+    setSolarText('res-solar-rent-rev', `NT$ ${Math.round(rentRev).toLocaleString()}`);
 
     // 3. 精算試算區塊計算 (三、精算試算)
     const panelCount = parseFloat(document.getElementById('solar-panel-count')?.value || 0);
@@ -54,7 +54,7 @@ window.calculateSolarAll = function() {
     // C. 廠房租金收益
     const rentPing = parseFloat(document.getElementById('solar-rent-ping')?.value || 0);
     const rentUnitPrice = parseFloat(document.getElementById('solar-rent-unit-price')?.value || 0);
-    const calcC = rentPing * rentUnitPrice * 12; // 通常以年度或月租計算，視欄位邏輯
+    const calcC = rentPing * rentUnitPrice * 12; // 每年租金收益
 
     // D. 綠電園區
     const greenPrice = parseFloat(document.getElementById('solar-green-price')?.value || 5);
@@ -63,17 +63,17 @@ window.calculateSolarAll = function() {
     // 總收益 (A + B + C + D)
     const totalRev = calcAnnualRev + calcB + calcC + calcD;
 
-    setにText('res-solar-calc-a', `NT$ ${Math.round(calcAnnualRev).toLocaleString()}`);
-    setにText('res-solar-calc-b', `NT$ ${Math.round(calcB).toLocaleString()}`);
-    setにText('res-solar-calc-c', `NT$ ${Math.round(calcC).toLocaleString()}`);
-    setにText('res-solar-calc-d', `NT$ ${Math.round(calcD).toLocaleString()}`);
-    setにText('res-solar-total-rev', `NT$ ${Math.round(totalRev).toLocaleString()}`);
+    setSolarText('res-solar-calc-a', `NT$ ${Math.round(calcAnnualRev).toLocaleString()}`);
+    setSolarText('res-solar-calc-b', `NT$ ${Math.round(calcB).toLocaleString()}`);
+    setSolarText('res-solar-calc-c', `NT$ ${Math.round(calcC).toLocaleString()}`);
+    setSolarText('res-solar-calc-d', `NT$ ${Math.round(calcD).toLocaleString()}`);
+    setSolarText('res-solar-total-rev', `NT$ ${Math.round(totalRev).toLocaleString()}`);
 };
 
-// 輔助安全設定文字函式
-function setにText(elementId, text) {
+// 輔助安全設定文字函式 (避免命名衝突，改名為 setSolarText)
+function setSolarText(elementId, text) {
     const el = document.getElementById(elementId);
     if (el) el.textContent = text;
 }
 
-console.log('太陽能精算試算模組 (solar-calc.js) 載入成功！');
+console.log('太陽能精算試算模組 (solar-calc.js) 載入成功且已修復！');
