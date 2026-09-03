@@ -2632,7 +2632,67 @@ window.calcFeedbackTotal = function() {
         </div>
     </div>
 </div>
-    // ==========================================
+   <script>
+// ==========================================
+// 1. 土地基本資料 Modal 控制與計算
+// ==========================================
+window.openLandModal = function() {
+    const modal = document.getElementById('land-modal');
+    if (modal) { modal.classList.remove('hidden'); modal.style.display = 'flex'; }
+};
+window.closeLandModal = function() {
+    const modal = document.getElementById('land-modal');
+    if (modal) { modal.classList.add('hidden'); modal.style.display = 'none'; }
+};
+
+window.addLandRow = function() {
+    const container = document.getElementById('land-rows-container');
+    if (!container) return;
+    const html = `
+        <div class="land-row grid grid-cols-[1fr_1fr_1.2fr_0.9fr_0.9fr_1.2fr_0.9fr_0.9fr_1fr_32px] gap-2 items-center bg-white p-2 rounded-lg border shadow-sm text-xs">
+            <input type="text" placeholder="地號" class="px-2 py-1 border rounded-lg">
+            <input type="date" class="px-2 py-1 border rounded-lg font-mono">
+            <input type="text" placeholder="使用分區" class="px-2 py-1 border rounded-lg">
+            <input type="text" placeholder="地目" class="px-2 py-1 border rounded-lg">
+            <input type="number" step="0.01" placeholder="面積(㎡)" oninput="window.calcLandTotals()" class="land-area px-2 py-1 border rounded-lg font-mono">
+            <input type="text" placeholder="1/1" value="1/1" oninput="window.calcLandTotals()" class="land-share px-2 py-1 border rounded-lg font-mono text-center">
+            <input type="text" placeholder="持分㎡" readonly class="land-share-sqm px-2 py-1 border rounded-lg bg-slate-100 font-mono">
+            <input type="text" placeholder="持分坪" readonly class="land-share-ping px-2 py-1 border rounded-lg bg-slate-100 font-mono font-bold text-emerald-700">
+            <input type="text" placeholder="他項權利" class="px-2 py-1 border rounded-lg">
+            <button type="button" onclick="this.closest('.land-row').remove(); window.calcLandTotals();" class="text-slate-400 hover:text-rose-600 cursor-pointer flex justify-center"><i class="fa-solid fa-trash-can"></i></button>
+        </div>
+    `;
+    container.insertAdjacentHTML('beforeend', html);
+};
+
+window.calcLandTotals = function() {
+    let totalArea = 0, totalSqm = 0, totalPing = 0;
+    document.querySelectorAll('.land-row').forEach(row => {
+        const area = parseFloat(row.querySelector('.land-area')?.value) || 0;
+        const shareText = row.querySelector('.land-share')?.value || '1/1';
+        let shareRatio = 1;
+        if (shareText.includes('/')) {
+            const parts = shareText.split('/');
+            const num = parseFloat(parts[0]) || 0;
+            const den = parseFloat(parts[1]) || 1;
+            if (den !== 0) shareRatio = num / den;
+        }
+        const shareSqm = area * shareRatio;
+        const sharePing = shareSqm * 0.3025;
+
+        if (row.querySelector('.land-share-sqm')) row.querySelector('.land-share-sqm').value = shareSqm.toFixed(2);
+        if (row.querySelector('.land-share-ping')) row.querySelector('.land-share-ping').value = sharePing.toFixed(2);
+
+        totalArea += area;
+        totalSqm += shareSqm;
+        totalPing += sharePing;
+    });
+    if (document.getElementById('sum-area')) document.getElementById('sum-area').textContent = totalArea.toFixed(2) + ' ㎡';
+    if (document.getElementById('sum-sqm')) document.getElementById('sum-sqm').textContent = totalSqm.toFixed(2) + ' ㎡';
+    if (document.getElementById('sum-ping')) document.getElementById('sum-ping').textContent = totalPing.toFixed(2) + ' 坪';
+};
+
+// ==========================================
 // 2. 保存登記建物 Modal 控制與計算
 // ==========================================
 window.openRegisteredBuildingModal = function() {
@@ -2689,5 +2749,49 @@ window.calcRegTotals = function() {
     if (document.getElementById('sum-reg-sqm')) document.getElementById('sum-reg-sqm').textContent = totalSqm.toFixed(2) + ' ㎡';
     if (document.getElementById('sum-reg-ping')) document.getElementById('sum-reg-ping').textContent = totalPing.toFixed(2) + ' 坪';
 };
+
+// ==========================================
+// 3. 未保存登記建物 Modal 控制與計算
+// ==========================================
+window.openUnregisteredBuildingModal = function() {
+    const modal = document.getElementById('unregistered-building-modal');
+    if (modal) { modal.classList.remove('hidden'); modal.style.display = 'flex'; }
+};
+window.closeUnregisteredBuildingModal = function() {
+    const modal = document.getElementById('unregistered-building-modal');
+    if (modal) { modal.classList.add('hidden'); modal.style.display = 'none'; }
+};
+
+window.addUnregBuildingRow = function() {
+    const container = document.getElementById('unreg-building-rows-container');
+    if (!container) return;
+    const html = `
+        <div class="unreg-row grid grid-cols-[1.5fr_1fr_1fr_1fr_1.5fr_32px] gap-2 items-center bg-white p-2 rounded-lg border shadow-sm text-xs">
+            <input type="text" placeholder="主要用途 / 說明" class="px-2 py-1 border rounded-lg">
+            <input type="text" placeholder="起造年份" class="px-2 py-1 border rounded-lg font-mono">
+            <input type="number" step="0.01" placeholder="平方公尺(㎡)" oninput="window.calcUnregTotals()" class="unreg-sqm px-2 py-1 border rounded-lg font-mono">
+            <input type="text" placeholder="坪數" readonly class="unreg-ping px-2 py-1 border rounded-lg bg-slate-100 font-mono font-bold text-emerald-700">
+            <input type="text" placeholder="現況說明 / 評估" class="px-2 py-1 border rounded-lg">
+            <button type="button" onclick="this.closest('.unreg-row').remove(); window.calcUnregTotals();" class="text-slate-400 hover:text-rose-600 cursor-pointer flex justify-center"><i class="fa-solid fa-trash-can"></i></button>
+        </div>
+    `;
+    container.insertAdjacentHTML('beforeend', html);
+};
+
+window.calcUnregTotals = function() {
+    let totalSqm = 0, totalPing = 0;
+    document.querySelectorAll('.unreg-row').forEach(row => {
+        const sqm = parseFloat(row.querySelector('.unreg-sqm')?.value) || 0;
+        const ping = sqm * 0.3025;
+        if (row.querySelector('.unreg-ping')) {
+            row.querySelector('.unreg-ping').value = ping > 0 ? ping.toFixed(2) + ' 坪' : '';
+        }
+        totalSqm += sqm;
+        totalPing += ping;
+    });
+    if (document.getElementById('sum-unreg-sqm')) document.getElementById('sum-unreg-sqm').textContent = totalSqm.toFixed(2) + ' ㎡';
+    if (document.getElementById('sum-unreg-ping')) document.getElementById('sum-unreg-ping').textContent = totalPing.toFixed(2) + ' 坪';
+};
+</script>
 </body> 
 </html>
