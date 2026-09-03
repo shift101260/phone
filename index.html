@@ -1904,7 +1904,7 @@
     <!-- 引入模組化主程式 (main.js) --> 
     <script type="module" src="./js/main.js"></script> 
   <!-- ========================================================== -->
-<!-- 1. 太陽能發電效益試算與精算工具 Modal (精算保留、估算擴充版) -->
+<!-- 1. 太陽能發電效益試算與精算工具 Modal (估算獨立擴充、精算保留版) -->
 <!-- ========================================================== -->
 <div id="solar-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[70] hidden flex items-center justify-center p-2 sm:p-4">
     <div class="bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] sm:max-h-[95vh] flex flex-col overflow-hidden relative">
@@ -1925,7 +1925,7 @@
             <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-4">
                 <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 border-b border-slate-100 pb-2">
                     <h4 class="font-bold text-slate-800 text-sm flex items-center gap-1.5">
-                        <i class="fa-solid fa-clipboard-list text-slate-600"></i> 一、案件評估
+                        <i class="fa-solid fa-clipboard-list text-slate-600"></i> 一、案件評估 (初次拜訪用)
                     </h4>
                     <button type="button" onclick="toggleSolarRefModal(true)" class="px-3 py-1 bg-slate-700 hover:bg-slate-800 text-white rounded-lg font-medium transition flex items-center gap-1 shadow-sm cursor-pointer">
                         <i class="fa-solid fa-industry"></i> 製造業每日用電參考表格
@@ -1948,10 +1948,10 @@
                 </div>
             </div>
 
-            <!-- 二、估算（保留您原本的每日/每月/每年發電與收益與 15% 屋頂出租） -->
+            <!-- 二、估算（依據坪數與售電價自動計算，並新增您要的 3 個欄位） -->
             <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-4">
                 <h4 class="font-bold text-slate-800 text-sm border-b border-slate-100 pb-2 flex items-center gap-1.5">
-                    <i class="fa-solid fa-calculator text-sky-600"></i> 二、估算（依據坪數與售電價自動計算）
+                    <i class="fa-solid fa-calculator text-sky-600"></i> 二、估算（依據坪數與售電價粗估）
                 </h4>
                 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -1968,24 +1968,55 @@
                         <span id="res-solar-annual-gen" class="text-base font-bold text-slate-800 font-mono">0 度</span>
                     </div>
                     <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 shadow-sm">
-                        <span class="block text-slate-500 mb-1">每月發電收益</span>
-                        <span id="res-solar-monthly-rev" class="text-base font-bold text-emerald-700 font-mono">NT$ 0</span>
-                    </div>
-                    <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 shadow-sm">
                         <span class="block text-slate-500 mb-1">每年發電收益</span>
                         <span id="res-solar-annual-rev" class="text-base font-bold text-emerald-700 font-mono">NT$ 0</span>
                     </div>
                     <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 shadow-sm">
-                        <span class="block text-slate-500 mb-1">屋頂出租收益 (15%)</span>
-                        <span id="res-solar-rent-rev" class="text-base font-bold text-indigo-700 font-mono">NT$ 0</span>
+                        <span class="block text-slate-500 mb-1">台製模組 6% 每年回饋</span>
+                        <span id="res-solar-est-b" class="text-base font-bold text-emerald-700 font-mono">NT$ 0</span>
                     </div>
+                </div>
+
+                <!-- 估算區：廠房租金收益（自填） -->
+                <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 space-y-3">
+                    <span class="font-bold text-slate-800 block">廠房租金收益 (估算用)</span>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <div>
+                            <label class="block text-slate-500 mb-1">坪數 (手動自填)</label>
+                            <input type="number" id="solar-est-rent-ping" placeholder="0" oninput="calculateSolarAll()" class="w-full px-3 py-1.5 border border-slate-300 rounded-lg text-xs font-mono bg-white">
+                        </div>
+                        <div>
+                            <label class="block text-slate-500 mb-1">附近實價登錄單價 (元/坪)</label>
+                            <input type="number" id="solar-est-rent-unit-price" placeholder="0" oninput="calculateSolarAll()" class="w-full px-3 py-1.5 border border-slate-300 rounded-lg text-xs font-mono bg-white">
+                        </div>
+                        <div>
+                            <span class="block text-slate-500 mb-1">廠房每年租金收益</span>
+                            <span id="res-solar-est-c" class="text-sm font-bold text-emerald-700 font-mono leading-8">NT$ 0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 估算區：綠電收益（自填每度價格） -->
+                <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 flex flex-col sm:flex-row justify-between items-center gap-2">
+                    <div class="flex items-center gap-2">
+                        <span class="font-bold text-slate-800">綠電收益 (每度</span>
+                        <input type="number" id="solar-est-green-price" value="5" step="0.1" oninput="calculateSolarAll()" class="w-16 px-2 py-1 border border-slate-300 rounded-lg text-center font-mono text-xs bg-white">
+                        <span class="font-bold text-slate-800">元 × 每年發電度數)</span>
+                    </div>
+                    <span id="res-solar-est-d" class="text-base font-bold text-emerald-700 font-mono">NT$ 0</span>
+                </div>
+
+                <!-- 估算下方新增：預估總收益 -->
+                <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-200 flex justify-between items-center shadow-sm">
+                    <span class="font-bold text-emerald-900 text-sm">估算 - 預估總收益 (每年發電收益 + 6%回饋 + 廠房租金 + 綠電收益)</span>
+                    <span id="res-solar-est-total" class="text-lg font-bold text-emerald-800 font-mono">NT$ 0</span>
                 </div>
             </div>
 
-            <!-- 三、精算試算（完全保留您原本獨立的精算 ABCD 結構與邏輯） -->
+            <!-- 三、精算試算（完全保留您原本獨立的精算 ABCD 結構與邏輯，不動任何原設定） -->
             <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-4">
                 <h4 class="font-bold text-slate-800 text-sm border-b border-slate-100 pb-2 flex items-center gap-1.5">
-                    <i class="fa-solid fa-chart-pie text-slate-600"></i> 三、精算試算
+                    <i class="fa-solid fa-chart-pie text-slate-600"></i> 三、精算試算 (現勘報價後使用)
                 </h4>
                  
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -2010,9 +2041,9 @@
                     </div>
                 </div>
 
-                <!-- C. 廠房租金收益 -->
+                <!-- C. 廠房租金收益 (精算) -->
                 <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 space-y-3">
-                    <span class="font-bold text-slate-800 block">C. 廠房租金收益</span>
+                    <span class="font-bold text-slate-800 block">C. 廠房租金收益 (精算用)</span>
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                         <div>
                             <label class="block text-slate-500 mb-1">坪數 (手動自填)</label>
@@ -2029,7 +2060,7 @@
                     </div>
                 </div>
 
-                <!-- D. 綠電園區 -->
+                <!-- D. 綠電園區 (精算) -->
                 <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 flex flex-col sm:flex-row justify-between items-center gap-2">
                     <div class="flex items-center gap-2">
                         <span class="font-bold text-slate-800">D. 綠電園區每年售電收益 (每度</span>
@@ -2041,7 +2072,7 @@
 
                 <!-- 精算總收益 (A + B + C + D) -->
                 <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-200 flex justify-between items-center shadow-sm">
-                    <span class="font-bold text-emerald-900 text-sm">總收益 (A + B + C + D)</span>
+                    <span class="font-bold text-emerald-900 text-sm">精算總收益 (A + B + C + D)</span>
                     <span id="res-solar-total-rev" class="text-lg font-bold text-emerald-800 font-mono">NT$ 0</span>
                 </div>
             </div>
