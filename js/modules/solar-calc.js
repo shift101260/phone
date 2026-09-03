@@ -35,16 +35,23 @@ window.calculateSolarAll = function() {
     const annualRev = annualGen * taipowerPrice;
     const monthlyRev = annualRev / 12;
 
-    // 估算區的新欄位計算
-    const estB = annualRev * 0.06; // 6% 回饋
+    // 1. 台製模組 6% 每年回饋 = 每年發電收益 * 0.06
+    const estB = annualRev * 0.06;
+
+    // 2. 廠房租金收益 (估算用) = 坪數 * 附近實價登錄單價 * 12
     const estRentPing = parseFloat(document.getElementById('solar-est-rent-ping')?.value || 0);
     const estRentUnitPrice = parseFloat(document.getElementById('solar-est-rent-unit-price')?.value || 0);
-    const estC = estRentPing * estRentUnitPrice * 12; // 廠房租金 * 12個月
+    const estC = estRentPing * estRentUnitPrice * 12;
 
-    const estGreenPrice = parseFloat(document.getElementById('solar-est-green-price')?.value || 5);
-    const estD = annualGen * estGreenPrice; // 綠電收益 = 每度自填 * 每年發電度數
+    // 3. 綠電收益 = 每度價格(自填) * 每年發電度數
+    const estGreenPrice = parseFloat(document.getElementById('solar-est-green-price')?.value || 0);
+    const estD = annualGen * estGreenPrice;
 
-    const estTotalRev = annualRev + estB + estC + estD; // 預估發電收益總和
+    // 4. 估算預估總收益：基本一定要有「每年發電收益 + 6%回饋」
+    // 如果有填寫廠房租金 (estC > 0) 或綠電收益 (estD > 0)，才把它們動態加進總收益中
+    let estTotalRev = annualRev + estB;
+    if (estC > 0) estTotalRev += estC;
+    if (estD > 0) estTotalRev += estD;
 
     // 填入估算區結果
     setSolarText('res-solar-daily-gen', `${dailyGen.toFixed(1)} 度`);
@@ -73,10 +80,13 @@ window.calculateSolarAll = function() {
     const rentUnitPrice = parseFloat(document.getElementById('solar-rent-unit-price')?.value || 0);
     const calcC = rentPing * rentUnitPrice * 12; // 每年租金收益
 
-    const greenPrice = parseFloat(document.getElementById('solar-green-price')?.value || 5);
+    const greenPrice = parseFloat(document.getElementById('solar-green-price')?.value || 0);
     const calcD = calcAnnualGen * greenPrice; // 精算綠電收益
 
-    const totalRev = calcAnnualRev + calcB + calcC + calcD;
+    // 精算總收益：基本為 A + B，若 C 或 D 大於 0 則動態累加
+    let totalRev = calcAnnualRev + calcB;
+    if (calcC > 0) totalRev += calcC;
+    if (calcD > 0) totalRev += calcD;
 
     setSolarText('res-solar-calc-a', `NT$ ${Math.round(calcAnnualRev).toLocaleString()}`);
     setSolarText('res-solar-calc-b', `NT$ ${Math.round(calcB).toLocaleString()}`);
@@ -91,4 +101,4 @@ function setSolarText(elementId, text) {
     if (el) el.textContent = text;
 }
 
-console.log('太陽能精算試算模組 (solar-calc.js) 精算公式修正版載入成功！');
+console.log('太陽能試算模組 (solar-calc.js) 條件加總版本載入成功！');
