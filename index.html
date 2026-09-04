@@ -1075,21 +1075,6 @@
                         </div>
                     </div>
                 </div>
-
-                </div> <!-- 這裡對應上方滾動主體的結束 -->
-
-            <!-- 彈窗底部按鈕列 (儲存按鈕在左、取消按鈕在右) -->
-            <div class="px-6 py-4 bg-stone-100 border-t border-stone-200 flex justify-end items-center space-x-3 shrink-0">
-                <button type="button" onclick="saveCaseData()" class="px-5 py-2 bg-ruili-brand hover:opacity-90 text-white rounded-xl text-xs font-bold transition shadow-2xs flex items-center space-x-1.5 cursor-pointer">
-                    <i class="fa-solid fa-check"></i><span>儲存案件資料</span>
-                </button>
-                <button type="button" onclick="closeModal('editCaseModal')" class="px-4 py-2 bg-white hover:bg-stone-50 text-stone-700 rounded-xl text-xs font-bold border border-stone-300 transition shadow-2xs cursor-pointer">
-                    取消
-                </button>
-            </div>
-        </div>
-    </div>
-</div>一
     <!-- 頁面切換與控制邏輯 --> 
     <script> 
         function openModal(modalId) { 
@@ -2260,15 +2245,12 @@
             </div>
         </div>
 
-        <!-- 彈窗底部按鈕列 (取消按鈕在左、儲存按鈕在右) -->
-            <div class="px-6 py-4 bg-stone-100 border-t border-stone-200 flex justify-end items-center space-x-3 shrink-0">
-                <button type="button" onclick="closeModal('editCaseModal')" class="px-4 py-2 bg-white hover:bg-stone-50 text-stone-700 rounded-xl text-xs font-bold border border-stone-300 transition shadow-2xs cursor-pointer">
-                    取消
-                </button>
-                <button type="button" onclick="saveCaseData()" class="px-5 py-2 bg-ruili-brand hover:opacity-90 text-white rounded-xl text-xs font-bold transition shadow-2xs flex items-center space-x-1.5 cursor-pointer">
-                    <i class="fa-solid fa-check"></i><span>儲存案件資料</span>
-                </button>
-            </div>
+        <div class="p-4 border-t border-slate-200 bg-slate-50 flex items-center justify-end gap-3 shrink-0 sticky bottom-0 z-10 shadow-lg">
+            <button type="button" onclick="closeLandChangeModal()" class="px-4 py-2 border border-slate-300 text-slate-600 rounded-lg font-medium hover:bg-white transition text-xs cursor-pointer">取消</button>
+            <button type="button" onclick="closeLandChangeModal()" class="px-5 py-2 bg-gradient-to-r from-sky-600 to-indigo-600 hover:from-sky-700 hover:to-indigo-700 text-white rounded-lg font-bold transition shadow-md text-xs cursor-pointer">儲存</button>
+        </div>
+    </div>
+</div>
 <!-- ========================================================== -->
 <!-- 3. 土地基本資料 Modal (完整精美對齊版) -->
 <!-- ========================================================== -->
