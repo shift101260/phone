@@ -1174,6 +1174,23 @@
 </div> <!-- 關閉 editCaseModal 背景遮罩 -->
     <!-- 頁面切換與控制邏輯 --> 
     <script> 
+        <script>
+    // --- 請把這段加在這裡 ---
+    function openClosingDetail(caseId, caseName) {
+        const titleElem = document.getElementById('closing-modal-name');
+        if (titleElem) {
+            titleElem.innerText = caseName + ' (' + caseId + ')';
+        }
+        closeModal('pendingClosingListModal');
+        openModal('pendingClosingModal');
+    }
+    // -------------------------
+
+    function openModal(modalId) {
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.classList.remove('hidden');
+            // ... 後續原本的程式碼保持不變
         function openModal(modalId) { 
             const modal = document.getElementById(modalId); 
             if (modal) {
