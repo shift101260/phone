@@ -2058,7 +2058,7 @@
     </div>
 </div>
 <!-- ========================================================== -->
-<!-- 2. 土地變更評估與試算 Modal (完整整合成品) -->
+<!-- 2. 土地變更評估與試算 Modal (穩定修復版) -->
 <!-- ========================================================== -->
 <div id="land-change-modal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-md z-[60] hidden flex items-center justify-center p-2 sm:p-4">
     <div class="bg-white rounded-2xl shadow-2xl w-full max-w-5xl max-h-[90vh] sm:max-h-[95vh] flex flex-col overflow-hidden border border-sky-100 relative">
@@ -2072,13 +2072,13 @@
                     <p class="text-[11px] text-sky-300/80 font-normal">Ruili Land Alteration & Feedback Fee Evaluation Tool</p>
                 </div>
             </div>
-            <button onclick="closeLandChangeModal()" class="text-slate-400 hover:text-white hover:bg-white/10 w-8 h-8 rounded-lg flex items-center justify-center transition cursor-pointer">
+            <button type="button" onclick="closeLandChangeModal()" class="text-slate-400 hover:text-white hover:bg-white/10 w-8 h-8 rounded-lg flex items-center justify-center transition cursor-pointer">
                 <i class="fa-solid fa-xmark text-lg"></i>
             </button>
         </div>
 
         <div class="p-4 md:p-6 space-y-6 overflow-y-auto flex-1 text-xs bg-slate-50/50">
-            <!-- 一、基本條件評估 (已新增指定欄位與排序) -->
+            <!-- 一、基本條件評估 (已按指定順序與欄位排版) -->
             <div class="bg-white p-4 md:p-5 rounded-2xl border border-slate-200/80 shadow-sm space-y-4">
                 <div class="flex items-center gap-2 border-b border-slate-100 pb-3">
                     <span class="w-2.5 h-2.5 rounded-full bg-sky-500"></span>
@@ -2118,7 +2118,7 @@
                     </div>
                 </div>
                 <div>
-                    <label class="block font-semibold text-slate-700 mb-1.5">隔離綠帶說明 (手動自填)</label>
+                    <label class="block font-semibold text-slate-700 mb-1.5">隔離綠帶說明 (手動自填，需較長格式)</label>
                     <textarea id="lc-green-belt" rows="3" placeholder="請詳細輸入隔離綠帶規劃與說明..." class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:border-sky-500 bg-white font-medium shadow-sm"></textarea>
                 </div>
             </div>
@@ -2171,7 +2171,7 @@
                 </div>
             </div>
 
-            <!-- 三、回饋金試算 (已加入地籍圖連結按鈕) -->
+            <!-- 三、回饋金試算 (已在「＋新增地號」左側加入「地籍圖」按鈕) -->
             <div class="bg-white p-4 md:p-5 rounded-2xl border border-slate-200/80 shadow-sm space-y-4">
                 <div class="flex justify-between items-center border-b border-slate-100 pb-3">
                     <div class="flex items-center gap-2">
@@ -2179,7 +2179,7 @@
                         <h4 class="font-bold text-slate-800 text-sm">三、回饋金試算</h4>
                     </div>
                     <div class="flex items-center gap-2">
-                        <!-- 地籍圖外部連結按鈕 -->
+                        <!-- 地籍圖按鈕 (位於新增地號左側) -->
                         <a href="https://maps.nlsc.gov.tw" target="_blank" class="px-3 py-1.5 bg-sky-600 hover:bg-sky-700 text-white rounded-lg font-medium transition flex items-center gap-1.5 shadow-sm text-xs cursor-pointer">
                             <i class="fa-solid fa-map-location-dot"></i> 地籍圖
                         </a>
