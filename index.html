@@ -448,46 +448,130 @@
         </div>
     </div>
 
-    <!-- 3-1. 待結案專區列表彈窗 (階段性請款) -->
-    <div id="pendingClosingListModal" class="fixed inset-0 bg-black/50 backdrop-blur-xs hidden flex items-center justify-center z-50 p-3 overflow-y-auto">
+   <!-- 3-2. 階段性請款：公文審查與接收詳細彈窗 (對齊秘書簽核格式，並帶有前手歷程備註) -->
+    <div id="pendingClosingModal" class="fixed inset-0 bg-black/60 backdrop-blur-xs hidden flex items-center justify-center z-50 p-3 overflow-y-auto">
         <div class="bg-white w-full max-w-xl rounded-2xl shadow-xl overflow-hidden border border-stone-200 my-6">
             <div class="bg-[#2C2A29] text-white px-5 py-3 flex justify-between items-center sticky top-0 z-10">
-                <h3 class="font-bold text-xs"><i class="fa-solid fa-hourglass-half text-purple-400 mr-1.5"></i> 階段性請款：待處理公文案件列表 (共 2 件)</h3>
-                <button onclick="closeModal('pendingClosingListModal')" class="text-stone-400 hover:text-white"><i class="fa-solid fa-xmark text-base"></i></button>
+                <h3 class="font-bold text-xs"><i class="fa-solid fa-hourglass-half text-purple-400 mr-1.5"></i> 階段性請款：公文審查與合約執行</h3>
+                <button onclick="closeModal('pendingClosingModal')" class="text-stone-400 hover:text-white"><i class="fa-solid fa-xmark text-base"></i></button>
             </div>
             
-            <div class="p-4 space-y-2.5 text-xs text-stone-700 bg-stone-50">
-                <p class="text-stone-500 text-[11px] mb-1">技術流程已全部完畢，請選擇下方案件進行最後公文接收與結案審查：</p>
-                
-                <div onclick="openClosingDetail('2026-001', '林董農地變更專案')" class="bg-white p-3.5 rounded-xl border border-stone-200 hover:border-purple-600 shadow-2xs cursor-pointer transition flex justify-between items-center group">
-                    <div class="space-y-1">
-                        <div class="flex items-center space-x-2">
-                            <span class="font-mono font-bold text-stone-400 text-[11px]">2026-001</span>
-                            <span class="px-2 py-0.5 bg-purple-100 text-purple-800 rounded text-[9px] font-bold">等待最後公文</span>
-                        </div>
-                        <h4 class="font-bold text-stone-900 text-xs group-hover:text-purple-600 transition">林董農地變更專案</h4>
+            <div class="p-4 space-y-4 text-xs text-stone-700 max-h-[70vh] overflow-y-auto">
+                <!-- 區塊一：系統自動帶入的案件核心資訊 -->
+                <div class="bg-stone-50 p-3.5 rounded-xl border border-stone-200 space-y-2.5">
+                    <div class="flex items-center space-x-1.5 mb-1">
+                        <i class="fa-solid fa-database text-stone-400 text-[10px]"></i>
+                        <span class="font-bold text-stone-600 text-[10px]">以下資訊由前階段流程自動帶入（案件合約與評估資訊）</span>
                     </div>
-                    <div class="text-right">
-                        <span class="text-purple-600 font-bold text-[11px] block">進入審查 ➔</span>
+                    <div class="grid grid-cols-2 gap-y-2.5 gap-x-4">
+                        <div><span class="text-stone-400 block text-[9px] mb-0.5">案件名稱</span><strong id="closing-modal-name" class="text-stone-800 text-xs">林董農地變更專案</strong></div>
+                        <div><span class="text-stone-400 block text-[9px] mb-0.5">服務項目</span><strong id="closing-modal-service" class="text-stone-800">土地變更</strong></div>
+                        
+                        <div><span class="text-stone-400 block text-[9px] mb-0.5">簽約金額是否含稅</span><strong class="text-stone-800">含稅 (5%)</strong></div>
+                        <div><span class="text-stone-400 block text-[9px] mb-0.5">退佣機制</span><strong class="text-stone-800">陳經理 / 10% / 匯款退佣</strong></div>
+                        
+                        <div class="col-span-2"><span class="text-stone-400 block text-[9px] mb-0.5">簽約條件</span><strong class="text-stone-800">第一期 30% / 第二期 30% / 第三期 40%</strong></div>
+
+                        <div class="col-span-2 bg-purple-50/70 p-2.5 rounded-lg border border-purple-200/80">
+                            <span class="text-purple-900 block text-[9px] font-bold mb-0.5"><i class="fa-solid fa-note-sticky mr-1"></i> 案件說明與結案條件</span>
+                            <strong class="text-stone-800 font-medium leading-relaxed block text-[11px]">技術與法規流程皆已完畢，準備進行公文審查與階段性請款。</strong>
+                        </div>
                     </div>
                 </div>
 
-                <div onclick="openClosingDetail('2026-002', '黃總經理特定工廠專案')" class="bg-white p-3.5 rounded-xl border border-stone-200 hover:border-purple-600 shadow-2xs cursor-pointer transition flex justify-between items-center group">
-                    <div class="space-y-1">
-                        <div class="flex items-center space-x-2">
-                            <span class="font-mono font-bold text-stone-400 text-[11px]">2026-002</span>
-                            <span class="px-2 py-0.5 bg-purple-100 text-purple-800 rounded text-[9px] font-bold">等待最後公文</span>
-                        </div>
-                        <h4 class="font-bold text-stone-900 text-xs group-hover:text-purple-600 transition">黃總經理特定工廠專案</h4>
+                <!-- 區塊二：自填與公文審查欄位（包含收款期程卡片排版） -->
+                <div class="bg-purple-50/30 p-3.5 rounded-xl border border-purple-100 space-y-3">
+                    <div class="flex items-center space-x-1.5 mb-1">
+                        <i class="fa-solid fa-pen-nib text-purple-600 text-[10px]"></i>
+                        <span class="font-bold text-purple-900 text-[10px]">階段性請款與公文自填欄位</span>
                     </div>
-                    <div class="text-right">
-                        <span class="text-purple-600 font-bold text-[11px] block">進入審查 ➔</span>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="font-bold block mb-1 text-stone-900">收文日期 <span class="text-rose-500">*</span></label>
+                            <input type="date" value="2026-06-25" class="w-full bg-white border border-stone-300 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-purple-600 font-bold shadow-2xs">
+                        </div>
+                        <div>
+                            <label class="font-bold block mb-1 text-stone-900">結案公文文號 <span class="text-rose-500">*</span></label>
+                            <input type="text" placeholder="例：高市府字第..." class="w-full bg-white border border-stone-300 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-purple-600 font-bold shadow-2xs">
+                        </div>
+                        <div class="col-span-2">
+                            <label class="font-bold block mb-1.5 text-stone-900">收款期程金額確認</label>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                                <div class="bg-white p-3 rounded-xl border border-stone-200 space-y-2.5 shadow-2xs">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-[11px] text-stone-700 font-bold">第三期款 (尾款)</span>
+                                        <span class="text-xs text-emerald-700 font-bold font-mono">NT$ 1,520,000</span>
+                                    </div>
+                                    <div>
+                                        <span class="text-[10px] text-stone-400 block mb-0.5">入帳日期</span>
+                                        <input type="date" value="2026-06-28" class="w-full text-xs border border-stone-200 rounded-lg px-2 py-1 font-mono text-stone-600 focus:outline-none focus:border-purple-600">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-span-2">
+                            <label class="font-bold block mb-1 text-stone-900">結案內容備註與特約事項</label>
+                            <textarea class="w-full bg-white border border-stone-300 rounded-xl p-2.5 h-14 text-xs focus:outline-none focus:border-purple-600 font-medium shadow-2xs" placeholder="請輸入公文字號或主旨說明..."></textarea>
+                        </div>
+                    </div>
+                </div>
+                
+                <hr class="border-stone-200">
+
+                <!-- 區塊三：作業人員拋轉與帶有前手紀錄的歷程備註牆 -->
+                <div class="space-y-3">
+                    <div>
+                        <label class="font-bold block mb-1 text-stone-900"><i class="fa-solid fa-share-nodes text-ruili-brand mr-1"></i> 作業人員拋轉 <span class="text-rose-500">*</span></label>
+                        <select class="w-full bg-white border border-stone-300 rounded-xl px-3 py-2 font-bold text-stone-900 focus:outline-none focus:border-ruili-brand shadow-2xs cursor-pointer">
+                            <option value="">請選擇下一個負責角色...</option>
+                            <option value="secretary">秘書</option>
+                            <option value="assistant">特助</option>
+                            <option value="surveyor">地政士</option>
+                            <option value="accountant">財務長</option>
+                            <option value="cbo">品牌長</option>
+                        </select>
+                    </div>
+
+                    <div class="space-y-1.5">
+                        <div class="flex justify-between items-center">
+                            <label class="font-bold text-stone-900"><i class="fa-solid fa-comments text-amber-500 mr-1"></i> 歷程備註與追溯牆</label>
+                            <span class="text-[9px] text-stone-400">責信記錄 (已包含前手歷程)</span>
+                        </div>
+                        
+                        <!-- 這裡直接帶有前手歷史紀錄，非空白 -->
+                        <div class="space-y-1.5 bg-stone-50 p-2.5 rounded-xl border border-stone-200 max-h-32 overflow-y-auto">
+                            <div class="bg-white p-2.5 rounded-lg border border-stone-200 shadow-2xs space-y-0.5">
+                                <div class="flex justify-between items-center text-[9px] text-stone-400">
+                                    <strong class="text-stone-700">👤 地政士團隊</strong>
+                                    <span>2026-06-16 14:20</span>
+                                </div>
+                                <p class="text-stone-800 text-[10px]">測量資料已送出，目前進入初審階段。</p>
+                            </div>
+                            <div class="bg-white p-2.5 rounded-lg border border-stone-200 shadow-2xs space-y-0.5">
+                                <div class="flex justify-between items-center text-[9px] text-stone-400">
+                                    <strong class="text-stone-700">👤 特助團隊</strong>
+                                    <span>2026-06-20 11:10</span>
+                                </div>
+                                <p class="text-stone-800 text-[10px]">水保審查已順利完成，準備轉入待結案專區等待主管機關核發公文。</p>
+                            </div>
+                        </div>
+
+                        <div class="flex space-x-2 pt-1">
+                            <input type="text" placeholder="輸入新的交辦事項或檢討備註..." class="flex-1 bg-white border border-stone-300 rounded-xl px-3 py-1.5 text-xs focus:outline-none focus:border-ruili-brand">
+                            <button type="button" class="px-3 py-1.5 bg-ruili-brand hover:opacity-90 text-white rounded-xl font-bold transition shadow-2xs whitespace-nowrap text-[11px]">
+                                <i class="fa-solid fa-plus mr-1"></i> 新增
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <div class="bg-stone-100 px-5 py-2.5 border-t border-stone-200 flex justify-end">
-                <button onclick="closeModal('pendingClosingListModal')" class="px-3.5 py-1.5 bg-stone-200 text-stone-700 rounded-lg text-xs font-medium">關閉</button>
+            
+            <div class="bg-stone-50 px-5 py-3 border-t border-stone-200 flex justify-between items-center sticky bottom-0 z-10">
+                <button onclick="closeModal('pendingClosingModal'); openModal('pendingClosingListModal');" class="px-3.5 py-1.5 bg-stone-200 text-stone-700 rounded-xl text-xs font-medium transition hover:bg-stone-300">返回列表</button>
+                <div class="flex space-x-2">
+                    <button onclick="alert('💾 階段性請款資料已成功儲存！')" class="px-3.5 py-1.5 bg-stone-200 hover:bg-stone-300 text-stone-700 rounded-xl text-xs font-bold transition">儲存</button>
+                    <button onclick="submitStageAction('✨ 公文審查完成！已成功拋轉至結案收尾')" class="px-4 py-1.5 bg-ruili-brand text-white rounded-xl text-xs font-bold shadow-xs transition hover:opacity-90">確認完成並拋轉</button>
+                </div>
             </div>
         </div>
     </div>
