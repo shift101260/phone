@@ -962,6 +962,35 @@
             <input type="hidden" id="edit-case-year" value="2026">
             <input type="hidden" id="edit-case-id" value="">
 
+            <!-- 財務會計區塊：精簡瘦身版 -->
+    <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-2xs space-y-5">
+        <h4 class="font-bold text-stone-900 border-b border-stone-200 pb-2.5 flex items-center text-xs">
+            <i class="fa-solid fa-calculator text-ruili-brand mr-1.5"></i> 四、財務會計（報價、佣金與合約）
+        </h4>
+
+        <!-- 手動填寫區：精簡版網格結構 -->
+        <div class="bg-sky-50/50 p-4 rounded-xl border border-sky-200 space-y-3">
+            <span class="font-bold text-sky-900 block text-[11px]"><i class="fa-solid fa-percent mr-1"></i> 專案報價與簽約比例設定 (手動填寫區)</span>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <!-- 報價設定 -->
+                <div class="bg-white p-3 rounded-xl border border-sky-200 space-y-2 shadow-2xs">
+                    <span class="text-[11px] text-stone-700 font-bold block">報價設定</span>
+                    <div class="grid grid-cols-2 gap-2">
+                        <input type="text" placeholder="報價金額 (NT$)" class="w-full text-xs border border-stone-200 rounded-lg px-2 py-1.5 font-mono font-bold text-stone-800 focus:outline-none focus:border-sky-600">
+                        <input type="text" placeholder="報價進度 (%)" class="w-full text-xs border border-stone-200 rounded-lg px-2 py-1.5 text-center font-mono font-bold text-stone-800 focus:outline-none focus:border-sky-600">
+                    </div>
+                </div>
+                <!-- 簽約設定 -->
+                <div class="bg-white p-3 rounded-xl border border-sky-200 space-y-2 shadow-2xs">
+                    <span class="text-[11px] text-stone-700 font-bold block">簽約設定 (期程參考基準)</span>
+                    <div class="grid grid-cols-2 gap-2">
+                        <input type="text" placeholder="簽約金額 (NT$)" class="w-full text-xs border border-stone-200 rounded-lg px-2 py-1.5 font-mono font-bold text-rose-600 focus:outline-none focus:border-sky-600">
+                        <input type="text" placeholder="簽約比例 (%)" class="w-full text-xs border border-stone-200 rounded-lg px-2 py-1.5 text-center font-mono font-bold text-rose-600 focus:outline-none focus:border-sky-600">
+                    </div>
+                </div>
+            </div>
+        </div>
+
             <!-- 區塊一：基本資訊區域 -->
             <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-2xs space-y-4">
                 <div class="flex justify-between items-center border-b border-stone-100 pb-2">
