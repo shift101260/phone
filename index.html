@@ -1311,6 +1311,57 @@
 </div> <!-- 關閉 editCaseModal 背景遮罩 -->
     <!-- 頁面切換與控制邏輯 --> 
     <script> 
+        function calculateQuoteTotals() {
+    // 1. 計算下方供應商工具的總報價、稅後總額、簽約總金額與利潤
+    let totalQuote = 0;
+    let totalTaxAfter = 0;
+    let totalContract = 0;
+    let totalCost = 0;
+
+    const rows = document.querySelectorAll('#suppliers-rows-container > div');
+    rows.forEach(row => {
+        const untaxed = parseFloat(row.querySelector('.supplier-untaxed')?.value) || 0;
+        const amount = parseFloat(row.querySelector('.supplier-amount')?.value) || 0;
+        const contract = parseFloat(row.querySelector('.supplier-contract')?.value) || 0;
+        const taxRate = (parseFloat(row.querySelector('.supplier-tax')?.value) || 0) / 100;
+
+        totalQuote += amount;
+        totalTaxAfter += amount * (1 + taxRate);
+        totalContract += contract;
+        totalCost += untaxed;
+    });
+
+    // 填入下方供應商的 4 個自動總計欄位
+    const elTotalQuote = document.getElementById('calc-total-quote');
+    const elTaxAfter = document.getElementById('calc-tax-after');
+    const elTotalContract = document.getElementById('calc-total-contract');
+    const elTotalProfit = document.getElementById('calc-total-profit');
+
+    if (elTotalQuote) elTotalQuote.value = 'NT$ ' + totalQuote.toLocaleString();
+    if (elTaxAfter) elTaxAfter.value = 'NT$ ' + Math.round(totalTaxAfter).toLocaleString();
+    if (elTotalContract) elTotalContract.value = 'NT$ ' + totalContract.toLocaleString();
+    if (elTotalProfit) {
+        const totalProfit = totalContract - totalCost;
+        elTotalProfit.value = 'NT$ ' + totalProfit.toLocaleString();
+    }
+
+    // ==========================================
+    // 2. 獨立連動：收款期程依上方手動填寫的簽約金額按 % 計算
+    // ==========================================
+    const manualInput = document.getElementById('manual-contract-amount');
+    const contractAmount = manualInput ? (parseFloat(manualInput.value) || 0) : 0;
+
+    for (let i = 1; i <= 4; i++) {
+        const pctInput = document.getElementById(`quote-inst-${i}-pct`);
+        const valSpan = document.getElementById(`quote-inst-${i}-val`);
+        
+        if (pctInput && valSpan) {
+            const pct = parseFloat(pctInput.value) || 0;
+            const calculatedVal = Math.round(contractAmount * (pct / 100));
+            valSpan.innerText = 'NT$ ' + calculatedVal.toLocaleString();
+        }
+    }
+}
         function openModal(modalId) { 
             const modal = document.getElementById(modalId); 
             if (modal) {
