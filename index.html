@@ -1105,13 +1105,12 @@
                 <!-- 簽約設定 -->
                 <div class="bg-white p-3 rounded-xl border border-sky-200 space-y-2 shadow-2xs">
                     <span class="text-[11px] text-stone-700 font-bold block">依照案件結案條件填寫 (期程參考基準)</span>
-                    <div class="grid grid-cols-2 gap-2">
-                        <input type="text" placeholder="簽約金額 (NT$)" class="w-full text-xs border border-stone-200 rounded-lg px-2 py-1.5 font-mono font-bold text-rose-600 focus:outline-none focus:border-sky-600">
-                        <input type="text" placeholder="簽約％數 (%)" class="w-full text-xs border border-stone-200 rounded-lg px-2 py-1.5 text-center font-mono font-bold text-rose-600 focus:outline-none focus:border-sky-600">
-                    </div>
-                </div>
-            </div>
-        </div>
+                    <div class="grid grid-cols-2 gap-2">一
+                    <!-- 這裡加上 id="project-contract-amount" 與 oninput 讓它連動下方計算 -->
+        <input type="number" id="project-contract-amount" oninput="calculateQuoteTotals()" placeholder="簽約金額 (NT$)" class="w-full text-xs border border-stone-200 rounded-lg px-2 py-1.5 font-mono font-bold text-rose-600 focus:outline-none focus:border-sky-600">
+        <input type="number" placeholder="簽約％數 (%)" class="w-full text-xs border border-stone-200 rounded-lg px-2 py-1.5 text-center font-mono font-bold text-rose-600 focus:outline-none focus:border-sky-600">
+    </div>
+</div>
 
                 <!-- 子區塊 1：報價工具 -->
                 <div class="bg-stone-50 p-4 rounded-xl border border-stone-200 space-y-4">
