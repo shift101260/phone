@@ -1102,15 +1102,16 @@
                         <input type="text" placeholder="報價趴數 (%)" class="w-full text-xs border border-stone-200 rounded-lg px-2 py-1.5 text-center font-mono font-bold text-stone-800 focus:outline-none focus:border-sky-600">
                     </div>
                 </div>
-                
                 <!-- 簽約設定 -->
-<div class="bg-white p-3 rounded-xl border border-sky-200 space-y-2 shadow-2xs">
-    <span class="text-[11px] text-stone-700 font-bold block">依照案件結案條件填寫 (期程參考基準)</span>
-    <div class="grid grid-cols-2 gap-2">
-        <input type="number" id="manual-contract-amount" oninput="calculateQuoteTotals()" placeholder="簽約金額 (NT$)" class="w-full text-xs border border-stone-200 rounded-lg px-2 py-1.5 font-mono font-bold text-rose-600 focus:outline-none focus:border-sky-600">
-        <input type="text" placeholder="簽約％數 (%)" class="w-full text-xs border border-stone-200 rounded-lg px-2 py-1.5 text-center font-mono font-bold text-rose-600 focus:outline-none focus:border-sky-600">
-    </div>
-</div>
+                <div class="bg-white p-3 rounded-xl border border-sky-200 space-y-2 shadow-2xs">
+                    <span class="text-[11px] text-stone-700 font-bold block">依照案件結案條件填寫 (期程參考基準)</span>
+                    <div class="grid grid-cols-2 gap-2">
+                        <input type="text" placeholder="簽約金額 (NT$)" class="w-full text-xs border border-stone-200 rounded-lg px-2 py-1.5 font-mono font-bold text-rose-600 focus:outline-none focus:border-sky-600">
+                        <input type="text" placeholder="簽約％數 (%)" class="w-full text-xs border border-stone-200 rounded-lg px-2 py-1.5 text-center font-mono font-bold text-rose-600 focus:outline-none focus:border-sky-600">
+                    </div>
+                </div>
+            </div>
+        </div>
 
                 <!-- 子區塊 1：報價工具 -->
                 <div class="bg-stone-50 p-4 rounded-xl border border-stone-200 space-y-4">
@@ -1311,57 +1312,6 @@
 </div> <!-- 關閉 editCaseModal 背景遮罩 -->
     <!-- 頁面切換與控制邏輯 --> 
     <script> 
-        function calculateQuoteTotals() {
-    // 1. 計算下方供應商工具的總報價、稅後總額、簽約總金額與利潤
-    let totalQuote = 0;
-    let totalTaxAfter = 0;
-    let totalContract = 0;
-    let totalCost = 0;
-
-    const rows = document.querySelectorAll('#suppliers-rows-container > div');
-    rows.forEach(row => {
-        const untaxed = parseFloat(row.querySelector('.supplier-untaxed')?.value) || 0;
-        const amount = parseFloat(row.querySelector('.supplier-amount')?.value) || 0;
-        const contract = parseFloat(row.querySelector('.supplier-contract')?.value) || 0;
-        const taxRate = (parseFloat(row.querySelector('.supplier-tax')?.value) || 0) / 100;
-
-        totalQuote += amount;
-        totalTaxAfter += amount * (1 + taxRate);
-        totalContract += contract;
-        totalCost += untaxed;
-    });
-
-    // 填入下方供應商的 4 個自動總計欄位
-    const elTotalQuote = document.getElementById('calc-total-quote');
-    const elTaxAfter = document.getElementById('calc-tax-after');
-    const elTotalContract = document.getElementById('calc-total-contract');
-    const elTotalProfit = document.getElementById('calc-total-profit');
-
-    if (elTotalQuote) elTotalQuote.value = 'NT$ ' + totalQuote.toLocaleString();
-    if (elTaxAfter) elTaxAfter.value = 'NT$ ' + Math.round(totalTaxAfter).toLocaleString();
-    if (elTotalContract) elTotalContract.value = 'NT$ ' + totalContract.toLocaleString();
-    if (elTotalProfit) {
-        const totalProfit = totalContract - totalCost;
-        elTotalProfit.value = 'NT$ ' + totalProfit.toLocaleString();
-    }
-
-    // ==========================================
-    // 2. 獨立連動：收款期程依上方手動填寫的簽約金額按 % 計算
-    // ==========================================
-    const manualInput = document.getElementById('manual-contract-amount');
-    const contractAmount = manualInput ? (parseFloat(manualInput.value) || 0) : 0;
-
-    for (let i = 1; i <= 4; i++) {
-        const pctInput = document.getElementById(`quote-inst-${i}-pct`);
-        const valSpan = document.getElementById(`quote-inst-${i}-val`);
-        
-        if (pctInput && valSpan) {
-            const pct = parseFloat(pctInput.value) || 0;
-            const calculatedVal = Math.round(contractAmount * (pct / 100));
-            valSpan.innerText = 'NT$ ' + calculatedVal.toLocaleString();
-        }
-    }
-}
         function openModal(modalId) { 
             const modal = document.getElementById(modalId); 
             if (modal) {
