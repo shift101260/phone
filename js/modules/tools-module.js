@@ -1,5 +1,5 @@
 // js/modules/tools-module.js
-export function renderToolsModule() {
+window.renderToolsModule = function() {
     const container = document.getElementById('app-container');
     if (!container) return;
 
@@ -144,7 +144,7 @@ export function renderToolsModule() {
                         </div>
                     </a>
 
-                    <a href="https://www.etax.nat.gov.tw/etwmain/etw158w/53" target="_blank" rel="npm" target="_blank" rel="noopener noreferrer" class="p-3 bg-white hover:bg-indigo-50 border border-stone-200 hover:border-indigo-300 rounded-2xl transition flex flex-col justify-between shadow-2xs group">
+                    <a href="https://www.etax.nat.gov.tw/etwmain/etw158w/53" target="_blank" rel="noopener noreferrer" class="p-3 bg-white hover:bg-indigo-50 border border-stone-200 hover:border-indigo-300 rounded-2xl transition flex flex-col justify-between shadow-2xs group">
                         <div class="flex items-center justify-between mb-2">
                             <i class="fa-solid fa-file-contract text-indigo-600 text-sm"></i>
                             <i class="fa-solid fa-arrow-up-right-from-square text-[10px] text-stone-300"></i>
@@ -171,4 +171,4 @@ export function renderToolsModule() {
             </div>
         </div>
     `;
-}
+};
