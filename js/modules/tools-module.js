@@ -39,7 +39,7 @@ window.renderToolsModule = function() {
                                 <span>參考官方資料來源</span>
                                 <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
                             </a>
-                            <button type="button" onclick="alert('✨ 【工廠改善計畫管理後台】模組架構已就緒！')" class="px-3 py-1.5 bg-ruili-brand text-white rounded-xl text-xs font-bold hover:opacity-90 transition shadow-2xs">
+                            <button type="button" onclick="renderFactoryImprovementModule()" class="px-3 py-1.5 bg-ruili-brand text-white rounded-xl text-xs font-bold hover:opacity-90 transition shadow-2xs">
                                 進入管理模組
                             </button>
                         </div>
