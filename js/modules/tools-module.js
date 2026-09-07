@@ -12,13 +12,13 @@ window.renderToolsModule = function() {
                         <div class="w-8 h-8 rounded-xl bg-sky-100 text-sky-700 flex items-center justify-center text-sm">
                             <i class="fa-solid fa-toolbox"></i>
                         </div>
-                        <span>外勤工具專區與系統管理</span>
+                        <span>工具與管理</span>
                     </h2>
-                    <p class="text-xs text-stone-500 mt-1">整合土地測繪、官方查閱、稅費試算與改善計畫管理，專為外勤業務與內部行政打造</p>
+                    <p class="text-xs text-stone-500 mt-1">專為業務與內部行政打造</p>
                 </div>
             </div>
 
-            <!-- 區塊一：核心系統與改善計畫模組 -->
+            <!-- 區塊一：核心工具模組 -->
             <div class="space-y-3">
                 <div class="flex items-center space-x-2 px-1">
                     <i class="fa-solid fa-diagram-project text-amber-500 text-sm"></i>
@@ -58,7 +58,7 @@ window.renderToolsModule = function() {
                                     <i class="fa-solid fa-globe"></i>
                                 </div>
                             </div>
-                            <h4 class="font-bold text-sm text-stone-900 mb-1">睿視野綠能官方網站</h4>
+                            <h4 class="font-bold text-sm text-stone-900 mb-1">睿立官方網站</h4>
                             <p class="text-xs text-stone-500 leading-relaxed mb-4">
                                 快速開啟集團官方網站，方便隨時向客戶展示綠能與土地開發實績。
                             </p>
@@ -73,11 +73,11 @@ window.renderToolsModule = function() {
                 </div>
             </div>
 
-            <!-- 區塊二：外勤地圖與工商查詢 -->
+            <!-- 區塊二：地籍與工商查詢 -->
             <div class="space-y-3">
                 <div class="flex items-center space-x-2 px-1">
                     <i class="fa-solid fa-map-location-dot text-emerald-500 text-sm"></i>
-                    <h3 class="text-xs font-bold uppercase tracking-wider text-stone-500">外勤地圖與工商查詢</h3>
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-stone-500">地籍與工商查詢</h3>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <a href="https://maps.nlsc.gov.tw/T09/mobilemap.action" target="_blank" rel="noopener noreferrer" class="p-4 bg-white hover:bg-emerald-50/50 border border-stone-200 hover:border-emerald-300 rounded-2xl transition flex items-center space-x-3.5 shadow-2xs group">
@@ -85,7 +85,7 @@ window.renderToolsModule = function() {
                             <i class="fa-solid fa-map"></i>
                         </div>
                         <div class="overflow-hidden flex-1">
-                            <div class="font-bold text-xs text-stone-900 truncate">測繪雲 (手機版)</div>
+                            <div class="font-bold text-xs text-stone-900 truncate">測繪雲</div>
                             <div class="text-[10px] text-stone-400 truncate mt-0.5">地籍圖快速定位與實地查勘</div>
                         </div>
                         <i class="fa-solid fa-arrow-up-right-from-square text-xs text-stone-300 group-hover:text-emerald-600"></i>
@@ -96,8 +96,8 @@ window.renderToolsModule = function() {
                             <i class="fa-solid fa-building"></i>
                         </div>
                         <div class="overflow-hidden flex-1">
-                            <div class="font-bold text-xs text-stone-900 truncate">商業司商工登記</div>
-                            <div class="text-[10px] text-stone-400 truncate mt-0.5">企業背景與負責人資訊查詢</div>
+                            <div class="font-bold text-xs text-stone-900 truncate">商業司</div>
+                            <div class="text-[10px] text-stone-400 truncate mt-0.5">企業背景資訊查詢</div>
                         </div>
                         <i class="fa-solid fa-arrow-up-right-from-square text-xs text-stone-300 group-hover:text-sky-600"></i>
                     </a>
@@ -108,7 +108,7 @@ window.renderToolsModule = function() {
                         </div>
                         <div class="overflow-hidden flex-1">
                             <div class="font-bold text-xs text-stone-900 truncate">工廠登記查詢</div>
-                            <div class="text-[10px] text-stone-400 truncate mt-0.5">合法與特定工廠納管查驗</div>
+                            <div class="text-[10px] text-stone-400 truncate mt-0.5">工廠登記證查驗</div>
                         </div>
                         <i class="fa-solid fa-arrow-up-right-from-square text-xs text-stone-300 group-hover:text-amber-600"></i>
                     </a>
@@ -119,7 +119,7 @@ window.renderToolsModule = function() {
             <div class="space-y-3">
                 <div class="flex items-center space-x-2 px-1">
                     <i class="fa-solid fa-calculator text-indigo-500 text-sm"></i>
-                    <h3 class="text-xs font-bold uppercase tracking-wider text-stone-500">稅費試算專區（外勤常用）</h3>
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-stone-500">稅費試算專區</h3>
                 </div>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                     <a href="https://net.tax.nat.gov.tw/PLRX/Lrx200d01/trial_lnd.html" target="_blank" rel="noopener noreferrer" class="p-4 bg-white hover:bg-indigo-50/50 border border-stone-200 hover:border-indigo-300 rounded-2xl transition flex flex-col justify-between shadow-2xs group">
