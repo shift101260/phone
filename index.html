@@ -1449,6 +1449,25 @@ window.calculateApprovalInstallments = function() {
 
 function openQuotationGeneratorModal() {
     openModal('quotationGeneratorModal');
+}
+
+window.calculateApprovalInstallments = function() {
+    const amountInput = document.getElementById('modal-input-amount');
+    const baseAmount = parseFloat(amountInput?.value.replace(/[^0-9.]/g, '')) || 0;
+
+    for (let i = 1; i <= 4; i++) {
+        const pctInput = document.getElementById(`approval-inst-${i}-pct`);
+        const valSpan = document.getElementById(`approval-inst-${i}-val`);
+        if (pctInput && valSpan) {
+            const pct = parseFloat(pctInput.value) || 0;
+            const val = Math.round(baseAmount * (pct / 100));
+            valSpan.innerText = `NT$ ${val.toLocaleString()}`;
+        }
+    }
+};
+
+function openQuotationGeneratorModal() {
+    openModal('quotationGeneratorModal');
 
         let currentGeneratedRuNo = 1;
         function generateRuCaseId() {
