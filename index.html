@@ -1323,28 +1323,18 @@ window.openGoogleMapDrawer = function() {
     window.open(mapUrl, '_blank');
 };
 
-// 2. 地籍圖多筆地號快捷清單解析與開啟邏輯
-window.openCadastralMapDrawer = function() {
-    const landInput = document.getElementById('edit-case-land-number');
-    const landText = landInput ? landInput.value.trim() : '';
-
-    if (!landText) {
-        alert('⚠️ 請先輸入「地段地號」（例如：高雄市仁武區仁龍段1158.1159.1159-1），系統將自動為您切分多筆地號快捷按鈕！');
-        if (landInput) landInput.focus();
-        return;
-    }
-
-    const rawParts = landText.split(/[.,、\s]+/);
-    let htmlButtons = '';
-    rawParts.forEach(part => {
-        if (part.trim()) {
-            htmlButtons += `
-                <button type="button" onclick="loadCadastralMap('${encodeURIComponent(landText)}', '${encodeURIComponent(part.trim())}')" class="px-3 py-1.5 bg-amber-50 hover:bg-amber-600 hover:text-white text-amber-800 border border-amber-300 rounded-xl text-xs font-mono font-bold transition shadow-2xs cursor-pointer">
-                    📍 ${part.trim()}
-                </button>
-            `;
-        }
+window.loadCadastralMap = function(fullText, targetPart) {
+    const cleanPart = decodeURIComponent(targetPart);
+    
+    // 自動將點擊的地號複製到剪貼簿
+    navigator.clipboard.writeText(cleanPart).then(() => {
+        alert(`✨ 已成功複製地號【${cleanPart}】到剪貼簿！\n\n請直接至剛剛開啟的「國土測繪圖資服務雲」頁面貼上 (Ctrl+V) 即可快速定位！`);
+    }).catch(err => {
+        alert(`✨ 已選取地號：【${cleanPart}】`);
     });
+
+    window.open('https://maps.nlsc.gov.tw', '_blank');
+};
 
     let drawerContainer = document.getElementById('cadastral-shortcut-bar');
     if (!drawerContainer) {
