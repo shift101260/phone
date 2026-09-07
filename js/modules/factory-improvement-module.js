@@ -12,15 +12,21 @@ window.renderFactoryImprovementModule = function() {
                         <i class="fa-solid fa-file-pdf text-amber-600"></i>
                         <span>工廠改善計畫名單</span>
                     </h2>
-                    <p class="text-xs text-stone-500 mt-0.5">特定工廠改善計畫名單查詢與 PDF 匯入</p>
+                    <p class="text-xs text-stone-500 mt-0.5">特定工廠改善計畫名單查詢與 PDF 匯入管理</p>
                 </div>
                 <div class="flex items-center space-x-2">
+                    <!-- 清除名單按鈕 (預設隱藏，有資料時顯示) -->
+                    <button type="button" id="clear-pdf-btn" onclick="clearFactoryData()" class="hidden px-3 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 rounded-xl text-xs font-bold transition flex items-center space-x-1 shadow-2xs">
+                        <i class="fa-solid fa-trash-can text-[10px]"></i><span>清除名單</span>
+                    </button>
+
                     <!-- 上傳 PDF 按鈕 -->
                     <label class="px-3 py-1.5 bg-ruili-brand text-white rounded-xl text-xs font-bold hover:opacity-90 transition shadow-2xs flex items-center space-x-1 cursor-pointer">
                         <i class="fa-solid fa-upload text-[10px]"></i>
                         <span>上傳 PDF 匯入名單</span>
                         <input type="file" id="pdf-upload-input" accept=".pdf" class="hidden" onchange="handlePdfUpload(this)">
                     </label>
+
                     <button type="button" onclick="window.renderToolsModule()" class="px-3 py-1.5 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded-xl text-xs font-bold transition flex items-center space-x-1">
                         <i class="fa-solid fa-arrow-left text-[10px]"></i><span>返回工具專區</span>
                     </button>
@@ -88,11 +94,11 @@ window.renderFactoryImprovementModule = function() {
 window.handlePdfUpload = function(input) {
     if (input.files && input.files[0]) {
         const file = input.files[0];
-        alert(`📂 已成功選取檔案：${file.name}\n系統正在進行自動解析，即將帶入清單！`);
+        alert(`📂 已成功選取檔案：${file.name}\n系統正在進行自動解析，即將帶入新清單！`);
         
-        // 這裡模擬從 PDF 解析後寫入清單的測試資料
         const tbody = document.getElementById('factory-table-body');
         const countSpan = document.getElementById('record-count');
+        const clearBtn = document.getElementById('clear-pdf-btn');
         
         if (tbody) {
             tbody.innerHTML = `
@@ -112,6 +118,32 @@ window.handlePdfUpload = function(input) {
                 </tr>
             `;
             if (countSpan) countSpan.textContent = "共 1 筆紀錄";
+            if (clearBtn) clearBtn.classList.remove('hidden'); // 顯示清除按鈕
+        }
+        
+        // 清空 input 讓同仁可以重複上傳同一個檔案名稱
+        input.value = '';
+    }
+};
+
+// 清除舊名單的函式
+window.clearFactoryData = function() {
+    if (confirm('確定要清除目前的工廠改善計畫名單嗎？清除後可重新上傳新的 PDF。')) {
+        const tbody = document.getElementById('factory-table-body');
+        const countSpan = document.getElementById('record-count');
+        const clearBtn = document.getElementById('clear-pdf-btn');
+        
+        if (tbody) {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="5" class="p-12 text-center text-stone-400 text-xs">
+                        <i class="fa-solid fa-folder-open text-3xl mb-2 block text-stone-300"></i>
+                        目前尚無特定工廠改善計畫案件紀錄，請點選右上角「上傳 PDF 匯入名單」
+                    </td>
+                </tr>
+            `;
+            if (countSpan) countSpan.textContent = "共 0 筆紀錄";
+            if (clearBtn) clearBtn.classList.add('hidden'); // 隱藏清除按鈕
         }
     }
 };
