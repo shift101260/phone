@@ -5,57 +5,14 @@ window.renderToolsModule = function() {
 
     container.innerHTML = `
         <div class="space-y-8 max-w-7xl mx-auto pb-12">
-            <!-- 頁面標題列 -->
-            <div class="flex flex-col md:flex-row md:items-center justify-between bg-white p-6 rounded-2xl border border-stone-200 shadow-2xs gap-4">
-                <div>
-                    <h2 class="text-lg font-bold text-stone-900 flex items-center space-x-2.5">
-                        <div class="w-8 h-8 rounded-xl bg-sky-100 text-sky-700 flex items-center justify-center text-sm">
-                            <i class="fa-solid fa-toolbox"></i>
-                        </div>
-                        <span>工具專區</span>
-                    </h2>
-                    <p class="text-xs text-stone-500 mt-1">專為業務與內部行政打造專區</p>
-                </div>
-            </div>
-
-            <!-- 區塊一：核心工具（僅保留官網） -->
-            <div class="space-y-3">
-                <div class="flex items-center space-x-2 px-1">
-                    <i class="fa-solid fa-diagram-project text-amber-500 text-sm"></i>
-                    <h3 class="text-xs font-bold uppercase tracking-wider text-stone-500">核心工具</h3>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-1 gap-5">
-                    <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-2xs hover:shadow-md transition flex flex-col justify-between group">
-                        <div>
-                            <div class="flex items-center justify-between mb-3">
-                                <span class="px-2.5 py-1 bg-sky-50 text-sky-800 border border-sky-200 rounded-lg text-[10px] font-bold">官方網站</span>
-                                <div class="w-9 h-9 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center text-base group-hover:scale-105 transition">
-                                    <i class="fa-solid fa-globe"></i>
-                                </div>
-                            </div>
-                            <h4 class="font-bold text-sm text-stone-900 mb-1">睿立集團官方網站</h4>
-                            <p class="text-xs text-stone-500 leading-relaxed mb-4">
-                                快速開啟集團官方網站。
-                            </p>
-                        </div>
-                        <div class="pt-3 border-t border-stone-100 flex items-center justify-between">
-                            <span class="text-[11px] text-stone-400">外部形象連結</span>
-                            <a href="https://www.yuanyeh.com.tw/" target="_blank" rel="noopener noreferrer" class="px-4 py-2 bg-stone-100 hover:bg-stone-900 hover:text-white text-stone-700 border border-stone-200 rounded-xl text-xs font-bold transition shadow-2xs flex items-center space-x-1.5">
-                                <i class="fa-solid fa-external-link text-[10px]"></i><span>進入官網</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 區塊二：地籍與工商查詢（已將工廠改善計畫查詢放到測繪雲左邊） -->
+            <!-- 區塊二：地籍與工商查詢 -->
             <div class="space-y-3">
                 <div class="flex items-center space-x-2 px-1">
                     <i class="fa-solid fa-map-location-dot text-emerald-500 text-sm"></i>
                     <h3 class="text-xs font-bold uppercase tracking-wider text-stone-500">地籍與工商查詢</h3>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                    <!-- 工廠改善計畫查詢 (放到測繪雲左邊) -->
+                    <!-- 工廠改善計畫查詢 -->
                     <div onclick="renderFactoryImprovementModule()" class="p-4 bg-white hover:bg-amber-50/50 border border-stone-200 hover:border-amber-300 rounded-2xl transition flex items-center space-x-3.5 shadow-2xs group cursor-pointer">
                         <div class="w-11 h-11 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center text-base shrink-0 group-hover:scale-105 transition">
                             <i class="fa-solid fa-file-pdf"></i>
@@ -173,6 +130,36 @@ window.renderToolsModule = function() {
                             <div class="text-[10px] text-stone-400 mt-0.5">地方稅申報入口網</div>
                         </div>
                     </a>
+                </div>
+            </div>
+
+            <!-- 區塊一：核心工具（官網移至最下方） -->
+            <div class="space-y-3">
+                <div class="flex items-center space-x-2 px-1">
+                    <i class="fa-solid fa-diagram-project text-amber-500 text-sm"></i>
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-stone-500">官方網站</h3>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-1 gap-5">
+                    <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-2xs hover:shadow-md transition flex flex-col justify-between group">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="px-2.5 py-1 bg-sky-50 text-sky-800 border border-sky-200 rounded-lg text-[10px] font-bold">官方網站</span>
+                                <div class="w-9 h-9 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center text-base group-hover:scale-105 transition">
+                                    <i class="fa-solid fa-globe"></i>
+                                </div>
+                            </div>
+                            <h4 class="font-bold text-sm text-stone-900 mb-1">睿立集團官方網站</h4>
+                            <p class="text-xs text-stone-500 leading-relaxed mb-4">
+                                快速開啟集團官方網站。
+                            </p>
+                        </div>
+                        <div class="pt-3 border-t border-stone-100 flex items-center justify-between">
+                            <span class="text-[11px] text-stone-400">外部形象連結</span>
+                            <a href="https://www.yuanyeh.com.tw/" target="_blank" rel="noopener noreferrer" class="px-4 py-2 bg-stone-100 hover:bg-stone-900 hover:text-white text-stone-700 border border-stone-200 rounded-xl text-xs font-bold transition shadow-2xs flex items-center space-x-1.5">
+                                <i class="fa-solid fa-external-link text-[10px]"></i><span>進入官網</span>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
