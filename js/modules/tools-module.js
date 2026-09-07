@@ -1,5 +1,5 @@
 // js/modules/tools-module.js
-function renderToolsModule() {
+export function renderToolsModule() {
     const container = document.getElementById('app-container');
     if (!container) return;
 
