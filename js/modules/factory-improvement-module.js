@@ -51,16 +51,16 @@ window.renderFactoryImprovementModule = function() {
                     </div>
                 </div>
 
-                <!-- 表格內容 -->
+                <!-- 表格內容（支援手機左右滑動） -->
                 <div class="overflow-x-auto border-t border-stone-100">
-                    <table class="w-full text-left border-collapse text-xs">
+                    <table class="w-full min-w-[750px] text-left border-collapse text-xs">
                         <thead>
                             <tr class="bg-stone-50 text-stone-500 border-b border-stone-200 text-[11px]">
-                                <th class="p-3 font-bold">編號</th>
-                                <th class="p-3 font-bold">縣市</th>
-                                <th class="p-3 font-bold">工廠名稱</th>
-                                <th class="p-3 font-bold">廠址</th>
-                                <th class="p-3 font-bold text-right">功能操作與系統連動</th>
+                                <th class="p-3 font-bold whitespace-nowrap">編號</th>
+                                <th class="p-3 font-bold whitespace-nowrap">縣市</th>
+                                <th class="p-3 font-bold whitespace-nowrap">工廠名稱</th>
+                                <th class="p-3 font-bold whitespace-nowrap">廠址</th>
+                                <th class="p-3 font-bold text-right whitespace-nowrap">功能操作與系統連動</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-stone-100 text-stone-700">
