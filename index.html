@@ -1726,6 +1726,8 @@ function addHandoffNote() {
                             </div> 
                         </div> 
                     </div>`; 
+                } else if(moduleName === 'tools-module') {
+                renderToolsModule();
             } else if(moduleName === 'closing') { 
                 container.innerHTML = ` 
                     <div class="space-y-6"> 
