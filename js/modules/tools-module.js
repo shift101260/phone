@@ -9,7 +9,7 @@ window.renderToolsModule = function() {
             <div class="space-y-3">
                 <div class="flex items-center space-x-2 px-1">
                     <i class="fa-solid fa-map-location-dot text-emerald-500 text-sm"></i>
-                    <h3 class="text-xs font-bold uppercase tracking-wider text-stone-500">地籍與工商查詢</h3>
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-stone-500">基本資料查詢</h3>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                     <!-- 工廠改善計畫查詢 -->
@@ -63,7 +63,7 @@ window.renderToolsModule = function() {
             <div class="space-y-3">
                 <div class="flex items-center space-x-2 px-1">
                     <i class="fa-solid fa-calculator text-indigo-500 text-sm"></i>
-                    <h3 class="text-xs font-bold uppercase tracking-wider text-stone-500">稅費試算專區</h3>
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-stone-500">不動產稅務試算專區</h3>
                 </div>
                 <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
                     <a href="https://net.tax.nat.gov.tw/PLRX/Lrx200d01/trial_lnd.html" target="_blank" rel="noopener noreferrer" class="p-4 bg-white hover:bg-indigo-50/50 border border-stone-200 hover:border-indigo-300 rounded-2xl transition flex flex-col justify-between shadow-2xs group">
@@ -168,7 +168,7 @@ window.renderToolsModule = function() {
                     <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-2xs hover:shadow-md transition flex flex-col justify-between group">
                         <div>
                             <div class="flex items-center justify-between mb-3">
-                                <span class="px-2.5 py-1 bg-indigo-50 text-indigo-800 border border-indigo-200 rounded-lg text-[10px] font-bold">系統後台</span>
+                                <span class="px-2.5 py-1 bg-indigo-50 text-indigo-800 border border-indigo-200 rounded-lg text-[10px] font-bold">官方網站後台</span>
                                 <div class="w-9 h-9 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-base group-hover:scale-105 transition">
                                     <i class="fa-solid fa-lock"></i>
                                 </div>
