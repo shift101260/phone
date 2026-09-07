@@ -1408,7 +1408,6 @@ window.calculateQuoteTotals = function() {
     const totalTaxAfter = totalQuote * 1.05;
     const totalProfit = totalContract - totalUntaxed;
 
-    // 1. 填入下方供應商的自動總計欄位（這裡用回 calc-total-contract，不會干擾上方手動輸入）
     const elTotal = document.getElementById('calc-total-quote');
     const elTaxAfter = document.getElementById('calc-tax-after');
     const elContractTotal = document.getElementById('calc-total-contract'); 
@@ -1419,7 +1418,6 @@ window.calculateQuoteTotals = function() {
     if (elContractTotal) elContractTotal.value = `NT$ ${totalContract.toLocaleString()}`;
     if (elProfit) elProfit.value = `NT$ ${totalProfit.toLocaleString()}`;
 
-    // 2. 獨立連動：抓取上方手動輸入的 contract-amount 來計算下方的收款期程
     const manualInput = document.getElementById('contract-amount');
     const manualContractAmount = manualInput ? (parseFloat(manualInput.value) || 0) : 0;
 
@@ -1451,8 +1449,6 @@ window.calculateApprovalInstallments = function() {
 
 function openQuotationGeneratorModal() {
     openModal('quotationGeneratorModal');
-}
-        }
 
         let currentGeneratedRuNo = 1;
         function generateRuCaseId() {
