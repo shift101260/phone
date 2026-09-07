@@ -1663,10 +1663,12 @@ function addHandoffNote() {
                         <h2 class="text-base font-bold text-stone-900">戰情室總覽</h2> 
                         <p class="text-xs text-stone-500">掌握集團整體 YoY 財報、營運案件數與跨通路效益分析。</p> 
                     </div>`; 
-            } else if(moduleName === 'kanban') { 
-                renderWorkflowOverviewWithPipelineView('secretary'); 
-            } else if(moduleName === 'all-cases') { 
-                container.innerHTML = ` 
+           } else if (moduleName === 'kanban') {
+                renderWorkflowOverviewWithPipelineView('secretary');
+            } else if (moduleName === 'tools-module') {
+                renderToolsModule();
+            } else if (moduleName === 'all-cases') {
+                container.innerHTML = `
                     <div class="space-y-6"> 
                         <div class="bg-white p-5 rounded-2xl border border-ruili-border shadow-2xs space-y-3"> 
                             <div class="flex flex-col md:flex-row md:items-center justify-between gap-3"> 
