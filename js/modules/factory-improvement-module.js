@@ -4,7 +4,7 @@ window.renderFactoryImprovementModule = function() {
     if (!container) return;
 
     container.innerHTML = `
-        <div class="space-y-6 max-w-7xl mx-auto">
+        <div class="space-y-6 max-w-7xl mx-auto pb-12">
             <!-- 頁面標題列 -->
             <div class="flex flex-col md:flex-row md:items-center justify-between bg-white p-4 rounded-2xl border border-stone-200 shadow-2xs gap-3">
                 <div>
@@ -21,22 +21,23 @@ window.renderFactoryImprovementModule = function() {
                 </div>
             </div>
 
-            <!-- 前台即時智慧篩選介面（按鈕與搜尋列並排，完美對齊） -->
-            <div class="bg-white p-4 rounded-2xl border border-stone-200 shadow-2xs flex flex-col lg:flex-row gap-3 items-end">
-                <!-- 關鍵字搜尋與執行按鈕並排 -->
-                <div class="flex-1 w-full">
-                    <label class="block text-[10px] font-bold text-stone-500 mb-1">關鍵字搜尋</label>
-                    <div class="flex space-x-2">
-                        <input type="text" id="factory-search-input" placeholder="輸入縣市、工廠名稱、廠址..." class="flex-1 px-3 py-1.5 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-900 focus:outline-none focus:border-ruili-brand">
-                        <button type="button" onclick="alert('🔍 已依條件執行即時智慧篩選！')" class="px-4 py-1.5 bg-stone-800 hover:bg-stone-900 text-white rounded-xl text-xs font-bold transition shadow-2xs shrink-0">
-                            執行篩選
-                        </button>
+            <!-- 前台即時智慧篩選與表格整合區塊 -->
+            <div class="bg-white rounded-2xl border border-stone-200 shadow-2xs overflow-hidden space-y-4">
+                <!-- 搜尋列區域 -->
+                <div class="p-4 border-b border-stone-100 flex flex-col lg:flex-row gap-3 items-end">
+                    <div class="flex-1 w-full">
+                        <label class="block text-[10px] font-bold text-stone-500 mb-1">關鍵字搜尋</label>
+                        <div class="flex space-x-2">
+                            <input type="text" id="factory-search-input" placeholder="輸入縣市、工廠名稱、廠址..." class="flex-1 px-3 py-1.5 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-900 focus:outline-none focus:border-ruili-brand">
+                            <button type="button" onclick="alert('🔍 已依條件執行即時智慧篩選！')" class="px-4 py-1.5 bg-stone-800 hover:bg-stone-900 text-white rounded-xl text-xs font-bold transition shadow-2xs shrink-0">
+                                執行篩選
+                            </button>
+                        </div>
                     </div>
                 </div>
 
-            <!-- 篩選結果與表格呈現 -->
-            <div class="bg-white rounded-2xl border border-stone-200 shadow-2xs overflow-hidden">
-                <div class="p-4 border-b border-stone-100 flex items-center justify-between">
+                <!-- 表格標題列 -->
+                <div class="px-4 pb-2 flex items-center justify-between">
                     <h3 class="font-bold text-xs text-stone-900 flex items-center space-x-1.5">
                         <i class="fa-solid fa-list-check text-sky-600"></i>
                         <span>特定工廠改善計畫清單</span>
@@ -49,7 +50,9 @@ window.renderFactoryImprovementModule = function() {
                         <span class="text-[10px] text-stone-400">共 0 筆紀錄</span>
                     </div>
                 </div>
-                <div class="overflow-x-auto">
+
+                <!-- 表格內容 -->
+                <div class="overflow-x-auto border-t border-stone-100">
                     <table class="w-full text-left border-collapse text-xs">
                         <thead>
                             <tr class="bg-stone-50 text-stone-500 border-b border-stone-200 text-[11px]">
