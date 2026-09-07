@@ -6,6 +6,7 @@ import './modules/land-change-calc.js';
 import './modules/payment-calc.js';
 import './modules/solar-calc.js';
 import './modules/case-edit.js';
+import { renderToolsModule } from './modules/tools-module.js';
 
 // 💡 確保所有彈窗開關 100% 能夠被 HTML 的 onclick 呼叫
 window.openLandModal = () => toggleModal('land-modal', true);
