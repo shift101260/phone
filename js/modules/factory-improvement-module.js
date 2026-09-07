@@ -21,36 +21,34 @@ window.renderFactoryImprovementModule = function() {
                 </div>
             </div>
 
-            <!-- 前台即時智慧篩選介面 -->
-            <div class="bg-white p-4 rounded-2xl border border-stone-200 shadow-2xs grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
-                <div class="md:col-span-2">
-                    <label class="block text-[10px] font-bold text-stone-500 mb-1">關鍵字搜尋</label>
-                    <div class="flex space-x-2">
-                        <input type="text" id="factory-search-input" placeholder="輸入縣市、工廠名稱、廠址..." class="flex-1 px-3 py-1.5 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-900 focus:outline-none focus:border-ruili-brand">
-                        <button type="button" onclick="alert('🔍 已依條件執行即時智慧篩選！')" class="px-4 py-1.5 bg-stone-800 hover:bg-stone-900 text-white rounded-xl text-xs font-bold transition shadow-2xs shrink-0">
-                            執行篩選
-                        </button>
-                    </div>
+            <!-- 前台即時智慧篩選介面（4 欄式完美對齊） -->
+            <div class="bg-white p-4 rounded-2xl border border-stone-200 shadow-2xs grid grid-cols-1 md:grid-cols-4 gap-3 items-end">
+                <div>
+                    <label class="block text-[10px] font-bold text-stone-500 mb-1">關鍵字搜尋 (案名 / 廠名)</label>
+                    <input type="text" id="factory-search-input" placeholder="輸入縣市、工廠名稱、廠址..." class="w-full px-3 py-1.5 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-900 focus:outline-none focus:border-ruili-brand">
                 </div>
-                <div class="grid grid-cols-2 gap-2">
-                    <div>
-                        <label class="block text-[10px] font-bold text-stone-500 mb-1">審查進度狀態</label>
-                        <select id="factory-status-select" class="w-full px-3 py-1.5 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-900 focus:outline-none focus:border-ruili-brand">
-                            <option value="">全部進度</option>
-                            <option value="reviewing">改善計畫審查中</option>
-                            <option value="approved">已核准通過</option>
-                            <option value="closed">已結案歸檔</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-[10px] font-bold text-stone-500 mb-1">縣市別</label>
-                        <select id="factory-city-select" class="w-full px-3 py-1.5 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-900 focus:outline-none focus:border-ruili-brand">
-                            <option value="">全部縣市</option>
-                            <option value="KHH">高雄市</option>
-                            <option value="TNN">臺南市</option>
-                            <option value="PTH">屏東縣</option>
-                        </select>
-                    </div>
+                <div>
+                    <label class="block text-[10px] font-bold text-stone-500 mb-1">審查進度狀態</label>
+                    <select id="factory-status-select" class="w-full px-3 py-1.5 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-900 focus:outline-none focus:border-ruili-brand">
+                        <option value="">全部進度</option>
+                        <option value="reviewing">改善計畫審查中</option>
+                        <option value="approved">已核准通過</option>
+                        <option value="closed">已結案歸檔</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-[10px] font-bold text-stone-500 mb-1">縣市別</label>
+                    <select id="factory-city-select" class="w-full px-3 py-1.5 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-900 focus:outline-none focus:border-ruili-brand">
+                        <option value="">全部縣市</option>
+                        <option value="KHH">高雄市</option>
+                        <option value="TNN">臺南市</option>
+                        <option value="PTH">屏東縣</option>
+                    </select>
+                </div>
+                <div>
+                    <button type="button" onclick="alert('🔍 已依條件執行即時智慧篩選！')" class="w-full py-1.5 bg-stone-800 hover:bg-stone-900 text-white rounded-xl text-xs font-bold transition shadow-2xs">
+                        執行篩選
+                    </button>
                 </div>
             </div>
 
