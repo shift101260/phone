@@ -12,9 +12,9 @@ window.renderToolsModule = function() {
                         <div class="w-8 h-8 rounded-xl bg-sky-100 text-sky-700 flex items-center justify-center text-sm">
                             <i class="fa-solid fa-toolbox"></i>
                         </div>
-                        <span>工具與管理</span>
+                        <span>工具專區</span>
                     </h2>
-                    <p class="text-xs text-stone-500 mt-1">專為業務與內部行政打造</p>
+                    <p class="text-xs text-stone-500 mt-1">專為業務與內部行政打造專區</p>
                 </div>
             </div>
 
@@ -22,18 +22,18 @@ window.renderToolsModule = function() {
             <div class="space-y-3">
                 <div class="flex items-center space-x-2 px-1">
                     <i class="fa-solid fa-diagram-project text-amber-500 text-sm"></i>
-                    <h3 class="text-xs font-bold uppercase tracking-wider text-stone-500">核心管理與改善計畫</h3>
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-stone-500">核心工具</h3>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                     <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-2xs hover:shadow-md transition flex flex-col justify-between group">
                         <div>
                             <div class="flex items-center justify-between mb-3">
-                                <span class="px-2.5 py-1 bg-amber-50 text-amber-800 border border-amber-200 rounded-lg text-[10px] font-bold">重點模組</span>
+                                <span class="px-2.5 py-1 bg-amber-50 text-amber-800 border border-amber-200 rounded-lg text-[10px] font-bold">名單查詢</span>
                                 <div class="w-9 h-9 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-base group-hover:scale-105 transition">
                                     <i class="fa-solid fa-file-pdf"></i>
                                 </div>
                             </div>
-                            <h4 class="font-bold text-sm text-stone-900 mb-1">工廠改善計畫查詢與管理</h4>
+                            <h4 class="font-bold text-sm text-stone-900 mb-1">工廠改善計畫查詢</h4>
                             <p class="text-xs text-stone-500 leading-relaxed mb-4">
                                 支援特定工廠改善計畫書查詢、前台多重條件智慧篩選，並可一鍵連動至集團案件中心。
                             </p>
@@ -44,7 +44,7 @@ window.renderToolsModule = function() {
                                 <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
                             </a>
                             <button type="button" onclick="renderFactoryImprovementModule()" class="px-4 py-2 bg-ruili-brand text-white rounded-xl text-xs font-bold hover:opacity-90 transition shadow-2xs flex items-center space-x-1.5">
-                                <span>進入管理模組</span>
+                                <span>進入查詢</span>
                                 <i class="fa-solid fa-arrow-right text-[10px]"></i>
                             </button>
                         </div>
@@ -53,20 +53,20 @@ window.renderToolsModule = function() {
                     <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-2xs hover:shadow-md transition flex flex-col justify-between group">
                         <div>
                             <div class="flex items-center justify-between mb-3">
-                                <span class="px-2.5 py-1 bg-sky-50 text-sky-800 border border-sky-200 rounded-lg text-[10px] font-bold">企業門面</span>
+                                <span class="px-2.5 py-1 bg-sky-50 text-sky-800 border border-sky-200 rounded-lg text-[10px] font-bold">官方網站</span>
                                 <div class="w-9 h-9 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center text-base group-hover:scale-105 transition">
                                     <i class="fa-solid fa-globe"></i>
                                 </div>
                             </div>
-                            <h4 class="font-bold text-sm text-stone-900 mb-1">睿立官方網站</h4>
+                            <h4 class="font-bold text-sm text-stone-900 mb-1">睿立集團官方網站</h4>
                             <p class="text-xs text-stone-500 leading-relaxed mb-4">
-                                快速開啟集團官方網站，方便隨時向客戶展示綠能與土地開發實績。
+                                快速開啟集團官方網站。
                             </p>
                         </div>
                         <div class="pt-3 border-t border-stone-100 flex items-center justify-between">
                             <span class="text-[11px] text-stone-400">外部形象連結</span>
                             <a href="https://www.yuanyeh.com.tw/" target="_blank" rel="noopener noreferrer" class="px-4 py-2 bg-stone-100 hover:bg-stone-900 hover:text-white text-stone-700 border border-stone-200 rounded-xl text-xs font-bold transition shadow-2xs flex items-center space-x-1.5">
-                                <i class="fa-solid fa-external-link text-[10px]"></i><span>開啟官網</span>
+                                <i class="fa-solid fa-external-link text-[10px]"></i><span>進入官網</span>
                             </a>
                         </div>
                     </div>
