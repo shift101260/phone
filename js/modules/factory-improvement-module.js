@@ -10,7 +10,7 @@ window.renderFactoryImprovementModule = function() {
                 <div>
                     <h2 class="text-base font-bold text-stone-900 flex items-center space-x-2">
                         <i class="fa-solid fa-file-pdf text-amber-600"></i>
-                        <span>工廠改善計畫查詢與管理模組</span>
+                        <span>工廠改善計畫名單</span>
                     </h2>
                     <p class="text-xs text-stone-500 mt-0.5">特定工廠改善計畫書查詢、前台智慧篩選與集團案件中心一鍵連動</p>
                 </div>
@@ -25,7 +25,7 @@ window.renderFactoryImprovementModule = function() {
             <div class="bg-white p-4 rounded-2xl border border-stone-200 shadow-2xs grid grid-cols-1 md:grid-cols-4 gap-3">
                 <div>
                     <label class="block text-[10px] font-bold text-stone-500 mb-1">關鍵字搜尋</label>
-                    <input type="text" id="factory-search-input" placeholder="輸入廠名、負責人或案號..." class="w-full px-3 py-1.5 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-900 focus:outline-none focus:border-ruili-brand">
+                    <input type="text" id="factory-search-input" placeholder="輸入縣市、工廠名稱、廠址" class="w-full px-3 py-1.5 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-900 focus:outline-none focus:border-ruili-brand">
                 </div>
                 </div>
                 <div class="flex items-end">
