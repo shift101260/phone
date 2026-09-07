@@ -133,13 +133,14 @@ window.renderToolsModule = function() {
                 </div>
             </div>
 
-            <!-- 區塊一：核心工具（官網移至最下方） -->
+            <!-- 區塊四：官方網站與後台管理 -->
             <div class="space-y-3">
                 <div class="flex items-center space-x-2 px-1">
-                    <i class="fa-solid fa-diagram-project text-amber-500 text-sm"></i>
-                    <h3 class="text-xs font-bold uppercase tracking-wider text-stone-500">官方網站</h3>
+                    <i class="fa-solid fa-globe text-sky-500 text-sm"></i>
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-stone-500">官方網站與後台管理</h3>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-1 gap-5">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <!-- 官網卡片 -->
                     <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-2xs hover:shadow-md transition flex flex-col justify-between group">
                         <div>
                             <div class="flex items-center justify-between mb-3">
@@ -150,13 +151,39 @@ window.renderToolsModule = function() {
                             </div>
                             <h4 class="font-bold text-sm text-stone-900 mb-1">睿立集團官方網站</h4>
                             <p class="text-xs text-stone-500 leading-relaxed mb-4">
-                                快速開啟集團官方網站。
+                                快速開啟集團官方網站，對外展示綠能與土地開發實績。
                             </p>
                         </div>
                         <div class="pt-3 border-t border-stone-100 flex items-center justify-between">
-                            <span class="text-[11px] text-stone-400">外部形象連結</span>
-                            <a href="https://www.yuanyeh.com.tw/" target="_blank" rel="noopener noreferrer" class="px-4 py-2 bg-stone-100 hover:bg-stone-900 hover:text-white text-stone-700 border border-stone-200 rounded-xl text-xs font-bold transition shadow-2xs flex items-center space-x-1.5">
+                            <button type="button" onclick="navigator.clipboard.writeText('https://www.yuanyeh.com.tw/'); alert('📋 已成功複製官網網址！');" class="px-3 py-2 bg-stone-100 hover:bg-stone-200 text-stone-700 border border-stone-200 rounded-xl text-xs font-bold transition flex items-center space-x-1 shadow-2xs">
+                                <i class="fa-solid fa-copy text-[10px]"></i><span>複製網址</span>
+                            </button>
+                            <a href="https://www.yuanyeh.com.tw/" target="_blank" rel="noopener noreferrer" class="px-4 py-2 bg-stone-900 hover:bg-stone-800 text-white rounded-xl text-xs font-bold transition shadow-2xs flex items-center space-x-1.5">
                                 <i class="fa-solid fa-external-link text-[10px]"></i><span>進入官網</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 官網後台卡片 -->
+                    <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-2xs hover:shadow-md transition flex flex-col justify-between group">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="px-2.5 py-1 bg-indigo-50 text-indigo-800 border border-indigo-200 rounded-lg text-[10px] font-bold">系統後台</span>
+                                <div class="w-9 h-9 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-base group-hover:scale-105 transition">
+                                    <i class="fa-solid fa-lock"></i>
+                                </div>
+                            </div>
+                            <h4 class="font-bold text-sm text-stone-900 mb-1">官方網站後台</h4>
+                            <p class="text-xs text-stone-500 leading-relaxed mb-4">
+                                專為內部管理打造的網站後台，用於維護官網內容與相關設定。
+                            </p>
+                        </div>
+                        <div class="pt-3 border-t border-stone-100 flex items-center justify-between">
+                            <button type="button" onclick="navigator.clipboard.writeText('https://www.yuanyeh.com.tw/AWS-Backyard/login'); alert('📋 已成功複製後台登入網址！');" class="px-3 py-2 bg-stone-100 hover:bg-stone-200 text-stone-700 border border-stone-200 rounded-xl text-xs font-bold transition flex items-center space-x-1 shadow-2xs">
+                                <i class="fa-solid fa-copy text-[10px]"></i><span>複製網址</span>
+                            </button>
+                            <a href="https://www.yuanyeh.com.tw/AWS-Backyard/login" target="_blank" rel="noopener noreferrer" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold transition shadow-2xs flex items-center space-x-1.5">
+                                <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i><span>進入後台</span>
                             </a>
                         </div>
                     </div>
