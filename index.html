@@ -1307,6 +1307,74 @@
 </div> <!-- 關閉 editCaseModal 背景遮罩 -->
     <!-- 頁面切換與控制邏輯 --> 
     <script> 
+        // 1. Google Map 街景與導航開啟邏輯
+window.openGoogleMapDrawer = function() {
+    const addressInput = document.getElementById('edit-case-address');
+    const address = addressInput ? addressInput.value.trim() : '';
+    
+    if (!address) {
+        alert('⚠️ 請先輸入案件地址，方可進行 Google Map 街景與導航查詢！');
+        if (addressInput) addressInput.focus();
+        return;
+    }
+
+    const encodedAddr = encodeURIComponent(address);
+    const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodedAddr}`;
+    window.open(mapUrl, '_blank');
+};
+
+// 2. 地籍圖多筆地號快捷清單解析與開啟邏輯
+window.openCadastralMapDrawer = function() {
+    const landInput = document.getElementById('edit-case-land-number');
+    const landText = landInput ? landInput.value.trim() : '';
+
+    if (!landText) {
+        alert('⚠️ 請先輸入「地段地號」（例如：高雄市仁武區仁龍段1158.1159.1159-1），系統將自動為您切分多筆地號快捷按鈕！');
+        if (landInput) landInput.focus();
+        return;
+    }
+
+    const rawParts = landText.split(/[.,、\s]+/);
+    let htmlButtons = '';
+    rawParts.forEach(part => {
+        if (part.trim()) {
+            htmlButtons += `
+                <button type="button" onclick="loadCadastralMap('${encodeURIComponent(landText)}', '${encodeURIComponent(part.trim())}')" class="px-3 py-1.5 bg-amber-50 hover:bg-amber-600 hover:text-white text-amber-800 border border-amber-300 rounded-xl text-xs font-mono font-bold transition shadow-2xs cursor-pointer">
+                    📍 ${part.trim()}
+                </button>
+            `;
+        }
+    });
+
+    let drawerContainer = document.getElementById('cadastral-shortcut-bar');
+    if (!drawerContainer) {
+        const previewArea = document.createElement('div');
+        previewArea.id = 'cadastral-shortcut-bar';
+        previewArea.className = 'p-3 bg-amber-50/80 border border-amber-200 rounded-xl space-y-2 my-2 animate-fade-in';
+        previewArea.innerHTML = `
+            <div class="flex justify-between items-center text-xs font-bold text-amber-900 border-b border-amber-200 pb-1">
+                <span>🗺️ 多筆地號快捷清單列（點擊下方按鈕快速切換查詢）</span>
+                <button type="button" onclick="this.parentElement.parentElement.remove()" class="text-stone-400 hover:text-stone-700 text-sm">✕</button>
+            </div>
+            <div class="flex flex-wrap gap-2 pt-1" id="cadastral-buttons-group">
+                ${htmlButtons}
+            </div>
+        `;
+        
+        if (landInput && landInput.parentElement && landInput.parentElement.parentElement) {
+            landInput.parentElement.parentElement.insertAdjacentElement('afterend', previewArea);
+        }
+    } else {
+        document.getElementById('cadastral-buttons-group').innerHTML = htmlButtons;
+    }
+
+    window.open('https://maps.nlsc.gov.tw', '_blank');
+};
+
+window.loadCadastralMap = function(fullText, targetPart) {
+    alert(`✨ 已選取地號【${decodeURIComponent(targetPart)}】，國土測繪圖資服務雲已同步開啟！`);
+    window.open('https://maps.nlsc.gov.tw', '_blank');
+};
         function openModal(modalId) { 
             const modal = document.getElementById(modalId); 
             if (modal) {
