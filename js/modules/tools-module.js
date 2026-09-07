@@ -18,38 +18,13 @@ window.renderToolsModule = function() {
                 </div>
             </div>
 
-            <!-- 區塊一：核心工具模組 -->
+            <!-- 區塊一：核心工具（僅保留官網） -->
             <div class="space-y-3">
                 <div class="flex items-center space-x-2 px-1">
                     <i class="fa-solid fa-diagram-project text-amber-500 text-sm"></i>
                     <h3 class="text-xs font-bold uppercase tracking-wider text-stone-500">核心工具</h3>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                    <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-2xs hover:shadow-md transition flex flex-col justify-between group">
-                        <div>
-                            <div class="flex items-center justify-between mb-3">
-                                <span class="px-2.5 py-1 bg-amber-50 text-amber-800 border border-amber-200 rounded-lg text-[10px] font-bold">名單查詢</span>
-                                <div class="w-9 h-9 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-base group-hover:scale-105 transition">
-                                    <i class="fa-solid fa-file-pdf"></i>
-                                </div>
-                            </div>
-                            <h4 class="font-bold text-sm text-stone-900 mb-1">工廠改善計畫查詢</h4>
-                            <p class="text-xs text-stone-500 leading-relaxed mb-4">
-                                支援特定工廠改善計畫書查詢、前台多重條件智慧篩選，並可一鍵連動至集團案件中心。
-                            </p>
-                        </div>
-                        <div class="pt-3 border-t border-stone-100 flex items-center justify-between">
-                            <a href="https://www.cto.moea.gov.tw/FactoryMCLA/web/information/detail.php?cid=7&id=350" target="_blank" rel="noopener noreferrer" class="text-xs font-bold text-sky-600 hover:text-sky-800 flex items-center space-x-1">
-                                <span>官方參考說明</span>
-                                <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
-                            </a>
-                            <button type="button" onclick="renderFactoryImprovementModule()" class="px-4 py-2 bg-ruili-brand text-white rounded-xl text-xs font-bold hover:opacity-90 transition shadow-2xs flex items-center space-x-1.5">
-                                <span>進入查詢</span>
-                                <i class="fa-solid fa-arrow-right text-[10px]"></i>
-                            </button>
-                        </div>
-                    </div>
-
+                <div class="grid grid-cols-1 md:grid-cols-1 gap-5">
                     <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-2xs hover:shadow-md transition flex flex-col justify-between group">
                         <div>
                             <div class="flex items-center justify-between mb-3">
@@ -73,13 +48,25 @@ window.renderToolsModule = function() {
                 </div>
             </div>
 
-            <!-- 區塊二：地籍與工商查詢 -->
+            <!-- 區塊二：地籍與工商查詢（已將工廠改善計畫查詢放到測繪雲左邊） -->
             <div class="space-y-3">
                 <div class="flex items-center space-x-2 px-1">
                     <i class="fa-solid fa-map-location-dot text-emerald-500 text-sm"></i>
                     <h3 class="text-xs font-bold uppercase tracking-wider text-stone-500">地籍與工商查詢</h3>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <!-- 工廠改善計畫查詢 (放到測繪雲左邊) -->
+                    <div onclick="renderFactoryImprovementModule()" class="p-4 bg-white hover:bg-amber-50/50 border border-stone-200 hover:border-amber-300 rounded-2xl transition flex items-center space-x-3.5 shadow-2xs group cursor-pointer">
+                        <div class="w-11 h-11 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center text-base shrink-0 group-hover:scale-105 transition">
+                            <i class="fa-solid fa-file-pdf"></i>
+                        </div>
+                        <div class="overflow-hidden flex-1">
+                            <div class="font-bold text-xs text-stone-900 truncate">工廠改善計畫查詢</div>
+                            <div class="text-[10px] text-stone-400 truncate mt-0.5">PDF 名單與智慧篩選管理</div>
+                        </div>
+                        <i class="fa-solid fa-arrow-right text-xs text-stone-300 group-hover:text-amber-600"></i>
+                    </div>
+
                     <a href="https://maps.nlsc.gov.tw/T09/mobilemap.action" target="_blank" rel="noopener noreferrer" class="p-4 bg-white hover:bg-emerald-50/50 border border-stone-200 hover:border-emerald-300 rounded-2xl transition flex items-center space-x-3.5 shadow-2xs group">
                         <div class="w-11 h-11 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-base shrink-0 group-hover:scale-105 transition">
                             <i class="fa-solid fa-map"></i>
