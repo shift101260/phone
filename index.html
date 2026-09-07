@@ -1952,8 +1952,8 @@ function addHandoffNote() {
                 const toolsModule = document.getElementById('tools-module');
                 if (toolsModule) {
                     container.innerHTML = toolsModule.innerHTML;
-                    // 確保動態載入後會移除 hidden，讓它正常顯示
-                    container.querySelector('#tools-module')?.classList.remove('hidden');
+                } else {
+                    container.innerHTML = `<div class="p-6 text-stone-500">正在載入外勤工具專區...</div>`;
                 }
             }
 
