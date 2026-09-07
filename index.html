@@ -1451,147 +1451,151 @@ function openQuotationGeneratorModal() {
     openModal('quotationGeneratorModal');
 }
 
-window.calculateApprovalInstallments = function() {
-    const amountInput = document.getElementById('modal-input-amount');
-    const baseAmount = parseFloat(amountInput?.value.replace(/[^0-9.]/g, '')) || 0;
+let currentGeneratedRuNo = 1;
+function generateRuCaseId() {
+    const seqStr = String(currentGeneratedRuNo).padStart(6, '0');
+    const newRuId = `RU${seqStr}`;
+    currentGeneratedRuNo++;
+    alert(`✨ 成功主動生成新案件編號：【${newRuId}】！`);
+}
 
-    for (let i = 1; i <= 4; i++) {
-        const pctInput = document.getElementById(`approval-inst-${i}-pct`);
-        const valSpan = document.getElementById(`approval-inst-${i}-val`);
-        if (pctInput && valSpan) {
-            const pct = parseFloat(pctInput.value) || 0;
-            const val = Math.round(baseAmount * (pct / 100));
-            valSpan.innerText = `NT$ ${val.toLocaleString()}`;
-        }
-    }
-};
-
-function openQuotationGeneratorModal() {
-    openModal('quotationGeneratorModal');
-
-        let currentGeneratedRuNo = 1;
-        function generateRuCaseId() {
-            const seqStr = String(currentGeneratedRuNo).padStart(6, '0');
-            const newRuId = `RU${seqStr}`;
-            currentGeneratedRuNo++;
-            alert(`✨ 成功主動生成新案件編號：【${newRuId}】！`);
-        }
-
-        function openActiveCasesModal() { 
-            const container = document.getElementById('active-cases-modal-content'); 
-            let allCases = globalCasesData['2026'] || []; 
-             
-            let html = `<p class="text-stone-500 text-[11px] mb-1">以下為工作看板：跨角色交棒專屬列表中的所有執行中案件 (共 ${allCases.length} 件)：</p>`; 
-             
-            allCases.forEach(c => { 
-                html += ` 
-                    <div class="bg-white p-3.5 rounded-xl border border-stone-200 hover:border-sky-500 shadow-2xs transition flex justify-between items-center group"> 
-                        <div class="space-y-0.5"> 
-                            <div class="flex items-center space-x-2"> 
-                                <span class="font-mono font-bold text-stone-400 text-[11px]">${c.id}</span> 
-                                <span class="px-2 py-0.5 bg-sky-100 text-sky-800 rounded text-[9px] font-bold">執行中</span> 
-                                <span class="text-rose-600 bg-rose-50 border border-rose-100 px-2 py-0.5 rounded text-[9px] font-semibold">滯留 ${c.days || 3} 天</span> 
-                            </div> 
-                            <h4 class="font-bold text-stone-900 text-xs group-hover:text-sky-600 transition">${c.name}</h4> 
-                            <p class="text-stone-500 text-[10px]">類別：${c.service} ｜ 金額：<strong class="text-rose-600">${c.amount}</strong></p> 
-                        </div> 
-                        <div> 
-                            <button onclick="closeModal('activeCasesListModal'); openModal('handoffModal');" class="px-3 py-1 bg-ruili-brand hover:opacity-90 text-white rounded-xl font-bold transition text-[10px] shadow-2xs whitespace-nowrap"> 
-                                交棒與管理 ➔ 
-                            </button> 
-                        </div> 
+function openActiveCasesModal() { 
+    const container = document.getElementById('active-cases-modal-content'); 
+    let allCases = globalCasesData['2026'] || []; 
+     
+    let html = `<p class="text-stone-500 text-[11px] mb-1">以下為工作看板：跨角色交棒專屬列表中的所有執行中案件 (共 ${allCases.length} 件)：</p>`; 
+     
+    allCases.forEach(c => { 
+        html += ` 
+            <div class="bg-white p-3.5 rounded-xl border border-stone-200 hover:border-sky-500 shadow-2xs transition flex justify-between items-center group"> 
+                <div class="space-y-0.5"> 
+                    <div class="flex items-center space-x-2"> 
+                        <span class="font-mono font-bold text-stone-400 text-[11px]">${c.id}</span> 
+                        <span class="px-2 py-0.5 bg-sky-100 text-sky-800 rounded text-[9px] font-bold">執行中</span> 
+                        <span class="text-rose-600 bg-rose-50 border border-rose-100 px-2 py-0.5 rounded text-[9px] font-semibold">滯留 ${c.days || 3} 天</span> 
                     </div> 
-                `; 
-            }); 
-             
-            container.innerHTML = html; 
-            openModal('activeCasesListModal'); 
-        } 
-
-        function openApprovalDetail(id, name, service, amount, intro, schedule, desc) { 
-            document.getElementById('modal-case-name').innerText = name; 
-            document.getElementById('modal-case-service').innerText = service; 
-            document.getElementById('modal-input-case-id').value = id; 
-            document.getElementById('modal-input-amount').value = amount; 
-            document.getElementById('modal-case-intro').innerText = intro; 
-            document.getElementById('modal-case-schedule').innerText = schedule; 
-            document.getElementById('modal-case-desc').innerText = desc || '依評估表記錄進行合約登錄。'; 
-             
-            closeModal('pendingListModal'); 
-            openModal('approvalModal'); 
-        } 
-
-        function openClosingDetail(id, name) { 
-            document.getElementById('closing-case-title').innerText = `${id} - ${name}`; 
-            closeModal('pendingClosingListModal'); 
-            openModal('pendingClosingModal'); 
-        } 
-
-        function openPipelineDetail(id, name, service, amount, intro, schedule, signDate, remark) { 
-            document.getElementById('pipeline-modal-id').innerText = id; 
-            document.getElementById('pipeline-modal-name').innerText = name; 
-            document.getElementById('pipeline-modal-service').innerText = service; 
-            document.getElementById('pipeline-modal-amount').innerText = amount; 
-            document.getElementById('pipeline-modal-intro').innerText = intro; 
-            document.getElementById('pipeline-modal-schedule').innerText = schedule; 
-            document.getElementById('pipeline-modal-sign-date').innerText = signDate; 
-            document.getElementById('pipeline-modal-remark').innerText = remark; 
-
-            document.getElementById('input-pay-date').value = ''; 
-            document.getElementById('input-close-date').value = ''; 
-
-            closeModal('closingPipelineListModal'); 
-            openModal('closingPipelineModal'); 
-        } 
-
-        function validateAndSubmitClosing() { 
-            const payDate = document.getElementById('input-pay-date').value; 
-            const closeDate = document.getElementById('input-close-date').value; 
-
-            if (!payDate || !closeDate) { 
-                alert('⚠️ 結案失敗：請務必填寫「尾款收款日期」與「結案日期」後方可結案！'); 
-                return; 
-            } 
-
-            alert('✨ 結案收尾流水線完成！尾款收款日期與結案日期已確認，正式結案報告已自動歸檔至左側「結案中心」'); 
-            closeModal('closingPipelineModal'); 
-        } 
-
-        function openPdfReport(id, client, service, amount) { 
-            document.getElementById('pdf-id').innerText = id; 
-            document.getElementById('pdf-client').innerText = client; 
-            document.getElementById('pdf-service').innerText = service; 
-            document.getElementById('pdf-amount').innerText = amount; 
-            document.getElementById('pdf-title').innerText = `睿立集團｜${client}${service}・結案總結報告`; 
-            openModal('pdfModal'); 
-        } 
-
-        function exportPdf() { 
-            alert('📥 正在執行一鍵匯出 PDF，白底金字正式結案報告已成功下載並歸檔！'); 
-            closeModal('pdfModal'); 
-        } 
-
-        function addNote() { 
-            const input = document.getElementById('new-note-input'); 
-            const container = document.getElementById('notes-container'); 
-            if(!input.value.trim()) return; 
-
-            const now = new Date(); 
-            const timeStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`; 
-             
-            const newNoteHtml = ` 
-                <div class="bg-white p-2 rounded-lg border border-stone-200 shadow-2xs space-y-0.5 animate-fade-in"> 
-                    <div class="flex justify-between items-center text-[9px] text-stone-400"> 
-                        <strong class="text-stone-700">👤 最高管理者 (品牌長 - 您)</strong> 
-                        <span class="font-mono font-bold text-amber-600">${timeStr}</span> 
-                    </div> 
-                    <p class="text-stone-800 text-[10px]">${input.value}</p> 
+                    <h4 class="font-bold text-stone-900 text-xs group-hover:text-sky-600 transition">${c.name}</h4> 
+                    <p class="text-stone-500 text-[10px]">類別：${c.service} ｜ 金額：<strong class="text-rose-600">${c.amount}</strong></p> 
                 </div> 
-            `; 
-             
-            container.insertAdjacentHTML('afterbegin', newNoteHtml); 
-            input.value = ''; 
-        } 
+                <div> 
+                    <button onclick="closeModal('activeCasesListModal'); openModal('handoffModal');" class="px-3 py-1 bg-ruili-brand hover:opacity-90 text-white rounded-xl font-bold transition text-[10px] shadow-2xs whitespace-nowrap"> 
+                        交棒與管理 ➔ 
+                    </button> 
+                </div> 
+            </div> 
+        `; 
+    }); 
+     
+    container.innerHTML = html; 
+    openModal('activeCasesListModal'); 
+} 
+
+function openApprovalDetail(id, name, service, amount, intro, schedule, desc) { 
+    document.getElementById('modal-case-name').innerText = name; 
+    document.getElementById('modal-case-service').innerText = service; 
+    document.getElementById('modal-input-case-id').value = id; 
+    document.getElementById('modal-input-amount').value = amount; 
+    document.getElementById('modal-case-intro').innerText = intro; 
+    document.getElementById('modal-case-schedule').innerText = schedule; 
+    document.getElementById('modal-case-desc').innerText = desc || '依評估表記錄進行合約登錄。'; 
+     
+    closeModal('pendingListModal'); 
+    openModal('approvalModal'); 
+} 
+
+function openClosingDetail(id, name) { 
+    document.getElementById('closing-case-title').innerText = `${id} - ${name}`; 
+    closeModal('pendingClosingListModal'); 
+    openModal('pendingClosingModal'); 
+} 
+
+function openPipelineDetail(id, name, service, amount, intro, schedule, signDate, remark) { 
+    document.getElementById('pipeline-modal-id').innerText = id; 
+    document.getElementById('pipeline-modal-name').innerText = name; 
+    document.getElementById('pipeline-modal-service').innerText = service; 
+    document.getElementById('pipeline-modal-amount').innerText = amount; 
+    document.getElementById('pipeline-modal-intro').innerText = intro; 
+    document.getElementById('pipeline-modal-schedule').innerText = schedule; 
+    document.getElementById('pipeline-modal-sign-date').innerText = signDate; 
+    document.getElementById('pipeline-modal-remark').innerText = remark; 
+
+    document.getElementById('input-pay-date').value = ''; 
+    document.getElementById('input-close-date').value = ''; 
+
+    closeModal('closingPipelineListModal'); 
+    openModal('closingPipelineModal'); 
+} 
+
+function validateAndSubmitClosing() { 
+    const payDate = document.getElementById('input-pay-date').value; 
+    const closeDate = document.getElementById('input-close-date').value; 
+
+    if (!payDate || !closeDate) { 
+        alert('⚠️ 結案失敗：請務必填寫「尾款收款日期」與「結案日期」後方可結案！'); 
+        return; 
+    } 
+
+    alert('✨ 結案收尾流水線完成！尾款收款日期與結案日期已確認，正式結案報告已自動歸檔至左側「結案中心」'); 
+    closeModal('closingPipelineModal'); 
+} 
+
+function openPdfReport(id, client, service, amount) { 
+    document.getElementById('pdf-id').innerText = id; 
+    document.getElementById('pdf-client').innerText = client; 
+    document.getElementById('pdf-service').innerText = service; 
+    document.getElementById('pdf-amount').innerText = amount; 
+    document.getElementById('pdf-title').innerText = `睿立集團｜${client}${service}・結案總結報告`; 
+    openModal('pdfModal'); 
+} 
+
+function exportPdf() { 
+    alert('📥 正在執行一鍵匯出 PDF，白底金字正式結案報告已成功下載並歸檔！'); 
+    closeModal('pdfModal'); 
+} 
+
+function addNote() { 
+    const input = document.getElementById('new-note-input'); 
+    const container = document.getElementById('notes-container'); 
+    if(!input.value.trim()) return; 
+
+    const now = new Date(); 
+    const timeStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`; 
+     
+    const newNoteHtml = ` 
+        <div class="bg-white p-2 rounded-lg border border-stone-200 shadow-2xs space-y-0.5 animate-fade-in"> 
+            <div class="flex justify-between items-center text-[9px] text-stone-400"> 
+                <strong class="text-stone-700">👤 最高管理者 (品牌長 - 您)</strong> 
+                <span class="font-mono font-bold text-amber-600">${timeStr}</span> 
+            </div> 
+            <p class="text-stone-800 text-[10px]">${input.value}</p> 
+        </div> 
+    `; 
+     
+    container.insertAdjacentHTML('afterbegin', newNoteHtml); 
+    input.value = ''; 
+} 
+
+function addHandoffNote() { 
+    const input = document.getElementById('handoff-new-note-input'); 
+    const container = document.getElementById('handoff-notes-container'); 
+    if(!input.value.trim()) return; 
+
+    const now = new Date(); 
+    const timeStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`; 
+     
+    const newNoteHtml = ` 
+        <div class="bg-white p-2 rounded-lg border border-stone-200 shadow-2xs space-y-0.5 animate-fade-in"> 
+            <div class="flex justify-between items-center text-[9px] text-stone-400"> 
+                <strong class="text-stone-700">👤 最高管理者 (品牌長 - 您)</strong> 
+                <span class="font-mono font-bold text-amber-600">${timeStr}</span> 
+            </div> 
+            <p class="text-stone-800 text-[10px]">${input.value}</p> 
+        </div> 
+    `; 
+     
+    container.insertAdjacentHTML('afterbegin', newNoteHtml); 
+    input.value = ''; 
+}
 
         function addHandoffNote() { 
             const input = document.getElementById('handoff-new-note-input'); 
