@@ -1358,94 +1358,100 @@
         }
 
         window.addQuoteSupplierRow = function() {
-            const container = document.getElementById('suppliers-rows-container');
-            if (!container) return;
+    const container = document.getElementById('suppliers-rows-container');
+    if (!container) return;
 
-            const rowId = 'supplier-row-' + Date.now();
-            const html = `
-                <div id="${rowId}" class="grid grid-cols-6 gap-3 items-center bg-stone-50 p-3 rounded-xl border border-stone-200">
-                    <div>
-                        <input type="text" placeholder="供應商名稱" class="supplier-name w-full bg-white border border-stone-300 rounded-xl px-3 py-1.5 text-xs focus:outline-none focus:border-ruili-brand shadow-2xs">
-                    </div>
-                    <div>
-                        <input type="text" placeholder="施作項目" class="supplier-item w-full bg-white border border-stone-300 rounded-xl px-3 py-1.5 text-xs focus:outline-none focus:border-ruili-brand shadow-2xs">
-                    </div>
-                    <div>
-                        <input type="number" placeholder="未稅價格" oninput="calculateQuoteTotals()" class="supplier-untaxed w-full bg-white border border-stone-300 rounded-xl px-3 py-1.5 text-xs focus:outline-none focus:border-ruili-brand shadow-2xs font-mono">
-                    </div>
-                    <div>
-                        <input type="number" placeholder="報價金額" oninput="calculateQuoteTotals()" class="supplier-amount w-full bg-white border border-stone-300 rounded-xl px-3 py-1.5 text-xs focus:outline-none focus:border-ruili-brand shadow-2xs font-mono">
-                    </div>
-                    <div>
-                        <input type="number" placeholder="簽約金額" oninput="calculateQuoteTotals()" class="supplier-contract w-full bg-white border border-stone-300 rounded-xl px-3 py-1.5 text-xs focus:outline-none focus:border-ruili-brand shadow-2xs font-mono text-rose-600 font-bold">
-                    </div>
-                    <div class="flex items-center space-x-2">
-                        <input type="number" value="5" oninput="calculateQuoteTotals()" class="supplier-tax w-14 bg-white border border-stone-300 rounded-xl px-2 py-1.5 text-xs text-center font-mono">
-                        <button type="button" onclick="document.getElementById('${rowId}').remove(); calculateQuoteTotals();" class="px-2.5 py-1.5 bg-rose-100 text-rose-600 hover:bg-rose-200 rounded-xl text-xs font-bold transition">
-                            <i class="fa-solid fa-trash"></i>
-                        </button>
-                    </div>
-                </div>
-            `;
-            container.insertAdjacentHTML('beforeend', html);
-        };
+    const rowId = 'supplier-row-' + Date.now();
+    const html = `
+        <div id="${rowId}" class="grid grid-cols-6 gap-3 items-center bg-stone-50 p-3 rounded-xl border border-stone-200">
+            <div>
+                <input type="text" placeholder="供應商名稱" class="supplier-name w-full bg-white border border-stone-300 rounded-xl px-3 py-1.5 text-xs focus:outline-none focus:border-ruili-brand shadow-2xs">
+            </div>
+            <div>
+                <input type="text" placeholder="施作項目" class="supplier-item w-full bg-white border border-stone-300 rounded-xl px-3 py-1.5 text-xs focus:outline-none focus:border-ruili-brand shadow-2xs">
+            </div>
+            <div>
+                <input type="number" placeholder="未稅價格" oninput="calculateQuoteTotals()" class="supplier-untaxed w-full bg-white border border-stone-300 rounded-xl px-3 py-1.5 text-xs focus:outline-none focus:border-ruili-brand shadow-2xs font-mono">
+            </div>
+            <div>
+                <input type="number" placeholder="報價金額" oninput="calculateQuoteTotals()" class="supplier-amount w-full bg-white border border-stone-300 rounded-xl px-3 py-1.5 text-xs focus:outline-none focus:border-ruili-brand shadow-2xs font-mono">
+            </div>
+            <div>
+                <input type="number" placeholder="簽約金額" oninput="calculateQuoteTotals()" class="supplier-contract w-full bg-white border border-stone-300 rounded-xl px-3 py-1.5 text-xs focus:outline-none focus:border-ruili-brand shadow-2xs font-mono text-rose-600 font-bold">
+            </div>
+            <div class="flex items-center space-x-2">
+                <input type="number" value="5" oninput="calculateQuoteTotals()" class="supplier-tax w-14 bg-white border border-stone-300 rounded-xl px-2 py-1.5 text-xs text-center font-mono">
+                <button type="button" onclick="document.getElementById('${rowId}').remove(); calculateQuoteTotals();" class="px-2.5 py-1.5 bg-rose-100 text-rose-600 hover:bg-rose-200 rounded-xl text-xs font-bold transition">
+                    <i class="fa-solid fa-trash"></i>
+                </button>
+            </div>
+        </div>
+    `;
+    container.insertAdjacentHTML('beforeend', html);
+};
 
-        window.calculateQuoteTotals = function() {
-            const rows = document.querySelectorAll('#suppliers-rows-container > div');
-            let totalQuote = 0;
-            let totalContract = 0;
-            let totalUntaxed = 0;
+window.calculateQuoteTotals = function() {
+    const rows = document.querySelectorAll('#suppliers-rows-container > div');
+    let totalQuote = 0;
+    let totalContract = 0;
+    let totalUntaxed = 0;
 
-            rows.forEach(row => {
-                const amount = parseFloat(row.querySelector('.supplier-amount')?.value) || 0;
-                const contract = parseFloat(row.querySelector('.supplier-contract')?.value) || 0;
-                const untaxed = parseFloat(row.querySelector('.supplier-untaxed')?.value) || 0;
-                totalQuote += amount;
-                totalContract += contract;
-                totalUntaxed += untaxed;
-            });
+    rows.forEach(row => {
+        const amount = parseFloat(row.querySelector('.supplier-amount')?.value) || 0;
+        const contract = parseFloat(row.querySelector('.supplier-contract')?.value) || 0;
+        const untaxed = parseFloat(row.querySelector('.supplier-untaxed')?.value) || 0;
+        totalQuote += amount;
+        totalContract += contract;
+        totalUntaxed += untaxed;
+    });
 
-            const totalTaxAfter = totalQuote * 1.05;
-            const totalProfit = totalContract - totalUntaxed;
+    const totalTaxAfter = totalQuote * 1.05;
+    const totalProfit = totalContract - totalUntaxed;
 
-            const elTotal = document.getElementById('calc-total-quote');
-            const elTaxAfter = document.getElementById('calc-tax-after');
-            const elContractTotal = document.getElementById('calc-total-contract');
-            const elProfit = document.getElementById('calc-total-profit');
+    // 1. 填入下方供應商的自動總計欄位（這裡用回 calc-total-contract，不會干擾上方手動輸入）
+    const elTotal = document.getElementById('calc-total-quote');
+    const elTaxAfter = document.getElementById('calc-tax-after');
+    const elContractTotal = document.getElementById('calc-total-contract'); 
+    const elProfit = document.getElementById('calc-total-profit');
 
-            if (elTotal) elTotal.value = `NT$ ${totalQuote.toLocaleString()}`;
-            if (elTaxAfter) elTaxAfter.value = `NT$ ${Math.round(totalTaxAfter).toLocaleString()}`;
-            if (elContractTotal) elContractTotal.value = `NT$ ${totalContract.toLocaleString()}`;
-            if (elProfit) elProfit.value = `NT$ ${totalProfit.toLocaleString()}`;
+    if (elTotal) elTotal.value = `NT$ ${totalQuote.toLocaleString()}`;
+    if (elTaxAfter) elTaxAfter.value = `NT$ ${Math.round(totalTaxAfter).toLocaleString()}`;
+    if (elContractTotal) elContractTotal.value = `NT$ ${totalContract.toLocaleString()}`;
+    if (elProfit) elProfit.value = `NT$ ${totalProfit.toLocaleString()}`;
 
-            for (let i = 1; i <= 4; i++) {
-                const pctInput = document.getElementById(`quote-inst-${i}-pct`);
-                const valSpan = document.getElementById(`quote-inst-${i}-val`);
-                if (pctInput && valSpan) {
-                    const pct = parseFloat(pctInput.value) || 0;
-                    const val = Math.round(totalContract * (pct / 100));
-                    valSpan.innerText = `NT$ ${val.toLocaleString()}`;
-                }
-            }
-        };
+    // 2. 獨立連動：抓取上方手動輸入的 contract-amount 來計算下方的收款期程
+    const manualInput = document.getElementById('contract-amount');
+    const manualContractAmount = manualInput ? (parseFloat(manualInput.value) || 0) : 0;
 
-        window.calculateApprovalInstallments = function() {
-            const amountInput = document.getElementById('modal-input-amount');
-            const baseAmount = parseFloat(amountInput?.value.replace(/[^0-9.]/g, '')) || 0;
+    for (let i = 1; i <= 4; i++) {
+        const pctInput = document.getElementById(`quote-inst-${i}-pct`);
+        const valSpan = document.getElementById(`quote-inst-${i}-val`);
+        if (pctInput && valSpan) {
+            const pct = parseFloat(pctInput.value) || 0;
+            const val = Math.round(manualContractAmount * (pct / 100));
+            valSpan.innerText = `NT$ ${val.toLocaleString()}`;
+        }
+    }
+};
 
-            for (let i = 1; i <= 4; i++) {
-                const pctInput = document.getElementById(`approval-inst-${i}-pct`);
-                const valSpan = document.getElementById(`approval-inst-${i}-val`);
-                if (pctInput && valSpan) {
-                    const pct = parseFloat(pctInput.value) || 0;
-                    const val = Math.round(baseAmount * (pct / 100));
-                    valSpan.innerText = `NT$ ${val.toLocaleString()}`;
-                }
-            }
-        };
+window.calculateApprovalInstallments = function() {
+    const amountInput = document.getElementById('modal-input-amount');
+    const baseAmount = parseFloat(amountInput?.value.replace(/[^0-9.]/g, '')) || 0;
 
-        function openQuotationGeneratorModal() {
-            openModal('quotationGeneratorModal');
+    for (let i = 1; i <= 4; i++) {
+        const pctInput = document.getElementById(`approval-inst-${i}-pct`);
+        const valSpan = document.getElementById(`approval-inst-${i}-val`);
+        if (pctInput && valSpan) {
+            const pct = parseFloat(pctInput.value) || 0;
+            const val = Math.round(baseAmount * (pct / 100));
+            valSpan.innerText = `NT$ ${val.toLocaleString()}`;
+        }
+    }
+};
+
+function openQuotationGeneratorModal() {
+    openModal('quotationGeneratorModal');
+}
         }
 
         let currentGeneratedRuNo = 1;
