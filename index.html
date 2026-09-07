@@ -1948,11 +1948,14 @@ function addHandoffNote() {
                         </div> 
                     </div>`; 
             } 
-        } else if(moduleName === 'tools-module') {
+       } else if(moduleName === 'tools-module') {
                 const toolsModule = document.getElementById('tools-module');
                 if (toolsModule) {
                     container.innerHTML = toolsModule.innerHTML;
-                } 
+                    // 確保動態載入後會移除 hidden，讓它正常顯示
+                    container.querySelector('#tools-module')?.classList.remove('hidden');
+                }
+            }
 
         function renderWorkflowOverviewWithPipelineView(activeRole) { 
             const container = document.getElementById('app-container'); 
