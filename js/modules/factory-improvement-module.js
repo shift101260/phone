@@ -12,7 +12,7 @@ window.renderFactoryImprovementModule = function() {
                         <i class="fa-solid fa-file-pdf text-amber-600"></i>
                         <span>工廠改善計畫名單</span>
                     </h2>
-                    <p class="text-xs text-stone-500 mt-0.5">特定工廠改善計畫書查詢、前台智慧篩選與集團案件中心一鍵連動</p>
+                    <p class="text-xs text-stone-500 mt-0.5">特定工廠改善計畫名單查詢</p>
                 </div>
                 <div class="flex items-center space-x-2">
                     <button type="button" onclick="window.renderToolsModule()" class="px-3 py-1.5 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded-xl text-xs font-bold transition flex items-center space-x-1">
@@ -34,35 +34,12 @@ window.renderFactoryImprovementModule = function() {
                     </div>
                 </div>
 
-                <!-- 審查進度狀態 -->
-                <div class="w-full lg:w-44">
-                    <label class="block text-[10px] font-bold text-stone-500 mb-1">審查進度狀態</label>
-                    <select id="factory-status-select" class="w-full px-3 py-1.5 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-900 focus:outline-none focus:border-ruili-brand">
-                        <option value="">全部進度</option>
-                        <option value="reviewing">改善計畫審查中</option>
-                        <option value="approved">已核准通過</option>
-                        <option value="closed">已結案歸檔</option>
-                    </select>
-                </div>
-
-                <!-- 縣市別 -->
-                <div class="w-full lg:w-40">
-                    <label class="block text-[10px] font-bold text-stone-500 mb-1">縣市別</label>
-                    <select id="factory-city-select" class="w-full px-3 py-1.5 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-900 focus:outline-none focus:border-ruili-brand">
-                        <option value="">全部縣市</option>
-                        <option value="KHH">高雄市</option>
-                        <option value="TNN">臺南市</option>
-                        <option value="PTH">屏東縣</option>
-                    </select>
-                </div>
-            </div>
-
             <!-- 篩選結果與表格呈現 -->
             <div class="bg-white rounded-2xl border border-stone-200 shadow-2xs overflow-hidden">
                 <div class="p-4 border-b border-stone-100 flex items-center justify-between">
                     <h3 class="font-bold text-xs text-stone-900 flex items-center space-x-1.5">
                         <i class="fa-solid fa-list-check text-sky-600"></i>
-                        <span>特定工廠改善計畫清單與關聯檢視</span>
+                        <span>特定工廠改善計畫清單</span>
                     </h3>
                     <div class="flex items-center space-x-2">
                         <a href="https://www.cto.moea.gov.tw/FactoryMCLA/web/information/detail.php?cid=7&id=350" target="_blank" rel="noopener noreferrer" class="text-[11px] text-sky-600 hover:text-sky-800 font-bold flex items-center space-x-1">
