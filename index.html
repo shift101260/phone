@@ -1009,16 +1009,25 @@
                 </div>
 
                 <div>
+                    <!-- 案件地址與 Google Map 按鈕 -->
+                <div>
                     <label class="font-bold block mb-1 text-stone-900">案件地址</label>
-                    <input type="text" id="edit-case-address" class="w-full bg-white border border-stone-300 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-ruili-brand font-medium shadow-2xs" placeholder="例：高雄市仁武區...">
+                    <div class="flex items-center space-x-2">
+                        <input type="text" id="edit-case-address" class="flex-1 bg-white border border-stone-300 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-ruili-brand font-medium shadow-2xs" placeholder="例：高雄市仁武區...">
+                        <button type="button" onclick="openGoogleMapDrawer()" class="px-3 py-2 bg-stone-100 hover:bg-sky-600 hover:text-white text-stone-700 border border-stone-300 rounded-xl text-xs font-bold transition shadow-2xs whitespace-nowrap flex items-center space-x-1 cursor-pointer" title="Google Map 街景與導航">
+                            <i class="fa-solid fa-map-location text-sky-600"></i><span>Google Map</span>
+                        </button>
+                    </div>
                 </div>
+
+                <!-- 地段地號與多筆地號地籍圖按鈕 -->
                 <div>
                     <label class="font-bold block mb-1 text-stone-900">地段地號</label>
                     <div class="flex items-center space-x-2">
-                        <input type="text" id="edit-case-land-number" class="flex-1 bg-white border border-stone-300 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-ruili-brand font-medium shadow-2xs" placeholder="例：仁武段 123-4地號">
-                        <a href="https://maps.nlsc.gov.tw" target="_blank" rel="noopener noreferrer" class="px-3 py-2 bg-stone-100 hover:bg-ruili-brand hover:text-white text-stone-700 border border-stone-300 rounded-xl text-xs font-bold transition shadow-2xs whitespace-nowrap flex items-center space-x-1" title="國土測繪圖資服務雲">
-                            <i class="fa-solid fa-map-location-dot"></i><span>地籍圖</span>
-                        </a>
+                        <input type="text" id="edit-case-land-number" class="flex-1 bg-white border border-stone-300 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-ruili-brand font-medium shadow-2xs" placeholder="例：高雄市仁武區仁龍段1158.1159.1159-1">
+                        <button type="button" onclick="openCadastralMapDrawer()" class="px-3 py-2 bg-stone-100 hover:bg-amber-600 hover:text-white text-stone-700 border border-stone-300 rounded-xl text-xs font-bold transition shadow-2xs whitespace-nowrap flex items-center space-x-1 cursor-pointer" title="國土測繪圖資服務雲 (多筆地號快捷)">
+                            <i class="fa-solid fa-map-pin text-amber-600"></i><span>地籍圖</span>
+                        </button>
                     </div>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
