@@ -115,13 +115,13 @@ window.renderToolsModule = function() {
                 </div>
             </div>
 
-            <!-- 區塊三：稅費試算專區 -->
+            <!-- 區塊三：稅費試算專區（橫向並排 5 個） -->
             <div class="space-y-3">
                 <div class="flex items-center space-x-2 px-1">
                     <i class="fa-solid fa-calculator text-indigo-500 text-sm"></i>
                     <h3 class="text-xs font-bold uppercase tracking-wider text-stone-500">稅費試算專區</h3>
                 </div>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
                     <a href="https://net.tax.nat.gov.tw/PLRX/Lrx200d01/trial_lnd.html" target="_blank" rel="noopener noreferrer" class="p-4 bg-white hover:bg-indigo-50/50 border border-stone-200 hover:border-indigo-300 rounded-2xl transition flex flex-col justify-between shadow-2xs group">
                         <div class="flex items-center justify-between mb-3">
                             <div class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center text-xs">
@@ -174,17 +174,17 @@ window.renderToolsModule = function() {
                         </div>
                     </a>
 
-                    <a href="https://net.tax.nat.gov.tw/PLRX/Lrx200d01/trial_cht.html" target="_blank" rel="noopener noreferrer" class="col-span-2 md:col-span-4 p-4 bg-white hover:bg-indigo-50/50 border border-stone-200 hover:border-indigo-300 rounded-2xl transition flex items-center justify-between shadow-2xs group">
-                        <div class="flex items-center space-x-3.5">
-                            <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center text-sm shrink-0">
+                    <a href="https://net.tax.nat.gov.tw/PLRX/Lrx200d01/trial_cht.html" target="_blank" rel="noopener noreferrer" class="p-4 bg-white hover:bg-indigo-50/50 border border-stone-200 hover:border-indigo-300 rounded-2xl transition flex flex-col justify-between shadow-2xs group">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center text-xs">
                                 <i class="fa-solid fa-calculator"></i>
                             </div>
-                            <div>
-                                <div class="font-bold text-xs text-stone-900">地方稅綜合試算（印花、土增、牌照、契稅、房屋、地價、娛樂、房地移轉）</div>
-                                <div class="text-[10px] text-stone-400 mt-0.5">地方稅網路申報作業入口網整合頁面</div>
-                            </div>
+                            <i class="fa-solid fa-arrow-up-right-from-square text-[10px] text-stone-300 group-hover:text-indigo-600"></i>
                         </div>
-                        <i class="fa-solid fa-arrow-up-right-from-square text-xs text-stone-300 group-hover:text-indigo-600 pr-1"></i>
+                        <div>
+                            <div class="font-bold text-xs text-stone-900">地方稅綜合試算</div>
+                            <div class="text-[10px] text-stone-400 mt-0.5">地方稅申報入口網</div>
+                        </div>
                     </a>
                 </div>
             </div>
