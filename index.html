@@ -799,13 +799,13 @@
                         <label class="font-bold block mb-1 text-stone-900">結案條件 <span class="text-rose-500">*</span></label>
                         <input type="date" id="input-pay-date" class="w-full bg-white border border-stone-300 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-emerald-600 font-bold shadow-2xs">
                     </div>
-                    div>
+                    <div>
                         <label class="font-bold block mb-1 text-stone-900">收文日期 <span class="text-rose-500">*</span></label>
-                        <input type="date" id="input-pay-date" class="w-full bg-white border border-stone-300 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-emerald-600 font-bold shadow-2xs">
+                        <input type="date" id="input-receive-date" class="w-full bg-white border border-stone-300 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-emerald-600 font-bold shadow-2xs">
                     </div>
                     <div>
                         <label class="font-bold block mb-1 text-stone-900">請款日期 <span class="text-rose-500">*</span></label>
-                        <input type="date" id="input-pay-date" class="w-full bg-white border border-stone-300 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-emerald-600 font-bold shadow-2xs">
+                        <input type="date" id="input-invoice-date" class="w-full bg-white border border-stone-300 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-emerald-600 font-bold shadow-2xs">
                     </div>
                     <div>
                         <label class="font-bold block mb-1 text-stone-900">尾款日期 <span class="text-rose-500">*</span></label>
@@ -838,9 +838,10 @@
                 </div>
             </div>
 
-            <div class="bg-stone-50 px-4 py-3 border-t border-stone-200 flex justify-between items-center sticky bottom-0 z-10">
+            <!-- 底端按鈕列：改為 flex-wrap 以適應手機螢幕，避免擠壓跑版 -->
+            <div class="bg-stone-50 px-4 py-3 border-t border-stone-200 flex flex-wrap justify-between items-center gap-2 sticky bottom-0 z-10">
                 <button onclick="closeModal('closingPipelineModal'); openModal('closingPipelineListModal');" class="px-3.5 py-1.5 bg-stone-200 text-stone-700 rounded-xl text-xs font-medium">返回列表</button>
-                <div class="flex space-x-2">
+                <div class="flex items-center space-x-2">
                     <button onclick="alert('💾 結案資料已成功儲存！')" class="px-3.5 py-1.5 bg-stone-200 hover:bg-stone-300 text-stone-700 rounded-xl text-xs font-bold transition">儲存</button>
                     <button onclick="validateAndSubmitClosing()" class="px-4 py-1.5 bg-ruili-brand hover:opacity-90 text-white rounded-xl text-xs font-bold shadow-xs transition">確認完成並完美結案</button>
                 </div>
