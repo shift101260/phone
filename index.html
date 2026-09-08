@@ -1294,31 +1294,34 @@
             <label class="font-bold block mb-1 text-stone-700 text-[11px]">業務合約備註</label>
             <textarea id="contract-business-note" class="w-full bg-white border border-stone-300 rounded-xl p-2.5 h-20 text-xs focus:outline-none focus:border-ruili-brand font-medium" placeholder="請輸入合約相關的特殊條件、付款期程或業務備註..."></textarea>
         </div>
-        <div class="pt-2 flex justify-end">
-            <button type="button" onclick="openQuotationGeneratorModal()" class="px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-xl text-xs font-bold transition shadow-xs flex items-center space-x-1.5 cursor-pointer">
-                <i class="fa-solid fa-file-invoice"></i><span>匯出PDF）</span>
-            </button>
-        </div>
+       <div class="pt-2 flex justify-end">
+    <!-- 匯出PDF 按鈕 -->
+    <button type="button" onclick="openQuotationGeneratorModal()" class="px-3 py-1.5 bg-ruili-brand hover:opacity-90 text-white rounded-xl text-xs font-bold transition shadow-2xs flex items-center space-x-1.5 cursor-pointer">
+        <i class="fa-solid fa-file-invoice"></i><span>匯出PDF</span>
+    </button>
+</div>
     </div>
 </div>
 <!-- 彈窗內容主體結束 -->
 
 <!-- 彈窗底部固定按鈕列 -->
 <div class="px-6 py-4 bg-stone-100 border-t border-stone-200 flex justify-end items-center space-x-3 shrink-0">
-    <!-- 新增的「案件簽核」按鈕（點擊後同步至工作看板的待簽核列表，且案件管理中的本體資料絕對不會消失） -->
-    <button type="button" onclick="handleCaseSignOff(currentEditingId)" class="px-4 py-2 bg-amber-700 hover:bg-amber-800 text-white rounded-xl text-xs font-bold transition shadow-2xs flex items-center space-x-1.5 cursor-pointer">
+    <!-- 案件簽核 按鈕 -->
+    <button type="button" onclick="handleCaseSignOff(currentEditingId)" class="px-3 py-1.5 bg-ruili-brand hover:opacity-90 text-white rounded-xl text-xs font-bold transition shadow-2xs flex items-center space-x-1.5 cursor-pointer">
         <i class="fa-solid fa-file-signature"></i>
         <span>案件簽核</span>
     </button>
 
-    <button type="button" onclick="closeModal('editCaseModal')" class="px-4 py-2 bg-white hover:bg-stone-50 text-stone-700 rounded-xl text-xs font-bold border border-stone-300 transition shadow-2xs cursor-pointer">
+    <!-- 取消 按鈕 (保持一致的尺寸高度) -->
+    <button type="button" onclick="closeModal('editCaseModal')" class="px-3 py-1.5 bg-white hover:bg-stone-50 text-stone-700 rounded-xl text-xs font-bold border border-stone-300 transition shadow-2xs cursor-pointer">
         取消
     </button>
-    <button type="button" onclick="saveCaseData()" class="px-5 py-2 bg-ruili-brand hover:opacity-90 text-white rounded-xl text-xs font-bold transition shadow-2xs flex items-center space-x-1.5 cursor-pointer">
+    
+    <!-- 儲存 按鈕 -->
+    <button type="button" onclick="saveCaseData()" class="px-3 py-1.5 bg-ruili-brand hover:opacity-90 text-white rounded-xl text-xs font-bold transition shadow-2xs flex items-center space-x-1.5 cursor-pointer">
         <i class="fa-solid fa-check"></i><span>儲存</span>
     </button>
 </div>
-
     </div> <!-- 關閉外層白色卡片 -->
 </div> <!-- 關閉 editCaseModal 背景遮罩 -->
     <!-- 頁面切換與控制邏輯 --> 
