@@ -844,11 +844,11 @@
                     <span class="font-bold text-stone-900 block mb-1.5"><i class="fa-solid fa-list-check text-emerald-600 mr-1"></i> 收尾標準作業程序 (SOP)：</span>
                     <label class="flex items-center space-x-2 cursor-pointer">
                         <input type="checkbox" checked class="rounded border-stone-300 text-emerald-600">
-                        <span>1. 確認並詢問客戶是否需要開立發票</span>
+                        <span>1. 發送尾款 / 請款單給客戶</span>
                     </label>
                     <label class="flex items-center space-x-2 cursor-pointer">
                         <input type="checkbox" checked class="rounded border-stone-300 text-emerald-600">
-                        <span>2. 發送尾款 / 請款單給客戶</span>
+                        <span>2. 確認並詢問客戶是否需要開立發票</span>
                     </label>
                     <label class="flex items-center space-x-2 cursor-pointer">
                         <input type="checkbox" checked class="rounded border-stone-300 text-emerald-600">
@@ -881,7 +881,7 @@
         <div class="bg-white w-full max-w-xl rounded-3xl shadow-2xl overflow-hidden border border-amber-200 my-6 text-stone-800">
             <div class="bg-stone-50 text-amber-800 px-5 py-3.5 flex justify-between items-center sticky top-0 z-10 border-b border-amber-200/60">
                 <h3 class="font-bold text-xs tracking-wider flex items-center">
-                    <i class="fa-solid fa-crown text-amber-600 mr-1.5"></i> 睿立集團・正式結案總結報告
+                    <i class="fa-solid fa-crown text-amber-600 mr-1.5"></i> 睿立集團・結案報告書
                 </h3>
                 <button onclick="closeModal('pdfModal')" class="text-stone-400 hover:text-stone-700"><i class="fa-solid fa-xmark text-base"></i></button>
             </div>
@@ -1600,12 +1600,12 @@ function openPdfReport(id, client, service, amount) {
     document.getElementById('pdf-client').innerText = client; 
     document.getElementById('pdf-service').innerText = service; 
     document.getElementById('pdf-amount').innerText = amount; 
-    document.getElementById('pdf-title').innerText = `睿立集團｜${client}${service}・結案總結報告`; 
+    document.getElementById('pdf-title').innerText = `睿立集團｜${client}${service}・結案報告書`; 
     openModal('pdfModal'); 
 } 
 
 function exportPdf() { 
-    alert('📥 正在執行一鍵匯出 PDF，白底金字正式結案報告已成功下載並歸檔！'); 
+    alert('📥 正在執行一鍵匯出 PDF，已成功下載並歸檔！'); 
     closeModal('pdfModal'); 
 } 
 
