@@ -2169,11 +2169,22 @@ function addHandoffNote() {
             alert(`成功將案件拋轉至「${targetStatus}」！`); 
             renderYearManagementView(currentYear); 
         } 
+// 側邊欄開合控制函式（請保留這段）
+    function toggleSidebar() {
+        const sidebar = document.querySelector('.ruili-sidebar');
+        sidebar.classList.toggle('mobile-open');
+    }
 
-        function toggleSidebar() { 
-            const sidebar = document.querySelector('.ruili-sidebar'); 
-            sidebar.classList.toggle('mobile-open'); 
-        } 
+    // 💡 手機版點擊任何導覽按鈕後，自動收起側邊欄
+    document.addEventListener('click', function(e) {
+        const btn = e.target.closest('.nav-btn');
+        if (btn && window.innerWidth < 768) {
+            const sidebar = document.querySelector('.ruili-sidebar');
+            if (sidebar && sidebar.classList.contains('mobile-open')) {
+                toggleSidebar();
+            }
+        }
+    });
 
         window.onload = function() { 
             switchModule('kanban', document.querySelector("button[onclick*='kanban']")); 
