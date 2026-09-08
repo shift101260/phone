@@ -1320,20 +1320,16 @@
             </div> <!-- 關閉第四大區塊 -->
         </div> <!-- 關閉彈窗內容主體 -->
 
-       <div class="px-6 py-4 bg-stone-100 border-t border-stone-200 flex justify-end items-center space-x-3 shrink-0">
-    <!-- 新增的按鈕 -->
-    <button type="button" onclick="handleCaseSignOff(currentEditingId)" class="px-4 py-2 bg-amber-700 text-white rounded-xl text-xs hover:bg-amber-800 transition flex items-center space-x-1.5">
-        <i class="fa-solid fa-file-signature"></i>
-        <span>案件簽核</span>
-    </button>
+        <!-- 彈窗底部固定按鈕列 -->
+        <div class="px-6 py-4 bg-stone-100 border-t border-stone-200 flex justify-end items-center space-x-3 shrink-0">
+            <button type="button" onclick="closeModal('editCaseModal')" class="px-4 py-2 bg-white hover:bg-stone-50 text-stone-700 rounded-xl text-xs font-bold border border-stone-300 transition shadow-2xs cursor-pointer">
+                取消
+            </button>
+            <button type="button" onclick="saveCaseData()" class="px-5 py-2 bg-ruili-brand hover:opacity-90 text-white rounded-xl text-xs font-bold transition shadow-2xs flex items-center space-x-1.5 cursor-pointer">
+                <i class="fa-solid fa-check"></i><span>儲存案件資料</span>
+            </button>
+        </div>
 
-    <button type="button" onclick="closeModal('editCaseModal')" class="px-4 py-2 bg-white hover:bg-stone-50 text-stone-700 rounded-xl text-xs border border-stone-200 transition">
-        取消
-    </button>
-    <button type="button" onclick="saveCaseData()" class="px-5 py-2 bg-ruili-brand hover:opacity-90 text-white rounded-xl text-xs transition flex items-center space-x-1.5">
-        <i class="fa-solid fa-check"></i><span>儲存案件資料</span>
-    </button>
-</div>
     </div>
 </div>
 
@@ -2189,59 +2185,6 @@ function addHandoffNote() {
         window.onload = function() { 
             switchModule('kanban', document.querySelector("button[onclick*='kanban']")); 
         }; 
-        // 側邊欄開合控制函式（請保留這段）
-        function toggleSidebar() {
-            const sidebar = document.querySelector('.ruili-sidebar');
-            sidebar.classList.toggle('mobile-open');
-        }
-
-        // 💡 把這段貼在這邊（toggleSidebar 的下方）！
-        // 💡 1. 案件簽核與工作看板連動處理函式
-window.handleCaseSignOff = function(caseId) {
-    let targetCase = globalCasesData.find(c => c.id === caseId);
-    if (targetCase) {
-        targetCase.isPendingSign = true; 
-        targetCase.signStatusUpdatedAt = new Date().toISOString();
-    }
-
-    // 儲存全域資料
-    saveCasesData(globalCasesData);
-
-    // 重新整理工作看板
-    if (typeof renderKanbanView === 'function') {
-        renderKanbanView();
-    }
-
-    alert(`✨ 案件 ${caseId} 已成功送出簽核！秘書待簽核清單已同步更新。`);
-    
-    // 呼叫 Bark 手機推播（請填入您的 Bark ID）
-    sendBarkNotification("睿立集團系統通知", `案件 ${caseId} 已送出案件簽核，請秘書協助處理！`);
-};
-
-// 💡 2. Bark App 手機推播專用函式
-function sendBarkNotification(title, body) {
-    const barkId = '8404667351542dc065a337dbb5f998a66532fdcad59d0151bb3c84b88a2d9c55'; // <--- 把這裡換成您的真實 Bark ID
-    if (barkId === '8404667351542dc065a337dbb5f998a66532fdcad59d0151bb3c84b88a2d9c55') {
-        console.log("尚未設定 Bark ID");
-        return;
-    }
-
-    const encodedTitle = encodeURIComponent(title);
-    const encodedBody = encodeURIComponent(body);
-    const url = `https://api.day.app/${barkId}/${encodedTitle}/${encodedBody}`;
-
-    fetch(url)
-        .then(response => {
-            if (response.ok) {
-                console.log("Bark 推播發送成功！");
-            }
-        })
-        .catch(err => console.error("Bark 推播失敗", err));
-}％
-
-        // 💡 手機版點擊任何導覽按鈕後，自動收起側邊欄
-        document.addEventListener('click', function(e) {
-            ...
     </script> 
 
     <!-- 引入模組化主程式 (main.js) --> 
