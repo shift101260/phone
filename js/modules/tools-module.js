@@ -5,13 +5,13 @@ window.renderToolsModule = function() {
 
     container.innerHTML = `
         <div class="space-y-8 max-w-7xl mx-auto pb-12">
-            <!-- 區塊二：地籍與工商查詢 -->
+            <!-- 區塊二：基本資料查詢（改為 5 欄並排，包含新增的謄本調閱） -->
             <div class="space-y-3">
                 <div class="flex items-center space-x-2 px-1">
                     <i class="fa-solid fa-map-location-dot text-emerald-500 text-sm"></i>
                     <h3 class="text-xs font-bold uppercase tracking-wider text-stone-500">基本資料查詢</h3>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
                     <!-- 工廠改善計畫查詢 -->
                     <div onclick="renderFactoryImprovementModule()" class="p-4 bg-white hover:bg-amber-50/50 border border-stone-200 hover:border-amber-300 rounded-2xl transition flex items-center space-x-3.5 shadow-2xs group cursor-pointer">
                         <div class="w-11 h-11 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center text-base shrink-0 group-hover:scale-105 transition">
@@ -56,14 +56,26 @@ window.renderToolsModule = function() {
                         </div>
                         <i class="fa-solid fa-arrow-up-right-from-square text-xs text-stone-300 group-hover:text-amber-600"></i>
                     </a>
+
+                    <!-- 新增的謄本調閱按鈕 -->
+                    <a href="https://aaav2.hinet.net/A1/AuthScreen.jsp" target="_blank" rel="noopener noreferrer" class="p-4 bg-white hover:bg-purple-50/50 border border-stone-200 hover:border-purple-300 rounded-2xl transition flex items-center space-x-3.5 shadow-2xs group">
+                        <div class="w-11 h-11 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center text-base shrink-0 group-hover:scale-105 transition">
+                            <i class="fa-solid fa-file-lines"></i>
+                        </div>
+                        <div class="overflow-hidden flex-1">
+                            <div class="font-bold text-xs text-stone-900 truncate">謄本調閱</div>
+                            <div class="text-[10px] text-stone-400 truncate mt-0.5">地政電傳謄本查詢系統</div>
+                        </div>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-xs text-stone-300 group-hover:text-purple-600"></i>
+                    </a>
                 </div>
             </div>
 
-            <!-- 區塊三：稅費試算專區（橫向並排 5 個） -->
+            <!-- 區塊三：不動產稅費試算專區（橫向並排 5 個） -->
             <div class="space-y-3">
                 <div class="flex items-center space-x-2 px-1">
                     <i class="fa-solid fa-calculator text-indigo-500 text-sm"></i>
-                    <h3 class="text-xs font-bold uppercase tracking-wider text-stone-500">不動產稅務試算專區</h3>
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-stone-500">不動產稅費試算專區</h3>
                 </div>
                 <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
                     <a href="https://net.tax.nat.gov.tw/PLRX/Lrx200d01/trial_lnd.html" target="_blank" rel="noopener noreferrer" class="p-4 bg-white hover:bg-indigo-50/50 border border-stone-200 hover:border-indigo-300 rounded-2xl transition flex flex-col justify-between shadow-2xs group">
