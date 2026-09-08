@@ -1339,6 +1339,23 @@
     <!-- 頁面切換與控制邏輯 --> 
     <script> 
         // Google Map 街景與導航開啟邏輯
+    // 控制年度清單展開與收合的函式
+    window.toggleYearList = function() {
+        const list = document.getElementById('year-list-container');
+        const chevron = document.getElementById('year-chevron');
+        
+        if (list.classList.contains('hidden')) {
+            list.classList.remove('hidden');
+            chevron.style.transform = 'rotate(0deg)';
+        } else {
+            list.classList.add('hidden');
+            chevron.style.transform = 'rotate(-90deg)';
+        }
+    };
+
+    // Google Map 街景與導航開啟邏輯
+    window.openGoogleMapDrawer = function() {
+    ...
 window.openGoogleMapDrawer = function() {
     const addressInput = document.getElementById('edit-case-address');
     const address = addressInput ? addressInput.value.trim() : '';
