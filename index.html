@@ -1296,7 +1296,7 @@
         </div>
         <div class="pt-2 flex justify-end">
             <button type="button" onclick="openQuotationGeneratorModal()" class="px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-xl text-xs font-bold transition shadow-xs flex items-center space-x-1.5 cursor-pointer">
-                <i class="fa-solid fa-file-invoice"></i><span>報價單生成（一鍵 PDF 儲存／列印）</span>
+                <i class="fa-solid fa-file-invoice"></i><span>匯出PDF）</span>
             </button>
         </div>
     </div>
@@ -1305,11 +1305,17 @@
 
 <!-- 彈窗底部固定按鈕列 -->
 <div class="px-6 py-4 bg-stone-100 border-t border-stone-200 flex justify-end items-center space-x-3 shrink-0">
+    <!-- 新增的「案件簽核」按鈕（點擊後同步至工作看板的待簽核列表，且案件管理中的本體資料絕對不會消失） -->
+    <button type="button" onclick="handleCaseSignOff(currentEditingId)" class="px-4 py-2 bg-amber-700 hover:bg-amber-800 text-white rounded-xl text-xs font-bold transition shadow-2xs flex items-center space-x-1.5 cursor-pointer">
+        <i class="fa-solid fa-file-signature"></i>
+        <span>案件簽核</span>
+    </button>
+
     <button type="button" onclick="closeModal('editCaseModal')" class="px-4 py-2 bg-white hover:bg-stone-50 text-stone-700 rounded-xl text-xs font-bold border border-stone-300 transition shadow-2xs cursor-pointer">
         取消
     </button>
     <button type="button" onclick="saveCaseData()" class="px-5 py-2 bg-ruili-brand hover:opacity-90 text-white rounded-xl text-xs font-bold transition shadow-2xs flex items-center space-x-1.5 cursor-pointer">
-        <i class="fa-solid fa-check"></i><span>儲存案件資料</span>
+        <i class="fa-solid fa-check"></i><span>儲存</span>
     </button>
 </div>
 
