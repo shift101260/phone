@@ -58,7 +58,7 @@ window.renderToolsModule = function() {
                     </a>
 
                     <!-- 新增的謄本調閱按鈕 -->
-                    <a href="https://aaav2.hinet.net/A1/AuthScreen.jsp" target="_blank" rel="noopener noreferrer" class="p-4 bg-white hover:bg-purple-50/50 border border-stone-200 hover:border-purple-300 rounded-2xl transition flex items-center space-x-3.5 shadow-2xs group">
+                    <a href="https://pqt-kcgetw.land.nat.gov.tw/Logout.action#" target="_blank" rel="noopener noreferrer" class="p-4 bg-white hover:bg-purple-50/50 border border-stone-200 hover:border-purple-300 rounded-2xl transition flex items-center space-x-3.5 shadow-2xs group">
                         <div class="w-11 h-11 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center text-base shrink-0 group-hover:scale-105 transition">
                             <i class="fa-solid fa-file-lines"></i>
                         </div>
