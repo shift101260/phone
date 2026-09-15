@@ -1729,21 +1729,90 @@ function addHandoffNote() {
                 renderYearManagementView(year); 
             } else if(moduleName === 'quotation') { 
                 container.innerHTML = `
-        <div class="space-y-6">
-            <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-2xs space-y-4">
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        } else if(moduleName === 'quotation') {
+        container.innerHTML = `
+            <div class="space-y-6">
+                <!-- 頂部標題與成員切換 -->
+                <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-2xs flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div>
-                        <h2 class="text-base font-bold text-stone-900"><i class="fa-solid fa-pen-to-square text-ruili-brand mr-2"></i>支出自填與查詢中心</h2>
-                        <p class="text-xs text-stone-500 mt-0.5">請手動輸入相關編號或資訊進行查詢與記錄。</p>
+                        <h2 class="text-base font-bold text-stone-900 flex items-center">
+                            <i class="fa-solid fa-file-invoice-dollar text-ruili-brand mr-2"></i> 支出自填與記錄中心
+                        </h2>
+                        <p class="text-xs text-stone-500 mt-0.5">個人日常支出明細、油資、交際費與月結帳總覽管理。</p>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <select onchange="alert('切換成員：' + this.value)" class="px-3 py-1.5 bg-stone-50 border border-stone-300 rounded-xl text-xs font-bold text-stone-800 focus:outline-none focus:border-ruili-brand cursor-pointer">
+                            <option value="楊裕憲">成員：楊裕憲</option>
+                            <option value="陳宥騰">成員：陳宥騰</option>
+                            <option value="樊靖昀">成員：樊靖昀</option>
+                            <option value="鄭家承">成員：鄭家承</option>
+                        </select>
+                        <button onclick="alert('➕ 新增支出項目')" class="px-3 py-1.5 bg-ruili-brand text-white rounded-xl text-xs font-bold shadow-xs hover:opacity-90 transition cursor-pointer flex items-center space-x-1">
+                            <i class="fa-solid fa-plus text-[10px]"></i><span>新增</span>
+                        </button>
                     </div>
                 </div>
-                <div class="flex space-x-2 pt-2 border-t border-stone-100">
-                    <input type="text" placeholder="請自行輸入編號或支出項目..." class="px-3 py-1.5 text-xs border border-stone-300 rounded-xl w-64 focus:outline-none focus:border-ruili-brand font-mono">
-                    <button onclick="alert('🔍 正在查詢記錄...')" class="px-3 py-1.5 bg-ruili-brand text-white rounded-xl text-xs font-bold shadow-xs cursor-pointer">查詢</button>
+
+                <!-- 單一成員支出清單卡片 -->
+                <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-2xs space-y-4">
+                    <div class="flex items-center justify-between border-b border-stone-200 pb-3 bg-stone-50 px-3 py-2 rounded-xl">
+                        <h3 class="font-bold text-stone-900 text-xs flex items-center">
+                            <i class="fa-solid fa-user text-ruili-brand mr-1.5"></i> 楊裕憲的支出明細
+                        </h3>
+                        <span class="text-[11px] text-stone-500 font-mono">總小計：<strong class="text-emerald-700">NT$ 38,154</strong></span>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-xs">
+                            <thead>
+                                <tr class="text-stone-400 border-b border-stone-100 text-[11px]">
+                                    <th class="py-1.5 px-2 font-medium">日期</th>
+                                    <th class="py-1.5 px-2 font-medium">項目</th>
+                                    <th class="py-1.5 px-2 font-medium text-right">金額</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-stone-100 font-medium text-stone-700">
+                                <tr>
+                                    <td class="py-2 px-2 font-mono text-stone-500">5/28</td>
+                                    <td class="py-2 px-2">停車費(台南)</td>
+                                    <td class="py-2 px-2 text-right font-mono">20</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-2 font-mono text-stone-500">5/28</td>
+                                    <td class="py-2 px-2">ETG(台南)</td>
+                                    <td class="py-2 px-2 text-right font-mono">32</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-2 font-mono text-stone-500">6/3</td>
+                                    <td class="py-2 px-2">油資</td>
+                                    <td class="py-2 px-2 text-right font-mono text-amber-700">1,788</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-2 font-mono text-stone-500">6/30</td>
+                                    <td class="py-2 px-2">保養零件機油</td>
+                                    <td class="py-2 px-2 text-right font-mono text-amber-700">5,900</td>
+                                </tr>
+                                <!-- 月結帳分隔 -->
+                                <tr class="bg-rose-50/80 text-rose-800 font-bold">
+                                    <td colspan="2" class="py-1.5 px-2">🔴 7月月結帳</td>
+                                    <td class="py-1.5 px-2 text-right font-mono">--</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-2 font-mono text-stone-500">7/9</td>
+                                    <td class="py-2 px-2">獅子會費</td>
+                                    <td class="py-2 px-2 text-right font-mono text-rose-600 font-bold">30,000</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-2 font-mono text-stone-500">7/9</td>
+                                    <td class="py-2 px-2">會長費</td>
+                                    <td class="py-2 px-2 text-right font-mono text-rose-600 font-bold">50,000</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div>
-    `;
+        `;
+    } else if (moduleName === 'closing') {
                 } else if(moduleName === 'tools-module') {
                 renderToolsModule();
             } else if(moduleName === 'closing') { 
