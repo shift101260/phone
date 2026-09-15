@@ -1077,7 +1077,13 @@
             } else if (moduleName === 'kanban') {
                 renderWorkflowOverviewWithPipelineView('secretary');
             } else if (moduleName === 'tools-module') {
-                container.innerHTML = `<div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-2xs"><h2 class="text-base font-bold text-stone-900">工具專區</h2><p class="text-xs text-stone-500 mt-1">請選擇對應的試算與管理工具模組。</p></div>`;
+                container.innerHTML = `
+                    <div class="space-y-6">
+                        <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-2xs space-y-4">
+                            <h2 class="text-base font-bold text-stone-900"><i class="fa-solid fa-toolbox text-sky-400 mr-2"></i>工具專區</h2>
+                            <p class="text-xs text-stone-500">提供地政、稅務與專案試算等常用工具。</p>
+                        </div>
+                    </div>`;
             } else if (moduleName === 'all-cases') {
                 container.innerHTML = `
                     <div class="space-y-6"> 
@@ -1115,20 +1121,29 @@
                     </div>`; 
             } else if(moduleName.startsWith('year-')) { 
                 const year = moduleName.split('-')[1]; 
-                container.innerHTML = `<div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-2xs"><h2 class="text-base font-bold text-stone-900">${year} 年度案件管理中心</h2><p class="text-xs text-stone-500 mt-1">目前尚無建檔案件。</p></div>`;
+                container.innerHTML = `
+                    <div class="space-y-6">
+                        <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-2xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+                            <div>
+                                <h2 class="text-base font-bold text-stone-900">${year} 年度案件管理中心</h2>
+                                <p class="text-xs text-stone-500 mt-0.5">管理與檢視 ${year} 年度的所有專案與案件進度。</p>
+                            </div>
+                            <button onclick="openModal('editCaseModal'); document.getElementById('edit-case-year').value='${year}';" class="px-4 py-2 bg-ruili-brand hover:opacity-90 text-white rounded-xl text-xs font-bold shadow-xs transition flex items-center space-x-2">
+                                <i class="fa-solid fa-plus"></i><span>新增 ${year} 案件</span>
+                            </button>
+                        </div>
+                        <div class="bg-white rounded-2xl border border-stone-200 shadow-2xs overflow-hidden p-6 text-center text-stone-400 text-xs">
+                            目前尚無 ${year} 年度建檔案件，點擊上方按鈕開始新增。
+                        </div>
+                    </div>`;
             } else if(moduleName === 'quotation') { 
                 container.innerHTML = `
                     <div class="space-y-6">
                         <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-2xs space-y-4">
-                            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                                <div>
-                                    <h2 class="text-base font-bold text-stone-900"><i class="fa-solid fa-pen-to-square text-ruili-brand mr-2"></i>支出自填與查詢中心</h2>
-                                    <p class="text-xs text-stone-500 mt-0.5">請手動輸入相關編號或資訊進行查詢與記錄。</p>
-                                </div>
-                            </div>
+                            <h2 class="text-base font-bold text-stone-900"><i class="fa-solid fa-barcode text-stone-700 mr-2"></i>支出自填與查詢中心</h2>
+                            <p class="text-xs text-stone-500 mt-0.5">請手動輸入相關編號或資訊進行查詢與記錄。</p>
                         </div>
-                    </div>
-                `;
+                    </div>`;
             } else if(moduleName === 'closing') { 
                 container.innerHTML = ` 
                     <div class="space-y-6"> 
@@ -1138,7 +1153,7 @@
                         </div> 
                     </div>`; 
             } 
-        } 
+        }
 
         function renderWorkflowOverviewWithPipelineView(activeRole) { 
             const container = document.getElementById('app-container'); 
