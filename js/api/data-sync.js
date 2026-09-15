@@ -4,19 +4,8 @@
 
 const STORAGE_KEY = 'ruili_erp_cases_data_2026';
 
-// 1. 純淨的初始資料結構（乾淨的空資料）
-const emptyCasesData = {
-    '2027': [],
-    '2026': [],
-    '2025': [],
-    '2024': [],
-    '2023': [],
-    '2022': [],
-    '2021': []
-};
-
-// 2. （可選）保留假資料備用，方便測試，但預設不寫入系統
-const mockDemoCasesData = {
+// 預設初始資料（僅在第一次使用或清除快取時載入）
+const defaultCasesData = {
     '2027': [
         { id: '2027-01', name: '烏日區未來產業專區', client: '何董事長', service: '土地變更', progress: '評估中', amount: 'NT$ 3,000,000', note: '審查準備中', status: '案件評估' }
     ],
@@ -36,42 +25,24 @@ const mockDemoCasesData = {
     '2021': []
 };
 
-// 載入資料（優先從 LocalStorage 讀取，若沒有則載入空結構）
+// 載入資料（優先從 LocalStorage 讀取）
 function loadCasesData() {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
         try {
             return JSON.parse(saved);
         } catch (e) {
-            console.error('解析儲存資料失敗，還原預設空資料', e);
+            console.error('解析儲存資料失敗，還原預設值', e);
         }
     }
-    // 預設載入空資料結構
-    saveCasesData(emptyCasesData);
-    return JSON.parse(JSON.stringify(emptyCasesData));
+    // 若沒有則寫入預設值
+    saveCasesData(defaultCasesData);
+    return JSON.parse(JSON.stringify(defaultCasesData));
 }
 
 // 儲存資料到 LocalStorage
 function saveCasesData(data) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-}
-
-// 3. 安全取得指定年份案件的 Helper 函式（防止前端讀到 undefined 白屏）
-function getCasesByYear(year) {
-    return (globalCasesData && globalCasesData[year]) ? globalCasesData[year] : [];
-}
-
-// 4. 提供一個「一鍵清空 / 恢復測試資料」的工具函式（開發生態用）
-function resetToEmptyData() {
-    localStorage.removeItem(STORAGE_KEY);
-    globalCasesData = loadCasesData();
-    location.reload(); // 重新整理頁面讓 UI 更新
-}
-
-function loadMockDataForTesting() {
-    saveCasesData(mockDemoCasesData);
-    globalCasesData = mockDemoCasesData;
-    location.reload();
 }
 
 // 全域變數供系統調用
