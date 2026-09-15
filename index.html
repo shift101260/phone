@@ -125,7 +125,7 @@
 </button> 
 
 <button onclick="switchModule('quotation', this)" class="nav-btn w-full flex items-center space-x-2.5 px-3 py-2 rounded-xl hover:bg-stone-800 text-stone-300 transition"> 
-    <i class="fa-solid fa-barcode w-4"></i><span>支出自填</span> 
+    <i class="fa-solid fa-barcode w-4"></i><span>案件編號</span> 
 </button>
 
             </nav> 
@@ -1495,6 +1495,14 @@ function openQuotationGeneratorModal() {
     openModal('quotationGeneratorModal');
 }
 
+let currentGeneratedRuNo = 1;
+function generateRuCaseId() {
+    const seqStr = String(currentGeneratedRuNo).padStart(6, '0');
+    const newRuId = `RU${seqStr}`;
+    currentGeneratedRuNo++;
+    alert(`✨ 成功主動生成新案件編號：【${newRuId}】！`);
+}
+
 function openActiveCasesModal() { 
     const container = document.getElementById('active-cases-modal-content'); 
     let allCases = globalCasesData['2026'] || []; 
@@ -1728,22 +1736,25 @@ function addHandoffNote() {
                 const year = moduleName.split('-')[1]; 
                 renderYearManagementView(year); 
             } else if(moduleName === 'quotation') { 
-                container.innerHTML = `
-        <div class="space-y-6">
-            <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-2xs space-y-4">
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                    <div>
-                        <h2 class="text-base font-bold text-stone-900"><i class="fa-solid fa-pen-to-square text-ruili-brand mr-2"></i>支出自填與查詢中心</h2>
-                        <p class="text-xs text-stone-500 mt-0.5">請手動輸入相關編號或資訊進行查詢與記錄。</p>
-                    </div>
-                </div>
-                <div class="flex space-x-2 pt-2 border-t border-stone-100">
-                    <input type="text" placeholder="請自行輸入編號或支出項目..." class="px-3 py-1.5 text-xs border border-stone-300 rounded-xl w-64 focus:outline-none focus:border-ruili-brand font-mono">
-                    <button onclick="alert('🔍 正在查詢記錄...')" class="px-3 py-1.5 bg-ruili-brand text-white rounded-xl text-xs font-bold shadow-xs cursor-pointer">查詢</button>
-                </div>
-            </div>
-        </div>
-    `;
+                container.innerHTML = ` 
+                    <div class="space-y-6"> 
+                        <div class="bg-white p-5 rounded-2xl border border-ruili-border shadow-2xs space-y-4"> 
+                            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4"> 
+                                <div> 
+                                    <h2 class="text-base font-bold text-stone-900"><i class="fa-solid fa-barcode text-ruili-brand mr-2"></i> 案件編號查詢與生成中心</h2> 
+                                    <p class="text-xs text-stone-500 mt-0.5">輸入 RU 開頭的集團統一案件編號進行全集團快速檢索，或點擊右側按鈕主動生成全新編號。</p> 
+                                </div> 
+                                <div> 
+                                    <button type="button" onclick="generateRuCaseId()" class="px-4 py-2 bg-gradient-to-r from-ruili-brand to-stone-800 text-white rounded-xl text-xs font-bold transition shadow-md flex items-center space-x-2 cursor-pointer whitespace-nowrap hover:opacity-90"> 
+                                        <i class="fa-solid fa-barcode text-amber-400"></i><span>案件編號主動生成器 (RU000001)</span> 
+                                    </button> 
+                                </div> 
+                            </div> 
+                            <div class="flex space-x-2 pt-2 border-t border-stone-100"> 
+                                <input type="text" placeholder="輸入編號如 RU000001..." class="px-3 py-1.5 text-xs border border-stone-300 rounded-xl w-48 focus:outline-none focus:border-ruili-brand font-mono"> 
+                                <button onclick="alert('🔍 正在檢索該編號案件歷程...')" class="px-3 py-1.5 bg-ruili-brand text-white rounded-xl text-xs font-bold shadow-xs cursor-pointer">查詢</button> 
+                            </div> 
+                        </div> 
                     </div>`; 
                 } else if(moduleName === 'tools-module') {
                 renderToolsModule();
