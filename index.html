@@ -1809,14 +1809,10 @@ function addHandoffNote() {
                             </tbody>
                         </table>
                     </div>
-                </div>
-            </div>
-        `;
-    } else if (moduleName === 'closing') {
-                } else if(moduleName === 'tools-module') {
-                renderToolsModule();
-            } else if(moduleName === 'closing') { 
-                container.innerHTML = ` 
+              } else if (moduleName === 'tools-module') {
+    renderToolsModule();
+} else if (moduleName === 'closing') {
+    container.innerHTML = `
                     <div class="space-y-6"> 
                         <div class="bg-white p-5 rounded-2xl border border-ruili-border shadow-2xs space-y-1.5"> 
                             <h2 class="text-base font-bold text-stone-900"><i class="fa-solid fa-flag-checkered text-emerald-600 mr-2"></i> 結案中心（正式結案報告清單）</h2> 
