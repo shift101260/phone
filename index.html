@@ -1305,22 +1305,27 @@
 <!-- 彈窗內容主體結束 -->
 
 <!-- 彈窗底部固定按鈕列 -->
-<div class="px-6 py-4 bg-stone-100 border-t border-stone-200 flex justify-end items-center space-x-3 shrink-0">
-    <!-- 案件簽核 按鈕 -->
-    <button type="button" onclick="handleCaseSignOff(currentEditingId)" class="px-3 py-1.5 bg-ruili-brand hover:opacity-90 text-white rounded-xl text-xs font-bold transition shadow-2xs flex items-center space-x-1.5 cursor-pointer">
-        <i class="fa-solid fa-file-signature"></i>
-        <span>案件簽核</span>
-    </button>
+<div class="px-6 py-4 bg-stone-100 border-t border-stone-200 flex justify-between items-center shrink-0">
+    <!-- 左側：案件簽核按鈕 -->
+    <div>
+        <button type="button" onclick="handleCaseSignOff(currentEditingId)" class="px-3 py-1.5 bg-ruili-brand hover:opacity-90 text-white rounded-xl text-xs font-bold transition shadow-2xs flex items-center space-x-1.5 cursor-pointer">
+            <i class="fa-solid fa-file-signature"></i>
+            <span>案件簽核</span>
+        </button>
+    </div>
 
-    <!-- 取消 按鈕 (保持一致的尺寸高度) -->
-    <button type="button" onclick="closeModal('editCaseModal')" class="px-3 py-1.5 bg-white hover:bg-stone-50 text-stone-700 rounded-xl text-xs font-bold border border-stone-300 transition shadow-2xs cursor-pointer">
-        取消
-    </button>
-    
-    <!-- 儲存 按鈕 -->
-    <button type="button" onclick="saveCaseData()" class="px-3 py-1.5 bg-ruili-brand hover:opacity-90 text-white rounded-xl text-xs font-bold transition shadow-2xs flex items-center space-x-1.5 cursor-pointer">
-        <i class="fa-solid fa-check"></i><span>儲存</span>
-    </button>
+    <!-- 右側：取消與儲存按鈕群組 -->
+    <div class="flex items-center space-x-3">
+        <!-- 取消 按鈕 -->
+        <button type="button" onclick="closeModal('editCaseModal')" class="px-3 py-1.5 bg-white hover:bg-stone-50 text-stone-700 rounded-xl text-xs font-bold border border-stone-300 transition shadow-2xs cursor-pointer">
+            取消
+        </button>
+        <!-- 儲存 按鈕 -->
+        <button type="button" onclick="saveCaseData()" class="px-3 py-1.5 bg-ruili-brand hover:opacity-90 text-white rounded-xl text-xs font-bold transition shadow-2xs flex items-center space-x-1.5 cursor-pointer">
+            <i class="fa-solid fa-check"></i>
+            <span>儲存</span>
+        </button>
+    </div>
 </div>
     </div> <!-- 關閉外層白色卡片 -->
 </div> <!-- 關閉 editCaseModal 背景遮罩 -->
