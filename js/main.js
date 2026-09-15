@@ -9,7 +9,7 @@ import './modules/case-edit.js';
 import './modules/tools-module.js';
 import './modules/factory-improvement-module.js';
 
-// 💡 確保所有彈窗開關 100% 能夠被 HTML 的 onclick 呼叫
+// 💡 全域彈窗控制
 window.openLandModal = () => toggleModal('land-modal', true);
 window.closeLandModal = () => toggleModal('land-modal', false);
 
@@ -27,25 +27,18 @@ window.toggleSolarRefModal = (show) => toggleModal('solar-ref-modal', show);
 window.openLandChangeModal = () => toggleModal('land-change-modal', true);
 window.closeLandChangeModal = () => toggleModal('land-change-modal', false);
 
-// 共用切換顯示函式
 function toggleModal(modalId, show) {
     const modal = document.getElementById(modalId);
     if (modal) {
-        if (show) {
-            modal.classList.remove('hidden');
-            modal.style.display = 'flex';
-        } else {
-            modal.classList.add('hidden');
-            modal.style.display = 'none';
-        }
+        modal.classList.toggle('hidden', !show);
+        modal.style.display = show ? 'flex' : 'none';
     }
 }
 
 // ----------------------------------------------------
-// 🚀 新增：全域模組切換與畫面渲染邏輯 (修復按鈕無反應與空白問題)
+// 🚀 完整工作看板與角色簽核流程渲染
 // ----------------------------------------------------
 window.switchModule = function(moduleName, btnElement) {
-    // 1. 更新側邊欄按鈕高亮狀態
     if (btnElement) {
         document.querySelectorAll('.nav-btn').forEach(btn => {
             btn.classList.remove('bg-ruili-brand', 'text-white', 'shadow-xs', 'font-bold');
@@ -55,87 +48,125 @@ window.switchModule = function(moduleName, btnElement) {
         btnElement.classList.add('bg-ruili-brand', 'text-white', 'shadow-xs', 'font-bold');
     }
 
-    // 2. 渲染右側 app-container 內容
     const container = document.getElementById('app-container');
     if (!container) return;
 
-    // 根據點擊的模組名稱切換不同畫面
-    switch (moduleName) {
-        case 'dashboard':
-            container.innerHTML = `
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-stone-200">
-                    <h2 class="text-lg font-bold text-stone-800 mb-2">戰情室總覽</h2>
-                    <p class="text-xs text-stone-500">歡迎使用睿立集團 ERP 營運管理系統。</p>
-                </div>
-            `;
-            break;
-
-        case 'kanban':
-            container.innerHTML = `
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-stone-200">
-                    <h2 class="text-lg font-bold text-stone-800 mb-2">工作看板</h2>
-                    <p class="text-xs text-stone-500">目前執行中案件與待辦事項。</p>
-                </div>
-            `;
-            break;
-
-        case 'all-cases':
-            container.innerHTML = `
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-stone-200">
-                    <h2 class="text-lg font-bold text-stone-800 mb-2">全集團案件總覽</h2>
-                    <p class="text-xs text-stone-500">包含所有年度與進度之總表。</p>
-                </div>
-            `;
-            break;
-
-        case 'tools-module':
-            container.innerHTML = `
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-stone-200">
-                    <h2 class="text-lg font-bold text-stone-800 mb-2">工具專區</h2>
-                    <p class="text-xs text-stone-500">各式試算工具與評估清單。</p>
-                </div>
-            `;
-            break;
-
-        case 'closing':
-            container.innerHTML = `
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-stone-200">
-                    <h2 class="text-lg font-bold text-stone-800 mb-2">結案中心</h2>
-                    <p class="text-xs text-stone-500">階段性請款與結案公文審核。</p>
-                </div>
-            `;
-            break;
-
-        case 'quotation':
-            container.innerHTML = `
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-stone-200">
-                    <h2 class="text-lg font-bold text-stone-800 mb-2">支出自填</h2>
-                    <p class="text-xs text-stone-500">專案支出與費用填報系統。</p>
-                </div>
-            `;
-            break;
-
-        default:
-            // 處理年度案件（如 year-2026, year-2025 等）
-            if (moduleName.startsWith('year-')) {
-                const year = moduleName.replace('year-', '');
-                container.innerHTML = `
-                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-stone-200">
-                        <h2 class="text-lg font-bold text-stone-800 mb-2">${year} 年度案件管理</h2>
-                        <p class="text-xs text-stone-500">檢視與管理 ${year} 年度的所有案件紀錄。</p>
-                    </div>
-                `;
-            } else {
-                container.innerHTML = `<div class="p-6 text-xs text-stone-500">未知的模組：${moduleName}</div>`;
-            }
-            break;
+    if (moduleName === 'kanban') {
+        renderKanbanView(container);
+    } else if (moduleName === 'dashboard') {
+        container.innerHTML = `
+            <div class="bg-white p-6 rounded-2xl shadow-xs border border-stone-200">
+                <h2 class="text-base font-bold text-stone-800 mb-1"><i class="fa-solid fa-chart-line text-ruili-brand mr-2"></i>戰情室總覽</h2>
+                <p class="text-xs text-stone-500">歡迎使用睿立集團 ERP 營運管理系統。</p>
+            </div>
+        `;
+    } else {
+        container.innerHTML = `
+            <div class="bg-white p-6 rounded-2xl shadow-xs border border-stone-200">
+                <h2 class="text-base font-bold text-stone-800 mb-1">${moduleName} 模組</h2>
+                <p class="text-xs text-stone-500">此頁面載入成功。</p>
+            </div>
+        `;
     }
 };
 
-// 初始化載入預設頁面 (戰情室總覽)
+// 渲染工作看板（包含秘書簽核與評估入口）
+function renderKanbanView(container) {
+    container.innerHTML = `
+        <div class="space-y-6">
+            <!-- 上方標題與新增案件按鈕 -->
+            <div class="flex items-center justify-between">
+                <div>
+                    <h2 class="text-base font-bold text-stone-800 flex items-center">
+                        <i class="fa-solid fa-list-check text-amber-500 mr-2"></i>工作看板與角色簽核
+                    </h2>
+                    <p class="text-xs text-stone-500">管理集團案件進度、簽核流程與動態評估</p>
+                </div>
+                <button onclick="openModal('editCaseModal')" class="px-4 py-2 bg-ruili-brand hover:opacity-90 text-white rounded-xl text-xs font-bold transition shadow-xs flex items-center space-x-1.5 cursor-pointer">
+                    <i class="fa-solid fa-plus"></i><span>＋ 新增案件建檔</span>
+                </button>
+            </div>
+
+            <!-- 角色簽核工作流區塊 -->
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+                <!-- 秘書簽核 -->
+                <div class="bg-white p-4 rounded-2xl border border-stone-200 shadow-2xs space-y-3">
+                    <div class="flex items-center justify-between border-b border-stone-100 pb-2">
+                        <span class="font-bold text-xs text-stone-800 flex items-center">
+                            <i class="fa-solid fa-user-pen text-amber-500 mr-1.5"></i>秘書簽核
+                        </span>
+                        <span class="px-2 py-0.5 bg-amber-50 text-amber-700 rounded-full text-[10px] font-bold">待處理</span>
+                    </div>
+                    <p class="text-[11px] text-stone-500 leading-relaxed">負責合約初審、客戶基本資料建檔與簽核派單。</p>
+                    <button onclick="openModal('pendingListModal')" class="w-full py-2 bg-stone-100 hover:bg-amber-500 hover:text-white text-stone-700 rounded-xl text-xs font-bold transition">
+                        檢視待簽核清單
+                    </button>
+                </div>
+
+                <!-- 特助簽核 -->
+                <div class="bg-white p-4 rounded-2xl border border-stone-200 shadow-2xs space-y-3">
+                    <div class="flex items-center justify-between border-b border-stone-100 pb-2">
+                        <span class="font-bold text-xs text-stone-800 flex items-center">
+                            <i class="fa-solid fa-user-tie text-sky-500 mr-1.5"></i>特助流程
+                        </span>
+                        <span class="px-2 py-0.5 bg-sky-50 text-sky-700 rounded-full text-[10px] font-bold">進行中</span>
+                    </div>
+                    <p class="text-[11px] text-stone-500 leading-relaxed">跨部門資源協調、專案排程控管與現場勘查。</p>
+                    <button onclick="openModal('activeCasesListModal')" class="w-full py-2 bg-stone-100 hover:bg-sky-500 hover:text-white text-stone-700 rounded-xl text-xs font-bold transition">
+                        檢視執行中案件
+                    </button>
+                </div>
+
+                <!-- 地政士處理 -->
+                <div class="bg-white p-4 rounded-2xl border border-stone-200 shadow-2xs space-y-3">
+                    <div class="flex items-center justify-between border-b border-stone-100 pb-2">
+                        <span class="font-bold text-xs text-stone-800 flex items-center">
+                            <i class="fa-solid fa-landmark text-emerald-500 mr-1.5"></i>地政士審查
+                        </span>
+                        <span class="px-2 py-0.5 bg-emerald-50 text-emerald-700 rounded-full text-[10px] font-bold">法規評估</span>
+                    </div>
+                    <p class="text-[11px] text-stone-500 leading-relaxed">土地變更審查、特定工廠登記與容許使用評估。</p>
+                    <button onclick="openModal('editCaseModal')" class="w-full py-2 bg-stone-100 hover:bg-emerald-600 hover:text-white text-stone-700 rounded-xl text-xs font-bold transition">
+                        進入土地評估
+                    </button>
+                </div>
+
+                <!-- 財務長對帳 -->
+                <div class="bg-white p-4 rounded-2xl border border-stone-200 shadow-2xs space-y-3">
+                    <div class="flex items-center justify-between border-b border-stone-100 pb-2">
+                        <span class="font-bold text-xs text-stone-800 flex items-center">
+                            <i class="fa-solid fa-calculator text-purple-500 mr-1.5"></i>財務長核銷
+                        </span>
+                        <span class="px-2 py-0.5 bg-purple-50 text-purple-700 rounded-full text-[10px] font-bold">階段請款</span>
+                    </div>
+                    <p class="text-[11px] text-stone-500 leading-relaxed">各期請款比例試算、發票開立與支出費用稽核。</p>
+                    <button onclick="openModal('pendingClosingListModal')" class="w-full py-2 bg-stone-100 hover:bg-purple-600 hover:text-white text-stone-700 rounded-xl text-xs font-bold transition">
+                        請款與公文審查
+                    </button>
+                </div>
+
+                <!-- 品牌長與結案 -->
+                <div class="bg-white p-4 rounded-2xl border border-stone-200 shadow-2xs space-y-3">
+                    <div class="flex items-center justify-between border-b border-stone-100 pb-2">
+                        <span class="font-bold text-xs text-stone-800 flex items-center">
+                            <i class="fa-solid fa-award text-rose-500 mr-1.5"></i>結案歸檔
+                        </span>
+                        <span class="px-2 py-0.5 bg-rose-50 text-rose-700 rounded-full text-[10px] font-bold">報告匯出</span>
+                    </div>
+                    <p class="text-[11px] text-stone-500 leading-relaxed">專案成果彙整、PDF 結案報告產出與顧客滿意度。</p>
+                    <button onclick="openModal('pdfModal')" class="w-full py-2 bg-stone-100 hover:bg-rose-600 hover:text-white text-stone-700 rounded-xl text-xs font-bold transition">
+                        結案報告預覽
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+// 頁面初始化
 document.addEventListener('DOMContentLoaded', () => {
-    const defaultBtn = document.querySelector("button[onclick*='dashboard']");
-    window.switchModule('dashboard', defaultBtn);
+    const kanbanBtn = document.querySelector("button[onclick*='kanban']");
+    window.switchModule('kanban', kanbanBtn);
 });
 
-console.log('Ruili 系統主程式 (main.js) 與所有模組已成功載入！');
+console.log('Ruili 系統主程式 (main.js) 與工作看板模組已成功載入！');
