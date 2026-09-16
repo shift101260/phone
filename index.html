@@ -125,7 +125,7 @@
 </button> 
 
 <button onclick="switchModule('quotation', this)" class="nav-btn w-full flex items-center space-x-2.5 px-3 py-2 rounded-xl hover:bg-stone-800 text-stone-300 transition"> 
-    <i class="fa-solid fa-barcode w-4"></i><span>支出自填</span> 
+    <i class="fa-solid fa-barcode w-4"></i><span>案件編號</span> 
 </button>
 
             </nav> 
@@ -1305,27 +1305,22 @@
 <!-- 彈窗內容主體結束 -->
 
 <!-- 彈窗底部固定按鈕列 -->
-<div class="px-6 py-4 bg-stone-100 border-t border-stone-200 flex justify-between items-center shrink-0">
-    <!-- 左側：案件簽核按鈕 -->
-    <div>
-        <button type="button" onclick="handleCaseSignOff(currentEditingId)" class="px-3 py-1.5 bg-ruili-brand hover:opacity-90 text-white rounded-xl text-xs font-bold transition shadow-2xs flex items-center space-x-1.5 cursor-pointer">
-            <i class="fa-solid fa-file-signature"></i>
-            <span>案件簽核</span>
-        </button>
-    </div>
+<div class="px-6 py-4 bg-stone-100 border-t border-stone-200 flex justify-end items-center space-x-3 shrink-0">
+    <!-- 案件簽核 按鈕 -->
+    <button type="button" onclick="handleCaseSignOff(currentEditingId)" class="px-3 py-1.5 bg-ruili-brand hover:opacity-90 text-white rounded-xl text-xs font-bold transition shadow-2xs flex items-center space-x-1.5 cursor-pointer">
+        <i class="fa-solid fa-file-signature"></i>
+        <span>案件簽核</span>
+    </button>
 
-    <!-- 右側：取消與儲存按鈕群組 -->
-    <div class="flex items-center space-x-3">
-        <!-- 取消 按鈕 -->
-        <button type="button" onclick="closeModal('editCaseModal')" class="px-3 py-1.5 bg-white hover:bg-stone-50 text-stone-700 rounded-xl text-xs font-bold border border-stone-300 transition shadow-2xs cursor-pointer">
-            取消
-        </button>
-        <!-- 儲存 按鈕 -->
-        <button type="button" onclick="saveCaseData()" class="px-3 py-1.5 bg-ruili-brand hover:opacity-90 text-white rounded-xl text-xs font-bold transition shadow-2xs flex items-center space-x-1.5 cursor-pointer">
-            <i class="fa-solid fa-check"></i>
-            <span>儲存</span>
-        </button>
-    </div>
+    <!-- 取消 按鈕 (保持一致的尺寸高度) -->
+    <button type="button" onclick="closeModal('editCaseModal')" class="px-3 py-1.5 bg-white hover:bg-stone-50 text-stone-700 rounded-xl text-xs font-bold border border-stone-300 transition shadow-2xs cursor-pointer">
+        取消
+    </button>
+    
+    <!-- 儲存 按鈕 -->
+    <button type="button" onclick="saveCaseData()" class="px-3 py-1.5 bg-ruili-brand hover:opacity-90 text-white rounded-xl text-xs font-bold transition shadow-2xs flex items-center space-x-1.5 cursor-pointer">
+        <i class="fa-solid fa-check"></i><span>儲存</span>
+    </button>
 </div>
     </div> <!-- 關閉外層白色卡片 -->
 </div> <!-- 關閉 editCaseModal 背景遮罩 -->
@@ -1498,6 +1493,14 @@ window.calculateApprovalInstallments = function() {
 
 function openQuotationGeneratorModal() {
     openModal('quotationGeneratorModal');
+}
+
+let currentGeneratedRuNo = 1;
+function generateRuCaseId() {
+    const seqStr = String(currentGeneratedRuNo).padStart(6, '0');
+    const newRuId = `RU${seqStr}`;
+    currentGeneratedRuNo++;
+    alert(`✨ 成功主動生成新案件編號：【${newRuId}】！`);
 }
 
 function openActiveCasesModal() { 
@@ -1733,22 +1736,26 @@ function addHandoffNote() {
                 const year = moduleName.split('-')[1]; 
                 renderYearManagementView(year); 
             } else if(moduleName === 'quotation') { 
-                container.innerHTML = `
-        <div class="space-y-6">
-            <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-2xs space-y-4">
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                    <div>
-                        <h2 class="text-base font-bold text-stone-900"><i class="fa-solid fa-pen-to-square text-ruili-brand mr-2"></i>支出自填與查詢中心</h2>
-                        <p class="text-xs text-stone-500 mt-0.5">請手動輸入相關編號或資訊進行查詢與記錄。</p>
-                    </div>
-                </div>
-                <div class="flex space-x-2 pt-2 border-t border-stone-100">
-                    <input type="text" placeholder="請自行輸入編號或支出項目..." class="px-3 py-1.5 text-xs border border-stone-300 rounded-xl w-64 focus:outline-none focus:border-ruili-brand font-mono">
-                    <button onclick="alert('🔍 正在查詢記錄...')" class="px-3 py-1.5 bg-ruili-brand text-white rounded-xl text-xs font-bold shadow-xs cursor-pointer">查詢</button>
-                </div>
-            </div>
-        </div>
-    `;
+                container.innerHTML = ` 
+                    <div class="space-y-6"> 
+                        <div class="bg-white p-5 rounded-2xl border border-ruili-border shadow-2xs space-y-4"> 
+                            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4"> 
+                                <div> 
+                                    <h2 class="text-base font-bold text-stone-900"><i class="fa-solid fa-barcode text-ruili-brand mr-2"></i> 案件編號查詢與生成中心</h2> 
+                                    <p class="text-xs text-stone-500 mt-0.5">輸入 RU 開頭的集團統一案件編號進行全集團快速檢索，或點擊右側按鈕主動生成全新編號。</p> 
+                                </div> 
+                                <div> 
+                                    <button type="button" onclick="generateRuCaseId()" class="px-4 py-2 bg-gradient-to-r from-ruili-brand to-stone-800 text-white rounded-xl text-xs font-bold transition shadow-md flex items-center space-x-2 cursor-pointer whitespace-nowrap hover:opacity-90"> 
+                                        <i class="fa-solid fa-barcode text-amber-400"></i><span>案件編號主動生成器 (RU000001)</span> 
+                                    </button> 
+                                </div> 
+                            </div> 
+                            <div class="flex space-x-2 pt-2 border-t border-stone-100"> 
+                                <input type="text" placeholder="輸入編號如 RU000001..." class="px-3 py-1.5 text-xs border border-stone-300 rounded-xl w-48 focus:outline-none focus:border-ruili-brand font-mono"> 
+                                <button onclick="alert('🔍 正在檢索該編號案件歷程...')" class="px-3 py-1.5 bg-ruili-brand text-white rounded-xl text-xs font-bold shadow-xs cursor-pointer">查詢</button> 
+                            </div> 
+                        </div> 
+                    </div>`; 
                 } else if(moduleName === 'tools-module') {
                 renderToolsModule();
             } else if(moduleName === 'closing') { 
@@ -2855,9 +2862,11 @@ function addHandoffNote() {
             </table>
         </div>
 
-        <!-- 底部按鈕 -->
+        <!-- 底部關閉按鈕列 -->
         <div class="p-3 bg-slate-50 border-t border-slate-200 flex justify-end shrink-0">
-            <button onclick="toggleSolarRefModal(false)" class="px-4 py-1.5 bg-slate-800 text-white rounded-lg text-xs font-medium hover:bg-slate-900 transition">關閉</button>
+            <button onclick="toggleSolarRefModal(false)" class="px-5 py-2 bg-slate-700 hover:bg-slate-800 text-white rounded-lg text-xs font-medium cursor-pointer transition">
+                關閉
+            </button>
         </div>
     </div>
 </div>
